@@ -11,13 +11,24 @@
 |
 */
 
-Route::get('/', function () {
+Auth::routes();
+
+Route::get('/', 'HomeController@index');
+Route::get('/home', 'HomeController@index');
+
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
 Route::get('login', function() {
 	return view('login');
 });
-Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/form', function() {
+	return view('hardware.form');
+});
+
+Route::group(['middleware' => ['web']], function(){
+	Route::resource('hardware', 'HardwareController');
+	Route::resource('book', 'BookController');
+});
