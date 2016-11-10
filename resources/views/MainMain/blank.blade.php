@@ -178,7 +178,7 @@
               	  <h5 class="centered">AMS Sapura</h5>
               	  	
                   <li class="mt">
-                      <a href="index.html">
+                      <a class="active" href="index.html">
                           <i class="fa fa-dashboard"></i>
                           <span>Home</span>
                       </a>
@@ -208,12 +208,12 @@
                       </ul>
                   </li>
                   <li class="sub-menu">
-                      <a class="active" href="javascript:;" >
+                      <a href="javascript:;" >
                           <i class="fa fa-book"></i>
                           <span>Asset</span>
                       </a>
                       <ul class="sub">
-                          <li><a  href="responsive_table.html">Hardware List</a></li>
+                          <li><a  href="/hardware">Hardware List</a></li>
                           <li><a  href="responsive_table.html">Software List</a></li>
                           <li class="active"><a  href="blank.html">Blank Page</a></li>
                           <li><a  href="login.html">Login</a></li>
