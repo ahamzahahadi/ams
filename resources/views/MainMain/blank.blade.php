@@ -128,7 +128,7 @@
                                 <a href="index.html#">
                                     <span class="photo"><img alt="avatar" src="{{ URL::asset('img/ui-UserMale.jpg') }}"></span>
                                     <span class="subject">
-                                    <span class="from">Zac Snider</span>
+                                    <span class="from">Amir Hamzah</span>
                                     <span class="time">Just now</span>
                                     </span>
                                     <span class="message">
@@ -140,11 +140,11 @@
                                 <a href="index.html#">
                                     <span class="photo"><img alt="avatar" src="{{ URL::asset('img/ui-UserFemale.jpg') }}"></span>
                                     <span class="subject">
-                                    <span class="from">Divya Manian</span>
+                                    <span class="from">Ustaz Mimi</span>
                                     <span class="time">40 mins.</span>
                                     </span>
                                     <span class="message">
-                                     Hi, I need your help with this.
+                                     KYAHH~! NOTICE ME AMIR SENPAI!!
                                     </span>
                                 </a>
                             </li>
@@ -262,7 +262,6 @@
       <!--main content start-->
       <section id="main-content">
           <section class="wrapper site-min-height">
-          	<h3><i class="fa fa-angle-right"></i> Blank Page</h3>
           	<div class="row mt">
           		<div class="col-lg-12">
           		 @yield('content')
