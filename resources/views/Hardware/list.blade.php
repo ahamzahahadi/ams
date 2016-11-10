@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('mainmain.blank')
 
 @section('content')
 <div><h1> Hardware List <h1>
@@ -46,5 +46,6 @@
                         @endforeach
                     
                 </table>
+            </div>
 </div>
 @stop

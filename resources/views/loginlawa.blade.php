@@ -35,7 +35,7 @@
 	  	<div class="container">
 	  	
 		      <form class="form-login" action="index.html">
-		        <h2 class="form-login-heading">sign in now</h2>
+		        <h2 class="form-login-heading">Sign In Now</h2>
 		        <div class="login-wrap">
 		            <input type="text" class="form-control" placeholder="User ID" autofocus>
 		            <br>
@@ -98,7 +98,7 @@
     <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
     <script type="text/javascript" src="{{ URL::asset('js/jquery.backstretch.min.js') }}"></script>
     <script>
-        $.backstretch("img/login-bg.jpg", {speed: 5000});
+        $.backstretch("img/login-bg.jpg", {speed: 500});
     </script>
 
 
