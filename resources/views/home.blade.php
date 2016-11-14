@@ -1,4 +1,4 @@
-@extends('mainmain.blank')
+@extends('master')
 
 @section('content')
 <div class="container">

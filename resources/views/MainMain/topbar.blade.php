@@ -127,7 +127,17 @@ TOP BAR CONTENT & NOTIFICATIONS
       </div>
       <div class="top-menu">
         <ul class="nav pull-right top-menu">
-              <li><a class="logout" href="{{url('/logout')}}" >Logout</a></li>
+          <li>
+              <a href="{{ url('/logout') }}"
+                  onclick="event.preventDefault();
+                           document.getElementById('logout-form').submit();">
+                  Logout
+              </a>
+
+              <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                  {{ csrf_field() }}
+              </form>
+          </li>
         </ul>
       </div>
   </header>

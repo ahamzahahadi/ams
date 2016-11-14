@@ -25,7 +25,13 @@
     <![endif]-->
 
    <!-- src="{{ URL::asset('aaa/aaaa') }}"-->
+
+
   </head>
+
+
+
+
 
   <body>
 @include('mainmain.topbar')
@@ -41,7 +47,11 @@
           <section class="wrapper site-min-height">
           	<div class="row mt">
           		<div class="col-lg-12">
+                <table cellpadding="0" cellspacing="0" border="0" class="datatable table table-striped table-bordered">
+
           		 @yield('content')
+
+               </table>
           		</div>
           	</div>
 
