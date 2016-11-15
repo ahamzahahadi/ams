@@ -1,4 +1,4 @@
-@extends('mainmain.blank')
+@extends('master')
 
 @section('content')
 <div class="container">
@@ -11,7 +11,7 @@
                     You are logged in! this is home.blade
                 </div>
             </div>
-            
+
             </div>
 
 

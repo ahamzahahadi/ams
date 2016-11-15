@@ -11,12 +11,16 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{ URL::asset('css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
     <!--external css-->
     <link href="{{ URL::asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
 
     <!-- Custom styles for this template -->
     <link href="{{ URL::asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('css/style-responsive.css') }}" rel="stylesheet">
+
+    <!-- JQuery JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -28,8 +32,9 @@
   </head>
 
   <body>
-@include('mainmain.topbar')
-@include('mainmain.sidebar')
+    @include('mainmain.topbar')
+    @include('mainmain.sidebar')
+
   <section id="container" >
 
 
@@ -69,24 +74,26 @@
     <script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ URL::asset('js/jquery-ui-1.9.2.custom.min.js') }}"></script>
     <script src="{{ URL::asset('js/jquery.ui.touch-punch.min.js') }}"></script>
-    <script class="include" type="text/javascript" src="{{ URL::asset('js/jquery.dcjqaccordion.2.7.js') }}"></script>
+    <script src="{{ URL::asset('js/jquery.dcjqaccordion.2.7.js') }}" class="include" type="text/javascript" ></script>
     <script src="{{ URL::asset('js/jquery.scrollTo.min.js') }}"></script>
     <script src="{{ URL::asset('js/jquery.nicescroll.js') }}" type="text/javascript"></script>
-
+    <!--DATA TABLE SCRIPTS -->
+    <script src="{{ URL::asset('js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ URL::asset('js/dataTables.bootstrap.min.js') }}"></script>
 
     <!--common script for all pages-->
     <script src="{{ URL::asset('js/common-scripts.js') }}"></script>
 
     <!--script for this page-->
+    <script>
+        //custom select box
 
-  <script>
-      //custom select box
+        $(function(){
+            $('select.styled').customSelect();
+        });
 
-      $(function(){
-          $('select.styled').customSelect();
-      });
+    </script>
 
-  </script>
 
   </body>
 </html>

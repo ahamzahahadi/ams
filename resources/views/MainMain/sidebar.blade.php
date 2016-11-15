@@ -11,7 +11,7 @@
                  <h5 class="centered">AMS Sapura</h5>
 
                  <li class="mt">
-                     <a class="active" href="index.html">
+                     <a class="active" href="/">
                          <i class="fa fa-dashboard"></i>
                          <span>Home</span>
                      </a>

@@ -117,3 +117,5 @@ var Script = function () {
 
 
 }();
+
+$('#tableA').dataTable(); 
