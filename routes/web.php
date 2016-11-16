@@ -24,11 +24,13 @@ Route::get('login', function() {
 	return view('login');
 });
 
-Route::get('/form', function() {
+Route::get('/addHardware', function() {
 	return view('hardware.form');
 });
 
 Route::group(['middleware' => ['web']], function(){
 	Route::resource('hardware', 'HardwareController');
 	Route::resource('book', 'BookController');
+	Route::resource('supplier', 'SupplierController');
+	Route::resource('staff', 'StaffController');
 });

@@ -8,6 +8,7 @@
 {!! Form::open(array('action' => 'HardwareController@store')) !!}
 
 <div class="form-group">
+  <div class="col-lg-6">
     {!! Form::label('assetid', 'Asset ID:', ['class' => 'control-label']) !!}
     {!! Form::text('hw_assetid', null, ['class' => 'form-control']) !!}
 
@@ -22,9 +23,12 @@
 
     {!! Form::label('datepono', 'Purchase Order date:', ['class' => 'control-label']) !!}
     {!! Form::text('hw_date_po', null, ['class' => 'form-control']) !!}
-
-    {!! Form::label('supid', 'Supp ID dlu, nanti tukar/dropdown nama diorang/search:', ['class' => 'control-label']) !!}
-    {!! Form::text('hw_supplier', null, ['class' => 'form-control']) !!}
+  </div>
+  <div class="col-lg-6">
+    {!! Form::label('supid', 'Supplier', ['class' => 'control-label']) !!}
+    <!-- {!! Form::text('hw_supplier', null, ['class' => 'form-control']) !!} -->
+    {!! Form::select('hw_supplier', DB::table('supplier')->orderBy('supp_name', 'asc')->pluck('supp_name'), ['class' => 'form-control']) !!}
+  </div>
 </div>
 {!! Form::submit('Add', ['class' => 'btn btn-primary']) !!}
 

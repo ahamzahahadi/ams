@@ -30,7 +30,7 @@
             <td>{{ $hw->hw_model }}</td>
             <td>{{ $hw->hw_po_no }}</td>
             <td>{{ $hw->hw_date_po }}</td>
-            <td>{{ $hw->hw_supplier }}</td>
+            <td>{{ DB::table('supplier')->where('supp_id',$hw->hw_supplier)->value('supp_name')}}</td>
             <td>{{ $hw->hw_part_no }}</td>
             <td>{{ $hw->hw_price }}</td>
             <td>{{ $hw->hw_type }}</td>

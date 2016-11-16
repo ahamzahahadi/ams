@@ -23,7 +23,7 @@
                          <span>Staff</span>
                      </a>
                      <ul class="sub">
-                         <li><a  href="general.html">General</a></li>
+                         <li><a  href="/staff">Staff List</a></li>
                          <li><a  href="buttons.html">Buttons</a></li>
                          <li><a  href="panels.html">Panels</a></li>
                      </ul>
@@ -47,8 +47,8 @@
                      </a>
                      <ul class="sub">
                          <li><a  href="/hardware">Hardware List</a></li>
+                         <li><a  href="/hardware/create">Add Hardware</a></li>
                          <li><a  href="responsive_table.html">Software List</a></li>
-                         <li class="active"><a  href="blank.html">Blank Page</a></li>
                          <li><a  href="login.html">Login</a></li>
                          <li><a  href="lock_screen.html">Lock Screen</a></li>
                      </ul>
@@ -59,7 +59,7 @@
                          <span>Supplier</span>
                      </a>
                      <ul class="sub">
-                         <li><a  href="form_component.html">Form Components</a></li>
+                         <li><a  href="/supplier">Supplier List</a></li>
                      </ul>
                  </li>
                  <li class="sub-menu">
