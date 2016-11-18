@@ -36,8 +36,12 @@
             <td>{{ $hw->hw_type }}</td>
             <td>{{ $hw->hw_datesupp }}</td>
             <td>{{ $hw->hw_datefac }}</td>
-           <td><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a></td>
-           <td><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a></td>
+           <td><a href="{{action('HardwareController@edit', $hw->id)}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a></td>
+           <td>
+             {!! Form::open(['method' => 'DELETE','route' => ['hardware.destroy', $hw->id]]) !!}
+             {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
+             {!! Form::close() !!}
+             <!-- <a href="{{action('HardwareController@destroy', $hw->id)}}" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a></td> -->
           </tr>  @endforeach
        </tbody>
           </table>

@@ -2,18 +2,15 @@
 
 @section('content')
 
-<h1>Register New Hardware</h1>
+<h1>Update Asset</h1>
 <hr>
 
-{!! Form::open(array('action' => 'HardwareController@store')) !!}
+{!! Form::model($hardware, ['method' => 'PATCH','route' => ['hardware.update', $hardware->id]]) !!}
 
 <div class="form-group">
   <div class="col-lg-6">
     {!! Form::label('assetid', 'Asset ID:', ['class' => 'control-label']) !!}
     {!! Form::text('hw_assetid', null, ['class' => 'form-control']) !!}
-    @if($errors->has('hw_assetid'))
-        {{ $errors->first('hw_assetid')}}<br>
-    @endif
 
     {!! Form::label('serialno', 'Serial number:', ['class' => 'control-label']) !!}
     {!! Form::text('hw_serialno', null, ['class' => 'form-control']) !!}
@@ -58,9 +55,10 @@
             {!! Form::button('Add Asset Type') !!}
           </div>
     </div>
+
+    {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
+    <a href="{{action('HardwareController@index')}}" class="btn btn-default">Cancel</a>
+    {!! Form::close() !!}
 </div>
-{!! Form::submit('Add', ['class' => 'btn btn-primary']) !!}
-<a href="{{action('HardwareController@index')}}" class="btn btn-default">Cancel</a>
-{!! Form::close() !!}
 
 @stop
