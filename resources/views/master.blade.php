@@ -77,6 +77,9 @@
     <script src="{{ URL::asset('js/jquery.dcjqaccordion.2.7.js') }}" class="include" type="text/javascript" ></script>
     <script src="{{ URL::asset('js/jquery.scrollTo.min.js') }}"></script>
     <script src="{{ URL::asset('js/jquery.nicescroll.js') }}" type="text/javascript"></script>
+
+    <!-- Backstretch -->
+    <script type="text/javascript" src="{{URL::asset('js/jquery.backstretch.min.js')}}"></script>
     <!--DATA TABLE SCRIPTS -->
     <script src="{{ URL::asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ URL::asset('js/dataTables.bootstrap.min.js') }}"></script>
@@ -85,12 +88,9 @@
     <script src="{{ URL::asset('js/common-scripts.js') }}"></script>
 
     <!--script for this page-->
-    <script>
-        //custom select box
-
-        $(function(){
-            $('select.styled').customSelect();
-        });
+    <!-- <script>
+        $.backstretch("{{URL::asset('img/suka.png')}}", {speed: 500});
+    </script> -->
 
     </script>
 

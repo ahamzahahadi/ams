@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Hardware extends Model
 {
     protected $table = 'hardware';
+    protected $dates = ['hw_datesupp','hw_datefac','hw_date_po'];
     protected $fillable = [
   	'hw_asset',
   	'hw_serialno',

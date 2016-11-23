@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Software;
 
 class SoftwareController extends Controller
 {
@@ -15,7 +16,8 @@ class SoftwareController extends Controller
      */
     public function index()
     {
-        //
+        $swList = Software::all();
+        return view('software.list', ['swList' => $swList]);
     }
 
     /**

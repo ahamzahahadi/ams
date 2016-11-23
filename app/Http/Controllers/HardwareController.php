@@ -49,36 +49,54 @@ class HardwareController extends Controller
      */
     public function store(Request $request)
     {
-      // $messages = ['required' => 'This field MUST not be empty.',
-      //              'unique' => 'The data already EXISTED.',
-      // ];
-      //
-      $errorArr = [
-                  'hw_assetid'=>'required'
+      $messages = ['required' => 'This field must be FILLED.',
+                   'unique' => 'Duplicated asset id detected.'
       ];
-      //
-      // $validation = Validator::make($request->all(),$rules,$messages);
-      //
-      // if($validation->fails()){
-      //     return redirect()->back()->withErrors($validation)->withInput($request->all());
-      // }
-        $this->validate($request,$errorArr);
+
+      $rulesArr = [
+                  'hw_assetid'=>'required|unique:hardware',
+                  'hw_date_po'=> 'date_format:"Y-m-d"',
+                  'hw_datesupp'=> 'date_format:"Y-m-d"',
+                  'hw_datefac'=> 'date_format:"Y-m-d"'
+      ];
+
+      $validation = Validator::make($request->all(),$rulesArr,$messages);
+
+      if($validation->fails()){
+          return redirect()->back()->withErrors($validation)->withInput($request->all());
+      }
 
         $assetid = $request->input('hw_assetid');
         $serialno = $request->input('hw_serialno');
         $model = $request->input('hw_model');
         $partno = $request->input('hw_part_no');
         $pono = $request->input('hw_po_no');
-        $price = $request->input('hw_price');
-        $datepono = $request->input('hw_date_po');
-        $datesup = $request->input('hw_datesupp');
-        $datefac = $request->input('hw_datefac');
+        if($request->input('hw_price') == ''){
+          $price= '0.00';
+        }
+        else{$price = $request->input('hw_price');}
+
+        if($request->input('hw_date_po') == ''){
+          $datepono = '0001-00-00';
+        }
+        else{$datepono = $request->input('hw_date_po');}
+
+        if($request->input('hw_datesupp') == ''){
+          $datesup = '0001-00-00';
+        }
+        else{$datesup = $request->input('hw_datesupp');}
+
+        if($request->input('hw_datefac') == ''){
+          $datefac = '0001-00-00';
+        }
+        else{$datefac = $request->input('hw_datefac');}
+
 
         $supid = $request->input('hw_supplier'); // get sorted index array from form to get index of suppname
-        $arrSup=DB::table('supplier')->orderBy('supp_name', 'asc')->pluck('supp_id');
+        //$arrSup=DB::table('supplier')->orderBy('supp_name', 'asc')->pluck('supp_id');
         // get sorted supplier index based on name to get its id
         $typeIndexNo = $request->input('hw_type');
-        $arrType=DB::table('hwtype')->orderBy('type', 'asc')->pluck('type');
+      //  $arrType=DB::table('hwtype')->orderBy('type', 'asc')->pluck('type');
 
         $hardware = new Hardware;
         $hardware->hw_assetid = $assetid;
@@ -90,8 +108,8 @@ class HardwareController extends Controller
         $hardware->hw_date_po = $datepono;
         $hardware->hw_datesupp = $datesup;
         $hardware->hw_datefac = $datefac;
-        $hardware->hw_supplier = $arrSup[$supid];
-        $hardware->hw_type = $arrType[$typeIndexNo];
+        $hardware->hw_supplier = $supid;
+        $hardware->hw_type = $typeIndexNo;
         $hardware->save();
 
         return redirect()->action('HardwareController@index');
@@ -130,23 +148,54 @@ class HardwareController extends Controller
      */
     public function update(Request $request, $id)
     {
+      $messages = ['required' => 'This field must be FILLED.',
+                   'unique' => 'Duplicated asset id detected.'
+      ];
+
+      $rulesArr = [
+                  'hw_assetid'=>'required|unique:hardware',
+                  'hw_date_po'=> 'date_format:"Y-m-d"',
+                  'hw_datesupp'=> 'date_format:"Y-m-d"',
+                  'hw_datefac'=> 'date_format:"Y-m-d"'
+      ];
+
+      $validation = Validator::make($request->all(),$rulesArr,$messages);
+
+      if($validation->fails()){
+          return redirect()->back()->withErrors($validation)->withInput($request->all());
+      }
+
       $assetid = $request->input('hw_assetid');
       $serialno = $request->input('hw_serialno');
       $model = $request->input('hw_model');
       $partno = $request->input('hw_part_no');
       $pono = $request->input('hw_po_no');
-      $price = $request->input('hw_price');
-      $datepono = $request->input('hw_date_po');
-      $datesup = $request->input('hw_datesupp');
-      $datefac = $request->input('hw_datefac');
 
-      $supid = $request->input('hw_supplier'); // get sorted index array from form to get index of suppname
-      $arrSup=DB::table('supplier')->orderBy('supp_name', 'asc')->pluck('supp_id');
-      // get sorted supplier index based on name to get its id
+      if($request->input('hw_price') == ''){
+        $price= '0.00';
+      }
+      else{$price = $request->input('hw_price');}
+
+      if($request->input('hw_date_po') == ''){
+        $datepono = '0001-00-00';
+      }
+      else{$datepono = $request->input('hw_date_po');}
+
+      if($request->input('hw_datesupp') == ''){
+        $datesup = '0001-00-00';
+      }
+      else{$datesup = $request->input('hw_datesupp');}
+
+      if($request->input('hw_datefac') == ''){
+        $datefac = '0001-00-00';
+      }
+      else{$datefac = $request->input('hw_datefac');}
+
+
+      $supid = $request->input('hw_supplier');
       $typeIndexNo = $request->input('hw_type');
-      $arrType=DB::table('hwtype')->orderBy('type', 'asc')->pluck('type');
 
-      $hardware = new Hardware;
+      $hardware = Hardware::find($id);
       $hardware->hw_assetid = $assetid;
       $hardware->hw_serialno = $serialno;
       $hardware->hw_model = $model;
@@ -156,8 +205,8 @@ class HardwareController extends Controller
       $hardware->hw_date_po = $datepono;
       $hardware->hw_datesupp = $datesup;
       $hardware->hw_datefac = $datefac;
-      $hardware->hw_supplier = $arrSup[$supid];
-      $hardware->hw_type = $arrType[$typeIndexNo];
+      $hardware->hw_supplier = $supid;
+      $hardware->hw_type = $typeIndexNo;
       $hardware->save();
 
       return redirect()->action('HardwareController@index');

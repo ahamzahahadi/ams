@@ -20,11 +20,8 @@ class StaffController extends Controller
 
      public function index()
      {
-
-         $staffList = Staff::all();
-         // where('hw_supplier', $sw->supp_id)
-
-         return view('staff.list', ['staffList' => $staffList]);
+       $staffList = Staff::all();
+       return view('staff.list', ['staffList' => $staffList]);
      }
 
     /**
@@ -34,7 +31,7 @@ class StaffController extends Controller
      */
     public function create()
     {
-        //
+        return view('staff.form');
     }
 
     /**

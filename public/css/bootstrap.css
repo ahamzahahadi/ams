@@ -2058,7 +2058,7 @@ pre code {
   }
 }
 table {
-  background-color: transparent;
+  background-color: transparent# /*a9cad8; TAG SINI AMIR */
 }
 th {
   text-align: left;

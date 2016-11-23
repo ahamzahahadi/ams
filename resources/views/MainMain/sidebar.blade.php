@@ -24,7 +24,7 @@
                      </a>
                      <ul class="sub">
                          <li><a  href="/staff">Staff List</a></li>
-                         <li><a  href="buttons.html">Buttons</a></li>
+                         <li><a  href="/staff/create">Add Staff</a></li>
                          <li><a  href="panels.html">Panels</a></li>
                      </ul>
                  </li>
@@ -48,7 +48,7 @@
                      <ul class="sub">
                          <li><a  href="/hardware">Hardware List</a></li>
                          <li><a  href="/hardware/create">Add Hardware</a></li>
-                         <li><a  href="responsive_table.html">Software List</a></li>
+                         <li><a  href="/software">Software List</a></li>
                          <li><a  href="login.html">Login</a></li>
                          <li><a  href="lock_screen.html">Lock Screen</a></li>
                      </ul>

@@ -13,7 +13,7 @@
     <link href="{{ URL::asset('css/bootstrap.css') }} " rel="stylesheet">
     <!--external css-->
     <link href="{{ URL::asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
-        
+
     <!-- Custom styles for this template -->
     <link href="{{ URL::asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('css/style-responsive.css') }}" rel="stylesheet">
@@ -33,7 +33,7 @@
 
 	  <div id="login-page">
 	  	<div class="container">
-	  	
+
 		      <form class="form-login" action="index.html">
 		        <h2 class="form-login-heading">Sign In Now</h2>
 		        <div class="login-wrap">
@@ -43,12 +43,12 @@
 		            <label class="checkbox">
 		                <span class="pull-right">
 		                    <a data-toggle="modal" href="login.html#myModal"> Forgot Password?</a>
-		
+
 		                </span>
 		            </label>
 		            <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
 		            <hr>
-		            
+
 		            <div class="login-social-link centered">
 		            <p>or you can sign in via your social network</p>
 		                <button class="btn btn-facebook" type="submit"><i class="fa fa-facebook"></i> Facebook</button>
@@ -60,9 +60,9 @@
 		                    Create an account
 		                </a>
 		            </div>
-		
+
 		        </div>
-		
+
 		          <!-- Modal -->
 		          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
 		              <div class="modal-dialog">
@@ -74,7 +74,7 @@
 		                      <div class="modal-body">
 		                          <p>Enter your e-mail address below to reset your password.</p>
 		                          <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
-		
+
 		                      </div>
 		                      <div class="modal-footer">
 		                          <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
@@ -84,9 +84,9 @@
 		              </div>
 		          </div>
 		          <!-- modal -->
-		
-		      </form>	  	
-	  	
+
+		      </form>
+
 	  	</div>
 	  </div>
 
@@ -98,7 +98,7 @@
     <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
     <script type="text/javascript" src="{{ URL::asset('js/jquery.backstretch.min.js') }}"></script>
     <script>
-        $.backstretch("img/login-bg.jpg", {speed: 500});
+        $.backstretch("{{URL::asset('img/suka.png')}}", {speed: 500});
     </script>
 
 

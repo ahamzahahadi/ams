@@ -3,7 +3,7 @@
 <div >
     <div >
       <h4><i class="fa fa-angle-right"></i>Staff List</h4>
-        <table class="table table-bordered table-striped table-hover" id="tableA">
+        <table class="table table-bordered table-striped table-condensed" id="tableA">
           <thead><tr>
             <th>Staff ID</th>
             <th>Name</th>
