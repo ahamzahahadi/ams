@@ -76,13 +76,13 @@
       <div class="col-lg-6">
 
         <?php  $value = DB::table('supplier')->orderBy('supp_name', 'asc')->get();
-               $value2 = DB::table('hwtype')->orderBy('type', 'asc')->pluck('type'); ?>
+               $value2 = DB::table('hwtype')->where('flag', 1)->orderBy('type', 'asc')->pluck('type'); ?>
 
         {!! Form::label('supid', 'Supplier:', ['class' => 'col-sm-2 control-label col-lg-5']) !!}
         <select name='hw_supplier' required class = 'form-control' form="hwform">
             <option value=""> --Choose Supplier-- </option>
             @foreach ($value as $val)
-            <option value="{{ $val-> supp_id}}"> {{ $val->supp_name }} </option>
+            <option value="{{ $val-> id}}"> {{ $val->supp_name }} </option>
             @endforeach
         </select>
 

@@ -25,32 +25,18 @@
                      <ul class="sub">
                          <li><a  href="/staff">Staff List</a></li>
                          <li><a  href="/staff/create">Add Staff</a></li>
-                         <li><a  href="panels.html">Panels</a></li>
                      </ul>
                  </li>
-
                  <li class="sub-menu">
                      <a href="javascript:;" >
                          <i class="fa fa-desktop"></i>
-                         <span>Categories</span>
-                     </a>
-                     <ul class="sub">
-                         <li><a  href="calendar.html">Calendar</a></li>
-                         <li><a  href="gallery.html">Gallery</a></li>
-                         <li><a  href="todo_list.html">Todo List</a></li>
-                     </ul>
-                 </li>
-                 <li class="sub-menu">
-                     <a href="javascript:;" >
-                         <i class="fa fa-book"></i>
                          <span>Asset</span>
                      </a>
                      <ul class="sub">
                          <li><a  href="/hardware">Hardware List</a></li>
                          <li><a  href="/hardware/create">Add Hardware</a></li>
                          <li><a  href="/software">Software List</a></li>
-                         <li><a  href="login.html">Login</a></li>
-                         <li><a  href="lock_screen.html">Lock Screen</a></li>
+                         <li><a  href="/software/create">Add Software</a></li>
                      </ul>
                  </li>
                  <li class="sub-menu">
@@ -60,6 +46,7 @@
                      </a>
                      <ul class="sub">
                          <li><a  href="/supplier">Supplier List</a></li>
+                         <li><a  href="/supplier/create">Add Supplier</a></li>
                      </ul>
                  </li>
                  <li class="sub-menu">

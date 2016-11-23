@@ -54,7 +54,7 @@ class HardwareController extends Controller
       ];
 
       $rulesArr = [
-                  'hw_assetid'=>'required|unique:hardware',
+                  'hw_assetid'=>'unique:hardware',
                   'hw_date_po'=> 'date_format:"Y-m-d"',
                   'hw_datesupp'=> 'date_format:"Y-m-d"',
                   'hw_datefac'=> 'date_format:"Y-m-d"'
@@ -92,11 +92,8 @@ class HardwareController extends Controller
         else{$datefac = $request->input('hw_datefac');}
 
 
-        $supid = $request->input('hw_supplier'); // get sorted index array from form to get index of suppname
-        //$arrSup=DB::table('supplier')->orderBy('supp_name', 'asc')->pluck('supp_id');
-        // get sorted supplier index based on name to get its id
+        $supid = $request->input('hw_supplier');
         $typeIndexNo = $request->input('hw_type');
-      //  $arrType=DB::table('hwtype')->orderBy('type', 'asc')->pluck('type');
 
         $hardware = new Hardware;
         $hardware->hw_assetid = $assetid;
@@ -135,8 +132,7 @@ class HardwareController extends Controller
     public function edit($id)
     {
       $data['hardware'] = Hardware::find($id);
-      $supplier = Supplier::all();
-      return view('hardware.edit',$data)->with('supplier',$supplier);
+      return view('hardware.edit',$data);
     }
 
     /**

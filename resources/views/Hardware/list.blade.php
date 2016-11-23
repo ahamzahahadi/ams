@@ -34,7 +34,7 @@
             @else
             <td>{{ $hw->hw_date_po->format('d/m/Y') }}</td>
             @endif -->
-            <td>{{ DB::table('supplier')->where('supp_id',$hw->hw_supplier)->value('supp_name')}}</td>
+            <td>{{ DB::table('supplier')->where('id',$hw->hw_supplier)->value('supp_name')}}</td>
             <td>{{ $hw->hw_part_no }}</td>
             <td>RM {{ $hw->hw_price }}</td>
             <td>{{ $hw->hw_type }}</td>

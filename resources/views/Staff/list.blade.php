@@ -10,7 +10,7 @@
             <th>E-mail</th>
             <th>Mobile</th>
             <th>Tel no.</th>
-            <th>Title</th>
+            <th>Designation</th>
             <th>Department</th>
             <th>Company</th>
             <th>Location</th>
@@ -29,8 +29,10 @@
             <td>{{ $staff->staff_dept }}</td>
             <td>{{ $staff->staff_company }}</td>
             <td>{{ $staff->staff_officeLocation }}</td>
-           <td><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a></td>
-           <td><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a></td>
+           <td><a href="{{action('StaffController@edit', $staff->id)}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a></td>
+           <td>{!! Form::open(['method' => 'DELETE','route' => ['staff.destroy', $staff->id]]) !!}
+               {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
+               {!! Form::close() !!}</td>
           </tr>  @endforeach
        </tbody>
           </table>

@@ -24,7 +24,7 @@ class CreateSoftwareTable extends Migration
             $table->float('sw_price');
             $table->string('sw_prodkey');
             $table->integer('sw_supplier')->unsigned();
-            $table->foreign('sw_supplier')->references('supp_id')->on('supplier')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('sw_supplier')->references('id')->on('supplier')->onDelete('cascade')->onUpdate('cascade');
             $table->date('sw_datesupp');
             $table->date('sw_datefac');
             $table->timestamps();

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Staff;
 use App\Http\Requests;
 
+use Validator;
+
 class StaffController extends Controller
 {
     /**
@@ -42,7 +44,30 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $sid = $request->input('staff_id');
+      $sname = $request->input('staff_name');
+      $smail = $request->input('staff_mail');
+      $smobile = $request->input('staff_mobile');
+      $stelno = $request->input('staff_telno');
+      $stitle = $request->input('staff_title');
+      $sdept = $request->input('staff_dept');
+      $scompany = $request->input('staff_company');
+      $sol = $request->input('staff_officeLocation');
+
+
+        $staff = new Staff;
+        $staff->staff_id = $sid;
+        $staff->staff_name = $sname;
+        $staff->staff_mail = $smail;
+        $staff->staff_mobile = $smobile;
+        $staff->staff_telno = $stelno;
+        $staff->staff_title = $stitle;
+        $staff->staff_dept = $sdept;
+        $staff->staff_company = $scompany;
+        $staff->staff_officeLocation = $sol;
+        $staff->save();
+
+        return redirect()->action('StaffController@index');
     }
 
     /**
@@ -64,7 +89,8 @@ class StaffController extends Controller
      */
     public function edit($id)
     {
-        //
+      $data['staff'] = Staff::find($id);
+      return view('staff.edit',$data);
     }
 
     /**
@@ -76,7 +102,30 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $sid = $request->input('staff_id');
+      $sname = $request->input('staff_name');
+      $smail = $request->input('staff_mail');
+      $smobile = $request->input('staff_mobile');
+      $stelno = $request->input('staff_telno');
+      $stitle = $request->input('staff_title');
+      $sdept = $request->input('staff_dept');
+      $scompany = $request->input('staff_company');
+      $sol = $request->input('staff_officeLocation');
+
+
+      $staff = Staff::find($id);
+      $staff->staff_id = $sid;
+      $staff->staff_name = $sname;
+      $staff->staff_mail = $smail;
+      $staff->staff_mobile = $smobile;
+      $staff->staff_telno = $stelno;
+      $staff->staff_title = $stitle;
+      $staff->staff_dept = $sdept;
+      $staff->staff_company = $scompany;
+      $staff->staff_officeLocation = $sol;
+      $staff->save();
+
+      return redirect()->action('StaffController@index');
     }
 
     /**
@@ -87,6 +136,9 @@ class StaffController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $recToDelete = Staff::find($id);
+      $recToDelete->delete();
+
+      return redirect()->action('StaffController@index');
     }
 }

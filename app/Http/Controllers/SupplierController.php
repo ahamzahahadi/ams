@@ -31,7 +31,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        //
+        return view('supplier.form');
     }
 
     /**
@@ -42,7 +42,17 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $suname = $request->input('supp_name');
+        $suaddress = $request->input('supp_address');
+        $sucontact = $request->input('supp_contact');
+
+        $supp = new Supplier;
+        $supp->supp_name = $suname;
+        $supp->supp_address = $suaddress;
+        $supp->supp_contact = $sucontact;
+        $supp->save();
+
+        return redirect()->action('SupplierController@index');
     }
 
     /**
@@ -64,7 +74,8 @@ class SupplierController extends Controller
      */
     public function edit($id)
     {
-        //
+      $data['supplier'] = Supplier::find($id);
+      return view('supplier.edit',$data);
     }
 
     /**
@@ -76,7 +87,17 @@ class SupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $suname = $request->input('supp_name');
+      $suaddress = $request->input('supp_address');
+      $sucontact = $request->input('supp_contact');
+
+      $supp = Supplier::find($id);
+      $supp->supp_name = $suname;
+      $supp->supp_address = $suaddress;
+      $supp->supp_contact = $sucontact;
+      $supp->save();
+
+      return redirect()->action('SupplierController@index');
     }
 
     /**
@@ -87,6 +108,9 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $recToDelete = Supplier::find($id);
+      $recToDelete->delete();
+
+      return redirect()->action('SupplierController@index');
     }
 }

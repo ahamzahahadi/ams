@@ -20,8 +20,8 @@ class CreateHardwareTable extends Migration
             $table->string('hw_model');
             $table->string('hw_po_no');
             $table->date('hw_date_po');
-            $table->integer('hw_supplier')->unsigned(); 
-            $table->foreign('hw_supplier')->references('supp_id')->on('supplier')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('hw_supplier')->unsigned();
+            $table->foreign('hw_supplier')->references('id')->on('supplier')->onDelete('cascade')->onUpdate('cascade');
             $table->string('hw_part_no');
             $table->float('hw_price');
             $table->string('hw_type');

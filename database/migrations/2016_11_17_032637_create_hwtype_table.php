@@ -16,6 +16,7 @@ class CreateHwtypeTable extends Migration
         Schema::create('hwtype', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type');
+            $table->timestamps();
         });
     }
 

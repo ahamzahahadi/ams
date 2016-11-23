@@ -16,15 +16,17 @@
           <tbody>
                 @foreach ($supplierList as $sp)
             <tr>
-            <td>{{ $sp->supp_id }}</td>
+            <td>{{ $sp->id }}</td>
             <td>{{ $sp->supp_name }}</td>
             <td>{{ $sp->supp_address }}</td>
             <td>{{ $sp->supp_contact }}</td>
-           <td><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a></td>
-           <td><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a></td>
-          </tr>  @endforeach
-       </tbody>
-          </table>
+            <td><a href="{{action('SupplierController@edit', $sp->id)}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a></td>
+            <td>{!! Form::open(['method' => 'DELETE','route' => ['supplier.destroy', $sp->id]]) !!}
+                {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
+                {!! Form::close() !!}</td>
+            </tr>  @endforeach
+          </tbody>
+        </table>
       </div><!-- /content-panel -->
    </div><!-- /col-lg-4 -->
 </div><!-- /row -->

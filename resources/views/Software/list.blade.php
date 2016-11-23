@@ -32,10 +32,10 @@
           <td> {{ $sw->sw_type}} </td>
           <td> RM {{ $sw->sw_price}} </td>
           <td> {{ $sw->sw_prodkey}} </td>
-          <td>{{ DB::table('supplier')->where('supp_id',$sw->sw_supplier)->value('supp_name')}}</td>
+          <td>{{ DB::table('supplier')->where('id',$sw->sw_supplier)->value('supp_name')}}</td>
           <td> {{ $sw->sw_datesupp}} </td>
           <td> {{ $sw->sw_datefac}} </td>
-          <td><a href="{{action('HardwareController@index', $sw->id)}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a></td>
+          <td><a href="{{action('SoftwareController@edit', $sw->id)}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a></td>
           <td>
             {!! Form::open(['method' => 'DELETE','route' => ['software.destroy', $sw->id]]) !!}
             {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
