@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHwtypeTable extends Migration
+class CreateHwrecordTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateHwtypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('hwtype', function (Blueprint $table) {
+        Schema::create('hwrecord', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type');
-            $table->integer('flag');
+            $table->string('fk_assetid'); //not fk cuz its not unique (54 duplicates)
+            $table->string('remark');
+            $table->string('status');
+            $table->string('current_userid');
+            $table->foreign('current_userid')->references('staff_id')->on('staff');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateHwtypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hwtype');
+        Schema::dropIfExists('hwrecord');
     }
 }

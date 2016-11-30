@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c1b13b20dd25bb56e9bcf74121273074",
-    "content-hash": "ae8dcbdd850ad2415ecc248e812ae3f7",
+    "hash": "01a6e7579c5901ee58a855488bf2e6c4",
+    "content-hash": "c5431528fd6e1ec4e599f48a1de67154",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1030,6 +1030,53 @@
                 "uuid"
             ],
             "time": "2016-10-02 15:51:17"
+        },
+        {
+            "name": "raymondwilkinson/sweetalert-laravel",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RaymondWilkinson/Sweetalert-Laravel.git",
+                "reference": "bbc87b9fd8a9cb2bcd8f8de6cd4b342ebc050332"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RaymondWilkinson/Sweetalert-Laravel/zipball/bbc87b9fd8a9cb2bcd8f8de6cd4b342ebc050332",
+                "reference": "bbc87b9fd8a9cb2bcd8f8de6cd4b342ebc050332",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "v1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RaymondWilkinson\\SweetalertLaravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raymond Wilkinson",
+                    "email": "eleray13@hotmail.com"
+                }
+            ],
+            "description": "Simple way to flash sweetalert messages to the screen for laravel.",
+            "keywords": [
+                "alerts",
+                "flash messages",
+                "laravel",
+                "sweetalert"
+            ],
+            "time": "2016-06-21 07:58:24"
         },
         {
             "name": "swiftmailer/swiftmailer",

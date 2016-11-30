@@ -107,7 +107,7 @@
       </div>
     </div>
     {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
-    <a href="{{action('HardwareController@index')}}" class="btn btn-default">Cancel</a>
+    <a href="{{URL::previous()}}" class="btn btn-default">Cancel</a>
     {!! Form::close() !!}
 
     @stop

@@ -28,14 +28,22 @@ Route::get('/getval', function(){
 	return view('getval');
 });
 
+Route::get('/testbtn', function(){
+	return view('testbtn');
+});
+
 Route::get('/addHardware', function() {
 	return view('hardware.form');
 });
 
+Route::get('/record/form/{id}',['uses' => 'RecordController@recform']);
+Route::get('/record/returnform/{id}',['uses' => 'RecordController@returnasset']);
+Route::post('record/returned', ['uses' => 'RecordController@returnedit']);
+
 Route::group(['middleware' => 'auth'], function(){
 	Route::resource('hardware', 'HardwareController');
-	Route::resource('book', 'BookController');
 	Route::resource('supplier', 'SupplierController');
 	Route::resource('staff', 'StaffController');
 	Route::resource('software', 'SoftwareController');
+	Route::resource('record', 'RecordController');
 });

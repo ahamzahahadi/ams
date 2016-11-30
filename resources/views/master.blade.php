@@ -19,8 +19,14 @@
     <link href="{{ URL::asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('css/style-responsive.css') }}" rel="stylesheet">
 
+    <!-- SweetAlert -->
+    <link href="{{ URL::asset('css/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <script src="{{ URL::asset('js/sweetalert.min.js') }}"></script>
+    <script src="{{ URL::asset('js/swag.js') }}"></script>
+    @include('Alerts::sweetalerts')
     <!-- JQuery JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -28,15 +34,14 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-   <!-- src="{{ URL::asset('aaa/aaaa') }}"-->
   </head>
 
   <body>
-    @include('mainmain.topbar')
-    @include('mainmain.sidebar')
+
 
   <section id="container" >
-
+    @include('mainmain.topbar')
+    @include('mainmain.sidebar')
 
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT

@@ -1,5 +1,7 @@
 @extends('master')
 @section('content')
+
+@include('Alerts::sweetalerts')
 <div >
   <div >
     <div >
@@ -16,15 +18,17 @@
             <th>Part No.</th>
             <th>Price</th>
             <th>Type</th>
+            <th>Status</th>
             <!-- <th>Date Supplied</th>
             <th>Date Transfered to Facility</th> -->
+            <th></th>
             <th></th>
             <th></th>
           </tr></thead>
           <tbody>
                 @foreach ($allHardware as $hw)
             <tr>
-            <td>{{ $hw->id}}
+            <td>{{ $hw->id}} </td>
             <td>{{ $hw->hw_assetid }}</td>
             <td>{{ $hw->hw_serialno }}</td>
             <td>{{ $hw->hw_model }}</td>
@@ -38,13 +42,22 @@
             <td>{{ $hw->hw_part_no }}</td>
             <td>RM {{ $hw->hw_price }}</td>
             <td>{{ $hw->hw_type }}</td>
+            @if($hw->hw_status == '1')
+            <td><span class="badge bg-warning">Assigned</span></td>
+            @else
+            <td><span class="badge bg-info">Available</span></td>
+            @endif
             <!-- <td>{{ $hw->hw_datesupp }}</td>
             <td>{{ $hw->hw_datefac }}</td> -->
+           <td><a href="{{action('RecordController@show', $hw->id)}}" class="btn btn-theme"><i class="fa fa-info"></i> Info</button></a></td>
            <td><a href="{{action('HardwareController@edit', $hw->id)}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a></td>
            <td>
-             {!! Form::open(['method' => 'DELETE','route' => ['hardware.destroy', $hw->id]]) !!}
-             {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
-             {!! Form::close() !!} </td>
+             {!! Form::open(['method' => 'DELETE','id'=>'deleteform','route' => ['hardware.destroy', $hw->id]]) !!}
+             {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm', 'id' =>'delete']) !!}
+             {!! Form::close() !!}
+             <!-- <form "{{action('HardwareController@destroy', $hw->id)}}" method = "DELETE" id="deleteform"> -->
+
+           </td>
           </tr>  @endforeach
        </tbody>
           </table>

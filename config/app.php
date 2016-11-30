@@ -167,7 +167,7 @@ return [
          * Package Service Providers...
          */
 
-        //
+        RaymondWilkinson\SweetalertLaravel\AlertServiceProvider::class,
 
         /*
          * Application Service Providers...

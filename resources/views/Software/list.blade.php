@@ -6,16 +6,16 @@
   <table class="table table-bordered table-striped table-condensed" id="tableA">
     <thead>
       <tr><th>#</th>
-          <th>Asset ID </th>
+          <th>Asset ID</th>
           <th>Serial Number</th>
-          <th>PO Number </th>
-          <th>PO Date </th>
-          <th>Name </th>
-          <th>Type </th>
-          <th>Price </th>
-          <th>Product Key </th>
-          <th>Supplier </th>
-          <th>Date Supplied </th>
+          <th>PO Number</th>
+          <th>PO Date</th>
+          <th>Software Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Product Key</th>
+          <th>Supplier</th>
+          <th>Date Supplied</th>
           <th>Date Transfered to Facility</th>
           <th></th>
           <th></th>

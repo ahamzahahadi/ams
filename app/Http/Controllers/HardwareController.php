@@ -9,6 +9,7 @@ use App\Hardware;
 use App\Supplier;
 
 use Validator;
+use Session;
 
 
 class HardwareController extends Controller
@@ -109,6 +110,7 @@ class HardwareController extends Controller
         $hardware->hw_type = $typeIndexNo;
         $hardware->save();
 
+        flash()->success('Success!', 'New record has been added.');
         return redirect()->action('HardwareController@index');
     }
 
@@ -205,6 +207,7 @@ class HardwareController extends Controller
       $hardware->hw_type = $typeIndexNo;
       $hardware->save();
 
+      flash()->success('Success!', 'Record successfully updated.');
       return redirect()->action('HardwareController@index');
     }
 
@@ -214,12 +217,13 @@ class HardwareController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function destroy($id)
     {
-      $recToDelete = Hardware::find($id);
-      $recToDelete->delete();
-
-      return redirect()->action('HardwareController@index');
+      // Session::flash('deletor', 'deleteMe');
+       $recToDelete = Hardware::find($id);
+       $recToDelete->delete();
+       return redirect()->action('HardwareController@index');
     }
 
 }
