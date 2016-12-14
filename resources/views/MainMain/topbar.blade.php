@@ -7,7 +7,7 @@ TOP BAR CONTENT & NOTIFICATIONS
             <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
         </div>
       <!--logo start-->
-      <a href="index.html" class="logo"><b>ASSET MANAGEMENT SYSTEM</b></a>
+      <a href="/" class="logo"><b>ASSET MANAGEMENT SYSTEM</b></a>
       <!--logo end-->
       <div class="nav notify-row" id="top_menu">
           <!--  notification start -->
@@ -130,8 +130,8 @@ TOP BAR CONTENT & NOTIFICATIONS
           <li>
               <a href="{{ url('/logout') }}"
                   onclick="event.preventDefault();
-                           document.getElementById('logout-form').submit();">
-                  Logout
+                           document.getElementById('logout-form').submit();" class="logout">
+                           <span class="glyphicon glyphicon-off"> Logout</span>
               </a>
 
               <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">

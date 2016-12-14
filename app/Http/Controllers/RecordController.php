@@ -44,7 +44,11 @@ class RecordController extends Controller
     public function returnedit(Request $request){
       $id = $request->input('fk_assetid');
       $location = $request->input('location');
+
+      $returndate = DB::table('hwrecord')->where('fk_assetid', $id)->orderBy('created_at', 'desc')->value('id'); //get date retu
+
       DB::table('hardware')->where('hw_assetid', $id)->update(['hw_status' => 0, 'hw_location'=> $location]);
+      DB::table('hwrecord')->where('id', $returndate)->update(['updated_at' => Carbon::now(), 'status' => 2]);
 
       $addrec = new Record;
       $addrec->fk_assetid = $id;
@@ -68,19 +72,18 @@ class RecordController extends Controller
         $assetid = $request->input('fk_assetid');
         $userid = $request->input('current_userid');
         $remark = $request->input('remark');
-        $status = $request->input('status');
 
         $record = new Record;
         $record->fk_assetid = $assetid;
         $record->current_userid = $userid;
         $record->remark = $remark;
-        $record->status = $status;
+        $record->status = 1;
 
         DB::table('hardware')->where('hw_assetid', $assetid)->update(['hw_status' => 1]);
         flash()->success('Success!', 'Asset requisition has been recorded.');
         sleep(0.1);
         $record->save();
-        return redirect()->action('HardwareController@index');
+        return redirect()->action('RecordController@show', $request->input('id'));
     }
 
     /**

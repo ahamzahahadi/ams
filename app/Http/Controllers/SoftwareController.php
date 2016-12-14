@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Software;
+use Validator;
+use Session;
 
 class SoftwareController extends Controller
 {
@@ -13,35 +15,37 @@ class SoftwareController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $swList = Software::all();
         return view('software.list', ['swList' => $swList]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('software.form');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+      $messages = ['required' => 'This field must be FILLED.',
+                   'unique' => 'Duplicated asset id detected.'
+      ];
+
+      $rulesArr = [
+                  'sw_assetid'=>'unique:software',
+                  'sw_date_po'=> 'date_format:"Y-m-d"',
+                  'sw_datesupp'=> 'date_format:"Y-m-d"',
+                  'sw_datefac'=> 'date_format:"Y-m-d"'
+      ];
+
+      $validation = Validator::make($request->all(),$rulesArr,$messages);
+
+      if($validation->fails()){
+          return redirect()->back()->withErrors($validation)->withInput($request->all());
+      }
+
       $assetid = $request->input('sw_assetid');
       $serialno = $request->input('sw_serialno');
       $model = $request->input('sw_model');
@@ -85,41 +89,43 @@ class SoftwareController extends Controller
       $software->sw_type = $typeIndexNo;
       $software->save();
 
+      flash()->success('Success!', 'New record has been added.');
       return redirect()->action('SoftwareController@index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
       $data['software'] = Software::find($id);
       return view('software.edit',$data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
+      $messages = ['required' => 'This field must be FILLED.',
+                   'unique' => 'Duplicated asset id detected.'
+      ];
+
+      $rulesArr = [
+                  'sw_assetid'=>'required',
+                  'sw_date_po'=> 'date_format:"Y-m-d"',
+                  'sw_datesupp'=> 'date_format:"Y-m-d"',
+                  'sw_datefac'=> 'date_format:"Y-m-d"'
+      ];
+
+      $validation = Validator::make($request->all(),$rulesArr,$messages);
+
+      if($validation->fails()){
+          return redirect()->back()->withErrors($validation)->withInput($request->all());
+      }
+
       $assetid = $request->input('sw_assetid');
       $serialno = $request->input('sw_serialno');
       $model = $request->input('sw_model');
@@ -163,20 +169,17 @@ class SoftwareController extends Controller
       $software->sw_type = $typeIndexNo;
       $software->save();
 
+      flash()->success('Success!', 'Update successful :D');
       return redirect()->action('SoftwareController@index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
       $recToDelete = Software::find($id);
       $recToDelete->delete();
 
+      flash()->success('Success!', 'Deletion Successful.');
       return redirect()->action('SoftwareController@index');
     }
 }

@@ -52,7 +52,7 @@ class SupplierController extends Controller
         $supp->supp_contact = $sucontact;
         $supp->save();
 
-        return redirect()->action('SupplierController@index');
+        return redirect()->back();
     }
 
     /**

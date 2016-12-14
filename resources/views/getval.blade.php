@@ -1,2 +1,12 @@
-{{ DB::table('supplier')->where('id',2)->value('supp_name')}}
-{{DB::table('hardware')->where('hw_assetid', 'recordcontrollertest')->update(['hw_status' => 0, 'hw_location'=> 'dalam kasut'])}}
+<?php     $getFirstSwAvailble = DB::table('software')
+                          ->where('sw_model', 'Microsoft AMES')
+                          ->where('sw_status', 0)
+                          ->first();
+
+ ?>
+@if($getFirstSwAvailble == null)
+kosong
+@else
+{{print_r($assetid)}}
+{{die()}}
+@endif

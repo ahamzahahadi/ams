@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHwrecordTable extends Migration
+class CreateLoanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateHwrecordTable extends Migration
      */
     public function up()
     {
-        Schema::create('hwrecord', function (Blueprint $table) {
+        Schema::create('loan', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('fk_assetid'); //not fk cuz its not unique (54 duplicates)
-            $table->string('remark');
-            $table->string('status');
-            $table->string('current_userid');
-            $table->foreign('current_userid')->references('staff_id')->on('staff');
+            $table->string('item');
+            $table->string('borrower');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateHwrecordTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hwrecord');
+        Schema::dropIfExists('loan');
     }
 }

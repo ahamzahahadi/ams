@@ -1,5 +1,4 @@
 @extends('master')
-
 @section('content')
 
 <h1>Register New Hardware</h1>
@@ -74,7 +73,6 @@
     @endif
 
       <div class="col-lg-6">
-
         <?php  $value = DB::table('supplier')->orderBy('supp_name', 'asc')->get();
                $value2 = DB::table('hwtype')->where('flag', 1)->orderBy('type', 'asc')->pluck('type'); ?>
 
@@ -94,22 +92,24 @@
             <option> {{ $val2 }} </option>
             @endforeach
         </select>
+      </div>
 
-      </div>
       <div class="col-lg-6">
-        <div class="row">
-        Supplier not listed? <br>
-      	<button type="button" class="btn btn-round btn-info">Add Supplier</button>
-        </div>
-        <div class="row">
-        <br>New asset type? <br>
-        <button type="button" class="btn btn-round btn-info">Add Asset Type</button>
-        </div>
+          <div class="row">
+            Supplier not listed? <br>
+            <button class="btn btn-round btn-info" data-toggle="modal" data-target="#myModal1">Add Supplier</button>
+          </div>
+          <div class="row">
+            <br>New asset type? <br>
+            <button class="btn btn-round btn-info" data-toggle="modal" data-target="#myModal2">Add Asset Type</button>
+          </div>
       </div>
+
   </div>
 </div>
 {!! Form::submit('Add', ['class' => 'btn btn-primary']) !!}
 <a href="{{action('HardwareController@index')}}" class="btn btn-default">Cancel</a>
 {!! Form::close() !!}
-
+@include('modal.addsupplier')
+@include('modal.addassettype')
 @stop

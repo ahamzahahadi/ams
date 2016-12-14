@@ -18,12 +18,6 @@ class HardwareController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
 
     public function index()
     {
@@ -32,22 +26,11 @@ class HardwareController extends Controller
         return view('hardware.list', ['allHardware' => $allHardware]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
           return view('hardware.form');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
       $messages = ['required' => 'This field must be FILLED.',
@@ -55,7 +38,7 @@ class HardwareController extends Controller
       ];
 
       $rulesArr = [
-                  'hw_assetid'=>'unique:hardware',
+                  'hw_assetid'=>'unique:hardware|required',
                   'hw_date_po'=> 'date_format:"Y-m-d"',
                   'hw_datesupp'=> 'date_format:"Y-m-d"',
                   'hw_datefac'=> 'date_format:"Y-m-d"'
@@ -114,36 +97,17 @@ class HardwareController extends Controller
         return redirect()->action('HardwareController@index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
       $data['hardware'] = Hardware::find($id);
       return view('hardware.edit',$data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
       $messages = ['required' => 'This field must be FILLED.',
@@ -151,7 +115,7 @@ class HardwareController extends Controller
       ];
 
       $rulesArr = [
-                  'hw_assetid'=>'required|unique:hardware',
+                  'hw_assetid'=>'required',
                   'hw_date_po'=> 'date_format:"Y-m-d"',
                   'hw_datesupp'=> 'date_format:"Y-m-d"',
                   'hw_datefac'=> 'date_format:"Y-m-d"'
@@ -210,13 +174,6 @@ class HardwareController extends Controller
       flash()->success('Success!', 'Record successfully updated.');
       return redirect()->action('HardwareController@index');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
 
     public function destroy($id)
     {

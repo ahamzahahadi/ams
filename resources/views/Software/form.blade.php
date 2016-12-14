@@ -99,12 +99,12 @@
     </div>
     <div class="col-lg-6">
       <div class="row">
-      Supplier not listed? <br>
-      <button type="button" class="btn btn-round btn-info">Add Supplier</button>
+        Supplier not listed? <br>
+        <button class="btn btn-round btn-info" data-toggle="modal" data-target="#myModal1">Add Supplier</button>
       </div>
       <div class="row">
-      <br>New Software Category? <br>
-      <button type="button" class="btn btn-round btn-info">Add Software Category</button>
+        <br>New Software Category? <br>
+            <button class="btn btn-round btn-info" data-toggle="modal" data-target="#myModal2">Add Software Category</button>
       </div>
     </div>
 
@@ -113,4 +113,6 @@
 {!! Form::submit('Add', ['class' => 'btn btn-primary']) !!}
 <a href="{{action('SoftwareController@index')}}" class="btn btn-default">Cancel</a>
 {!! Form::close() !!}
+@include('modal.addsupplier')
+@include('modal.addswtype')
 @stop

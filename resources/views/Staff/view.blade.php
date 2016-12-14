@@ -1,0 +1,69 @@
+@extends('master')
+@section('content')
+<h1>{{$staff->staff_name}} - {{$staff->staff_id}}
+<div class="btn-group">
+  <button type="button" class="btn btn-theme dropdown-toggle" data-toggle="dropdown" style="display:inline-block">
+    Action <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li><a href="#">Assign hardware</a></li>
+    <li><a href="{{action('StaffController@edit', $staff->id)}}">Edit Staff Information</a></li>
+
+    {!! Form::open(['method' => 'DELETE','route' => ['staff.destroy', $staff->id],'style'=>'display:inline-block','id'=>'deleteform']) !!}
+    {!! Form::close() !!}
+    <li><a href="#"><button value="Delete" id="delete" class="btn btn-danger btn-sm">Resign</button></a></li>
+  </ul>
+</div></h1>
+<hr>
+
+<div class="showback">
+  <h3>Staff Details</h3>
+  <table class="table table-condensed table-bordered">
+    <tr><td><b>Name</b></td><td>{{$staff->staff_name}}</td></tr>
+    <tr><td><b>Staff ID</b></td><td>{{$staff->staff_id}}</td></tr>
+    <tr><td><b>Email</b></td><td>{{$staff->staff_mail}}</td></tr>
+    <tr><td><b>Mobile</b></td><td>{{$staff->staff_mobile}}</td></tr>
+    <tr><td><b>Telephone no.</b></td><td>{{$staff->staff_telno}}</td></tr>
+    <tr><td><b>Department</b></td><td>{{$staff->staff_dept}}</td></tr>
+    <tr><td><b>Designation</b></td><td>{{$staff->staff_title}}</td></tr>
+    <tr><td><b>Company</b></td><td>{{$staff->staff_company}}</td></tr>
+  </table>
+</div>
+
+<?php $hwrec = DB::table('hwrecord')->where('current_userid', $staff->staff_id)->get()?>
+@if($hwrec->isEmpty() )
+<div class="alert alert-warning"><b>Note:</b> This staff have not been assigned with any asset. </div>
+@else
+<div class="showback">
+  <h3>Hardware Usage History</h3>
+
+
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th> Ref# </th>
+        <th> Hardware Model </th>
+        <th> Asset ID </th>
+        <th> Date Taken </th>
+        <th> Date Returned </th>
+      </tr>
+    </thead>
+        @foreach($hwrec as $recku)
+      <tr>
+        <?php $idhw = DB::table('hardware')->where('hw_assetid', $recku->fk_assetid)->first() ?>
+        <td>{{$recku->id}}</td>
+        <td>{{$idhw->hw_model}}</td>
+        <td>{{$recku->fk_assetid}}</td>
+        <td>{{date('jS F Y', strtotime($recku->created_at))}}</td>
+        @if(($recku->created_at == $recku->updated_at) && $recku->status == 1)
+          <td><a href="{{action('RecordController@show', $idhw->id)}}">In Use</a></td>
+        @else
+          <td>{{date('jS F Y', strtotime($recku->updated_at))}}</td>
+        @endif
+      </tr>
+        @endforeach
+  </table>
+</div>
+@endif
+
+@stop

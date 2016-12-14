@@ -9,7 +9,7 @@
   {!! form::label('assetid', 'Asset ID:', ['class'=> 'control-label']) !!}
   {!! form::text('fk_assetid', "$hardware->hw_assetid", ['class'=> 'form-control', 'readonly'=>'readonly','value'=>"$hardware->hw_assetid" ]  )!!}
 
-  {!! form::label('assignto','Staff ID:', ['class'=> 'control-label'] )!!}
+  {!! form::label('assignto','For Staff ID:', ['class'=> 'control-label'] )!!}
   {!! Form::text('current_userid', null, ['class' => 'form-control']) !!}
   <span class="help-block"><sup>&nbsp&nbsp&nbsp&nbspEnter staff ID to be assigned to.</sup></span>
 
@@ -19,7 +19,8 @@
   {!! form::label('remark','Remarks:', ['class'=> 'control-label'] )!!}
   {!! Form::textarea('remark', null, ['class' => 'form-control']) !!}
 
-  {!! Form::hidden('status', '1') !!}
+  {!! Form::hidden('id', "$hardware->id") !!}
+
 
 </div>
 {!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
