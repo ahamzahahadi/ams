@@ -19,6 +19,9 @@ Route::get('/home', 'HomeController@index');
 /*Route::get('/', function () {
     return view('welcome');
 });*/
+Route::get('/error', function(){
+	return view('dberror');
+});
 
 Route::get('login', function() {
 	return view('login');
@@ -47,6 +50,7 @@ Route::post('swrecord/uninstalled', ['uses' => 'SwRecordController@uninstall']);
 Route::get('/swrecord/uninstalllist/{id}', ['uses' => 'SwRecordController@uninstalllist']);
 
 Route::post('category', ['uses' => 'CategoryController@store']);
+Route::post('loan', ['uses' => 'LoanController@store']);
 
 Route::group(['middleware' => 'auth'], function(){
 	Route::resource('hardware', 'HardwareController');

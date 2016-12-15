@@ -69,6 +69,11 @@ $(function() {
 
 @if($hardware->hw_status== '1')
   <?php $latestuser = DB::table('hwrecord')->where('fk_assetid', "$hardware->hw_assetid")->orderBy('created_at', 'desc')->first(); //get record of latest user
+        if($latestuser == null){
+          header("Location: /error");
+          exit();
+        }
+
         $userstaffdb = DB::table('staff')->where('staff_id', "$latestuser->current_userid")->first();?>
   <h2>Current Status: <button type="button" class="btn btn-round btn-warning">Assigned</button></h2>
   <div class="showback">

@@ -8,7 +8,7 @@
     </div>
     <div class="modal-body">
       <div class="form-group">
-        {!! Form::open(array('action' => 'CategoryController@store')) !!}
+        {!! Form::open(array('action' => 'LoanController@store')) !!}
 
         {!! Form::label('item', 'Item loaned:', ['class' => 'control-label']) !!}
         {!! Form::text('item', null, ['class' => 'form-control', 'required' => 'required']) !!}

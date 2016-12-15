@@ -16,25 +16,28 @@
                 <div class="col-md-12">
                     <section class="task-panel tasks-widget">
                   <div class="panel-heading">
-                        <div class="pull-left"><h5><i class="fa fa-pencil-square-o"></i>  Quick Loan Logger </h5></div>
+                        <div class="pull-left"><h5><i class="fa fa-pencil-square-o"></i>  Tulis barang pinjam disini </h5></div>
                         <br>
                   </div>
                         <div class="panel-body">
                             <div class="task-content">
                                 <ul id="sortable" class="task-list">
+                                  <?php $rekodpeminjam = DB::table('loan')->get(); ?>
+                                  @foreach($rekodpeminjam as $peminjam)
                                     <li class="list-primary">
                                         <div class="task-checkbox">
                                             <input type="checkbox" class="list-child" value=""  />
                                         </div>
                                         <div class="task-title">
-                                            <span class="task-title-sp">Dashgum - Admin Panel Theme</span>
-                                            <span class="badge bg-theme">Done</span>
+                                            <span class="badge bg-theme">Yesterday</span>
+                                            <span class="task-title-sp">{{$peminjam->borrower}} borrowed {{$peminjam->item}}</span>
                                             <div class="pull-right hidden-phone">
                                                 <button class="btn btn-success btn-xs fa fa-check"></button>
                                                 <button class="btn btn-danger btn-xs fa fa-trash-o"></button>
                                             </div>
                                         </div>
                                     </li>
+                                  @endforeach
                                 </ul>
                             </div>
                             <div class=" add-task-row">
