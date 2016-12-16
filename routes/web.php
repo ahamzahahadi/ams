@@ -51,6 +51,7 @@ Route::get('/swrecord/uninstalllist/{id}', ['uses' => 'SwRecordController@uninst
 
 Route::post('category', ['uses' => 'CategoryController@store']);
 Route::post('loan', ['uses' => 'LoanController@store']);
+Route::delete('/loan/{loan}', ['uses' => 'LoanController@padam', 'as' => 'loan.padam']);
 
 Route::group(['middleware' => 'auth'], function(){
 	Route::resource('hardware', 'HardwareController');

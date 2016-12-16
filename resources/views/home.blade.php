@@ -32,8 +32,9 @@
                                             <span class="badge bg-theme">Yesterday</span>
                                             <span class="task-title-sp">{{$peminjam->borrower}} borrowed {{$peminjam->item}}</span>
                                             <div class="pull-right hidden-phone">
-                                                <button class="btn btn-success btn-xs fa fa-check"></button>
-                                                <button class="btn btn-danger btn-xs fa fa-trash-o"></button>
+                                                {!! Form::open(['method' => 'DELETE','route' => ['loan.padam', $peminjam->id]]) !!}
+                                                {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger', 'class'=>'fa fa-trash-o'] )  !!}
+                                                {!! Form::close() !!}
                                             </div>
                                         </div>
                                     </li>

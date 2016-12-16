@@ -11,8 +11,8 @@ Premium: http://www.gridgum.com
 
 /* BASIC THEME CONFIGURATION */
 body {
-    color: #797979;
-	background: #f2f2f2;
+    color: #17120c;   /* black tulisan */
+	background: #f2f2f2; /* white */
     font-family: 'Ruda', sans-serif;
     padding: 0px !important;
     margin: 0px !important;
@@ -29,11 +29,11 @@ a, a:hover, a:focus {
 }
 ::selection {
 
-    background: #68dff0;
+    background: #68dff0; /* turqoise color */
     color: #fff;
 }
 ::-moz-selection {
-    background: #68dff0;
+    background: #68dff0; /* turqoise color */
     color: #fff;
 }
 
@@ -44,7 +44,7 @@ a, a:hover, a:focus {
 
 /* Bootstrap Modifications */
 .modal-header {
-	background: #13144f;
+	background: #13144f; /* top bar blue heavy color */
 }
 
 .modal-title {
@@ -59,11 +59,11 @@ a, a:hover, a:focus {
 .accordion-heading .accordion-toggle {
 	display: block;
 	cursor: pointer;
-	border-top: 1px solid #F5F5F5;
+	border-top: 1px solid #F5F5F5; /*white */
 	padding: 5px 0px;
 	line-height: 28.75px;
 	text-transform: uppercase;
-	color: #1a1a1a;
+	color: #1a1a1a;   /* black light */
 	background-color: #ffffff;
 	outline: none !important;
 	text-decoration: none;
@@ -74,26 +74,26 @@ a, a:hover, a:focus {
 /*Theme Backgrounds*/
 
 .bg-theme {
-	background-color: #68dff0;
+	background-color: #e51d28; /* merah unknown */
 }
 
 .bg-theme02 {
-	background-color: #ac92ec;
+	background-color: #ac92ec; /* purple light */
 }
 
 .bg-theme03 {
-  background-color: #48cfad;
+  background-color: #48cfad; /* turqoise */
 }
 
 .bg-theme04 {
-  background-color: #ed5565;
+  background-color: #ed5565; /* red unknown 2 */
 }
 /*Theme Buttons*/
 
 .btn-theme {
   color: #fff;
-  background-color: #68dff0;
-  border-color: #48bcb4;
+  background-color: #68dff0; /* turqoise */
+  border-color: #48bcb4;   /* turqoise dark a bit */
 }
 .btn-theme:hover,
 .btn-theme:focus,
@@ -101,14 +101,14 @@ a, a:hover, a:focus {
 .btn-theme.active,
 .open .dropdown-toggle.btn-theme {
   color: #fff;
-  background-color: #48bcb4;
-  border-color: #48bcb4;
+  background-color: #48bcb4; /* turqoise dark a bit */
+  border-color: #48bcb4; /* turqoise dark a bit */
 }
 
 .btn-theme02 {
   color: #fff;
-  background-color: #ac92ec;
-  border-color: #967adc;
+  background-color: #ac92ec; /* light purple */
+  border-color: #967adc; /* light purple 2 */
 }
 .btn-theme02:hover,
 .btn-theme02:focus,
@@ -206,22 +206,22 @@ hr {
 /*Exclusive Theme Colors Configuration*/
 
 .label-theme {
-	background-color: #68dff0;
+	background-color: #68dff0; /* turqoise */
 }
 
 .bg-theme {
-	background-color: #68dff0;
+	background-color: #68dff0; /* turqoise */
 }
 
 ul.top-menu > li > .logout {
-	color: #f2f2f2;
+	color: #f9fffe; /* color white icon word logout top */
 	font-size: 12px;
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
-	border: 1px solid #64c3c2 !important;
+	border: 1px solid #f9fffe !important; /* #68dff0 */
 	padding: 5px 15px;
 	margin-right: 15px;
-	background: #68dff0;
+	background: #990000; /* background kotak logout */
 	margin-top: 15px;
 }
 
@@ -232,11 +232,11 @@ ul.top-menu > li > .logout {
     width: 210px;
     height: 100%;
     position: fixed;
-    background: #424a5d;
+    background: #424a5d; /* #4b6789 background color sidebar kiri */
 }
 
 #sidebar h5 {
-	color: #f2f2f2;
+	color: #ffffff;
 	font-weight: 700;
 }
 
@@ -295,7 +295,7 @@ ul.sidebar-menu {
 }
 
 ul.sidebar-menu li ul.sub li{
-    background: #424a5d;
+    background: #e1e4e8; /* #424a5d; */
     margin-bottom: 0;
     margin-left: 0;
     margin-right: 0;
@@ -316,16 +316,16 @@ ul.sidebar-menu li ul.sub li a {
     -o-transition: all 0.3s ease;
     -ms-transition: all 0.3s ease;
     transition: all 0.3s ease;
-    color: #aeb2b7;
+    color: #020202 ; /* #aeb2b7 text kotak kecik sidebar */
 }
 
 ul.sidebar-menu li ul.sub li a:hover {
-	color: white;
+	color: red;
 	background: transparent;
 }
 
 ul.sidebar-menu li ul.sub li.active a {
-    color: #68dff0;
+    color: #68dff0; /* #e1e4e8 */
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
@@ -350,7 +350,7 @@ ul.sidebar-menu li a span{
 }
 
 ul.sidebar-menu li a{
-    color: #aeb2b7;
+    color: #fcfcfc; /* #fcfcfc  */
     text-decoration: none;
     display: block;
     padding: 15px 0 15px 10px;
@@ -364,8 +364,8 @@ ul.sidebar-menu li a{
 }
 
 ul.sidebar-menu li a.active, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:focus {
-    background: #68dff0;
-    color: #fff;
+    background: #68dff0;  /* #40d3af*/
+    color: #fff;       /* #16105e */
     display: block;
 
     -webkit-transition: all 0.3s ease;
@@ -413,8 +413,8 @@ ul.sidebar-menu li a.active i {
 }
 
 .black-bg {
-    background: #104d89;
-    border-bottom: 1px solid #c9aa5f;
+    background: #0d254c;
+    border-bottom: 1px solid #ba122b;
 }
 
 .wrapper {
@@ -468,23 +468,23 @@ a.logo span {
 }
 
 ul.top-menu > li > a {
-    color: #666666;
+    color: #ffffff;  //icon topbar menu color
     font-size: 16px;
     border-radius: 4px;
     -webkit-border-radius: 4px;
-    border:1px solid #666666 !important;
+    border:1px solid #ffffff !important;
     padding: 2px 6px;
     margin-right: 15px;
 }
 
 ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
-    border:1px solid #b6b6b6 !important;
+    border:1px solid 	#ff5e59 !important;
     background-color: transparent !important;
-    border-color: #b6b6b6 !important;
+    border-color:	#ff5e59  !important;
     text-decoration: none;
     border-radius: 4px;
     -webkit-border-radius: 4px;
-    color: #b6b6b6 !important;
+    color: 	#ff5e59 !important;
 }
 
 .notify-row .badge {
@@ -546,7 +546,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 
 .dropdown-menu.extended li a:hover {
     background-color: #F7F8F9 !important;
-    color: #2E2E2E;
+    color: #0f0f0f;
 }
 
 .dropdown-menu.tasks-bar .task-info .desc {
@@ -670,6 +670,8 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     padding: 6px;
     background: none;
     margin-right: 0;
+
+
 }
 .top-nav ul.top-menu > li {
     margin-left: 10px;

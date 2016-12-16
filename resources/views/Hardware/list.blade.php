@@ -49,7 +49,7 @@
             @endif
             <!-- <td>{{ $hw->hw_datesupp }}</td>
             <td>{{ $hw->hw_datefac }}</td> -->
-           <td><a href="{{action('RecordController@show', $hw->id)}}" class="btn btn-theme"><i class="fa fa-info"></i> Info</button></a></td>
+           <td><a href="{{action('RecordController@show', $hw->id)}}" class="btn btn-theme"><i class="fa fa-info"></i> Info</a></td>
            <td><a href="{{action('HardwareController@edit', $hw->id)}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a></td>
            <td>
              {!! Form::open(['method' => 'DELETE','id'=>'deleteform','route' => ['hardware.destroy', $hw->id]]) !!}
