@@ -185,7 +185,7 @@ $(function() {
     <table class="table table-condensed">
       <thead><tr>
         <th>Ref#</th>
-        <th>Date Taken</th>
+        <th>Date Recorded</th>
         <th>User</th>
         <th>Staff ID</th>
         <th>Remark</th>

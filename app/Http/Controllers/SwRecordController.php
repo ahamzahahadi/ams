@@ -29,7 +29,7 @@ class SwRecordController extends Controller
 
     public function modalinstall(Request $request){
       $swToInstall = $request->input('swname');
-      $id = $request->input('id');
+      $id = $request->input('id'); //untuk return nanti
       $hwid = $request->input('hwid');
       $userid = $request->input('current_userid');
       $remark = $request->input('remark');

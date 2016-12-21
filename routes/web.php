@@ -42,6 +42,7 @@ Route::get('/addHardware', function() {
 Route::get('/record/form/{id}',['uses' => 'RecordController@recform']);
 Route::get('/record/returnform/{id}',['uses' => 'RecordController@returnasset']);
 Route::post('record/returned', ['uses' => 'RecordController@returnedit']);
+Route::post('hwrecord/modalassign', ['uses' => 'RecordController@modalassign']);
 
 Route::get('/swrecord/installform/{id}',['uses' => 'SwRecordController@installform']);
 Route::get('/swrecord/uninstallform/{id}',['uses' => 'SwRecordController@uninstallform']);

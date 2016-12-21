@@ -30,13 +30,17 @@
   </table>
 </div>
 
+@include('modal.assigntostaff')
 <?php $hwrec = DB::table('hwrecord')->where('current_userid', $staff->staff_id)->get()?>
 @if($hwrec->isEmpty() )
-<div class="alert alert-warning"><b>Note:</b> This staff have not been assigned with any asset. </div>
+<div class="alert alert-warning"><b>Note:</b> This staff have not been assigned with any asset.
+  <button class="btn btn-success pull-right" data-toggle="modal" data-target="#myModal">
+    Assign hardware
+  </button>
+</div>
 @else
 <div class="showback">
   <h3>Hardware Usage History</h3>
-
 
   <table class="table table-condensed">
     <thead>
@@ -63,6 +67,9 @@
       </tr>
         @endforeach
   </table>
+  <button class="btn btn-success pull-right" data-toggle="modal" data-target="#myModal">
+    Assign another hardware
+  </button>
 </div>
 @endif
 

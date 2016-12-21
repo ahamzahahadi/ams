@@ -17,7 +17,7 @@ class LoanController extends Controller
     $loan->item = $request->input('item');
     $loan->borrower = $request->input('borrower');
     $loan->save();
-    return redirect()->back();
+    return redirect()->to('/#loan');
   }
 
   public function padam($id)
@@ -25,6 +25,6 @@ class LoanController extends Controller
     // Session::flash('deletor', 'deleteMe');
      $recToDelete = Loan::find($id);
      $recToDelete->delete();
-     return redirect()->back();
+     return redirect()->to('/#loan');
   }
 }

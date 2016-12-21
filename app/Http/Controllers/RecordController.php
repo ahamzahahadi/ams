@@ -61,13 +61,34 @@ class RecordController extends Controller
       return redirect()->action('HardwareController@index');
     }
 
+    public function modalassign(Request $request){
+      $hwToGive = $request->input('hwname');
+      $id = $request->input('id'); //untuk return nanti
+      $userid = $request->input('current_userid');
+      $remark = $request->input('remark');
+      $getFirstHwAvailble = DB::table('hardware')
+      ->where('hw_model', $hwToGive)
+      ->where('hw_status', 0)
+      ->first();
+      if($getFirstHwAvailble == null){
+        return redirect()->back()->with('ada_error', $hwToGive);
+      }
+      else{
+        $assetid = $getFirstHwAvailble->hw_assetid;
+        $huhu = new Record;
+        $huhu->fk_assetid = $assetid;
+        $huhu->current_userid = $userid;
+        $huhu->remark = $remark;
+        $huhu->status = 1;
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+        DB::table('hardware')->where('hw_assetid', $assetid)->update(['hw_status' => 1]);
+        flash()->success('Success!', 'Asset requisition has been recorded.');
+        sleep(0.1);
+        $huhu->save();
+        return redirect()->to(action('StaffController@show', $id).'#hwlist');
+      }
+    }
+
     public function store(Request $request){
         $assetid = $request->input('fk_assetid');
         $userid = $request->input('current_userid');

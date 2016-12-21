@@ -26,7 +26,7 @@
     {!! Form::text('staff_mail', null, ['class' => 'form-control']) !!}
 
     {!! Form::label('staffmobile', 'Mobile Number:', ['class' => 'control-label']) !!}
-    {!! Form::text('staff_mobile', null, ['class' => 'form-control', 'required' => 'required']) !!}
+    {!! Form::text('staff_mobile', null, ['class' => 'form-control']) !!}
 
     {!! Form::label('stafftelno', 'Telephone number:', ['class' => 'control-label']) !!}
     {!! Form::text('staff_telno', null, ['class' => 'form-control']) !!}
