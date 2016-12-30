@@ -38,7 +38,7 @@ class HardwareController extends Controller
       ];
 
       $rulesArr = [
-                  'hw_assetid'=>'unique:hardware|required',
+                  'hw_assetid'=>'required',
                   'hw_date_po'=> 'date_format:"Y-m-d"',
                   'hw_datesupp'=> 'date_format:"Y-m-d"',
                   'hw_datefac'=> 'date_format:"Y-m-d"'
@@ -55,6 +55,9 @@ class HardwareController extends Controller
         $model = $request->input('hw_model');
         $partno = $request->input('hw_part_no');
         $pono = $request->input('hw_po_no');
+        $company = $request->input('hw_company');
+        $class = $request->input('hw_class');
+
         if($request->input('hw_price') == ''){
           $price= '0.00';
         }
@@ -79,6 +82,7 @@ class HardwareController extends Controller
         $supid = $request->input('hw_supplier');
         $typeIndexNo = $request->input('hw_type');
 
+
         $hardware = new Hardware;
         $hardware->hw_assetid = $assetid;
         $hardware->hw_serialno = $serialno;
@@ -91,6 +95,8 @@ class HardwareController extends Controller
         $hardware->hw_datefac = $datefac;
         $hardware->hw_supplier = $supid;
         $hardware->hw_type = $typeIndexNo;
+        $hardware->hw_company = $company;
+        $hardware->hw_class = $class;
         $hardware->save();
 
         flash()->success('Success!', 'New record has been added.');
@@ -132,6 +138,8 @@ class HardwareController extends Controller
       $model = $request->input('hw_model');
       $partno = $request->input('hw_part_no');
       $pono = $request->input('hw_po_no');
+      $company = $request->input('hw_company');
+      $class = $request->input('hw_class');
 
       if($request->input('hw_price') == ''){
         $price= '0.00';
@@ -169,6 +177,8 @@ class HardwareController extends Controller
       $hardware->hw_datefac = $datefac;
       $hardware->hw_supplier = $supid;
       $hardware->hw_type = $typeIndexNo;
+      $hardware->hw_company = $company;
+      $hardware->hw_class = $class;
       $hardware->save();
 
       flash()->success('Success!', 'Record successfully updated.');

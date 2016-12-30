@@ -27,11 +27,11 @@
           <ul id="list_3">
             @foreach($valhwname as $valhw)
             <li data-filtr="{{$valhw->hw_type}}"><input type="radio" name="hwname" value="{{$valhw->hw_model}}">{{$valhw->hw_model}}
-              <?php $counter = DB::table('hardware')->where('hw_status', 0)->where('hw_model', $valhw->hw_model)->count();?>
+              <?php $counter = DB::table('hardware')->where('hw_status', 0)->where('hw_model', $valhw->hw_model)->where('hw_model', '<>', '')->count();?>
               <font color="red"> {{$counter}} units available <br> </font>
             </li>
               @if(!empty(Session::get('ada_error')) && Session::get('ada_error') == $valhw->hw_model)
-              <div class="alert alert-danger"> No key available for <b>{{$valhw->hw_model}}</b>, please purchase and add into the system </div>
+              <div class="alert alert-danger">  There are no available <b>{{$valhw->hw_model}}</b> to be assigned. </div>
               @endif
             @endforeach
           </ul>

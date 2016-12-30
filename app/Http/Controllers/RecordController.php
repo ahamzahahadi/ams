@@ -90,21 +90,23 @@ class RecordController extends Controller
     }
 
     public function store(Request $request){
-        $assetid = $request->input('fk_assetid');
+        $id = $request->input('id');
         $userid = $request->input('current_userid');
         $remark = $request->input('remark');
+        $created_at = $request->input('date_handed');
 
         $record = new Record;
-        $record->fk_assetid = $assetid;
+        $record->fk_assetid = $id;
         $record->current_userid = $userid;
         $record->remark = $remark;
         $record->status = 1;
+        $record->created_at = $created_at;
 
-        DB::table('hardware')->where('hw_assetid', $assetid)->update(['hw_status' => 1]);
+        DB::table('hardware')->where('id', $id)->update(['hw_status' => 1]);
         flash()->success('Success!', 'Asset requisition has been recorded.');
         sleep(0.1);
         $record->save();
-        return redirect()->action('RecordController@show', $request->input('id'));
+        return redirect()->action('RecordController@show', $id);
     }
 
     /**

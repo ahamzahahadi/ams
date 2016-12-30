@@ -48,18 +48,20 @@
         <th> Ref# </th>
         <th> Hardware Model </th>
         <th> Asset ID </th>
+        <th> S/N </th>
         <th> Date Taken </th>
         <th> Date Returned </th>
       </tr>
     </thead>
         @foreach($hwrec as $recku)
       <tr>
-        <?php $idhw = DB::table('hardware')->where('hw_assetid', $recku->fk_assetid)->first() ?>
+        <?php $idhw = DB::table('hardware')->where('id', $recku->fk_assetid)->first() ?>
         <td>{{$recku->id}}</td>
         <td>{{$idhw->hw_model}}</td>
-        <td>{{$recku->fk_assetid}}</td>
+        <td>{{$idhw->hw_assetid}}</td>
+        <td>{{$idhw->hw_serialno}}</td>
         <td>{{date('jS F Y', strtotime($recku->created_at))}}</td>
-        @if(($recku->created_at == $recku->updated_at) && $recku->status == 1)
+        @if($recku->status == 1)
           <td><a href="{{action('RecordController@show', $idhw->id)}}">In Use</a></td>
         @else
           <td>{{date('jS F Y', strtotime($recku->updated_at))}}</td>

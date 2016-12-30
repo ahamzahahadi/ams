@@ -14,7 +14,7 @@
       {!! Form::label('assetid', 'Asset ID:', ['class' => 'col-sm-2 control-label col-lg-5']) !!}
       {!! Form::text('hw_assetid', null, ['class' => 'form-control']) !!}
     </div>
-      <div class="alert alert-danger" >  {{ $errors->first('hw_assetid')}}</div>
+    <div class="alert alert-danger" >  {{ $errors->first('hw_assetid')}}</div>
 
     @else
     {!! Form::label('assetid', 'Asset ID:', ['class' => 'control-label']) !!}
@@ -44,7 +44,7 @@
       {!! Form::label('datepono', 'Purchase Order date:', ['class' => 'control-label']) !!}
       {!! Form::input('date','hw_date_po', null, ['class' => 'form-control']) !!}
     </div>
-        <div class="alert alert-danger" >  {{ $errors->first('hw_date_po')}}</div>
+    <div class="alert alert-danger" >  {{ $errors->first('hw_date_po')}}</div>
     @else
     {!! Form::label('datepono', 'Purchase Order date:', ['class' => 'control-label']) !!}
     {!! Form::input('date','hw_date_po', null, ['class' => 'form-control']) !!}
@@ -55,7 +55,7 @@
       {!! Form::label('datesupp', 'Date Supplied:', ['class' => 'control-label']) !!}
       {!! Form::input('date','hw_datesupp', null, ['class' => 'form-control']) !!}
     </div>
-        <div class="alert alert-danger" >  {{ $errors->first('hw_datesupp')}}</div>
+    <div class="alert alert-danger" >  {{ $errors->first('hw_datesupp')}}</div>
     @else
     {!! Form::label('datesupp', 'Date Supplied:', ['class' => 'control-label']) !!}
     {!! Form::input('date','hw_datesupp', null, ['class' => 'form-control']) !!}
@@ -66,48 +66,72 @@
       {!! Form::label('datefac', 'Date Sent to Facility:', ['class' => 'control-label']) !!}
       {!! Form::input('date','hw_datefac', null, ['class' => 'form-control']) !!}
     </div>
-        <div class="alert alert-danger" >  {{ $errors->first('hw_datefac')}}</div>
+    <div class="alert alert-danger" >  {{ $errors->first('hw_datefac')}}</div>
     @else
     {!! Form::label('datefac', 'Date Sent to Facility:', ['class' => 'control-label']) !!}
     {!! Form::input('date','hw_datefac', null, ['class' => 'form-control']) !!}
     @endif
 
-          <div class="col-lg-6">
-            <?php  $value = DB::table('supplier')->orderBy('supp_name', 'asc')->get();
-                   $value2 = DB::table('hwtype')->where('flag', 1)->orderBy('type', 'asc')->pluck('type'); ?>
+    <?php  $value = DB::table('supplier')->orderBy('supp_name', 'asc')->get();
+    $value2 = DB::table('hwtype')->where('flag', 1)->orderBy('type', 'asc')->pluck('type'); ?>
 
-            {!! Form::label('supid', 'Supplier:', ['class' => 'col-sm-2 control-label col-lg-5']) !!}
-            <select name='hw_supplier' required class = 'form-control'>
-                <option value=""> --Choose Supplier-- </option>
-                @foreach ($value as $val)
-                <option value= "{{ $val-> id }}"> {{$val->supp_name}} </option>
-                @endforeach
-            </select>
+    <div class="col-sm-6">
+      {!! Form::label('hw_companylel', 'Owner Company: ', ['class' => 'control-label']) !!} <br>
+      <select name='hw_company' class = 'form-control'>
+        <option value=""> --Choose Company-- </option>
+        <option value="SAS"> SAS </option>
+        <option value="SST"> SST </option>
+        <option value="SST"> STB </option>
+        <option value="SDSB"> SDSB </option>
+        <option value="SRSB"> SRSB </option>
+        <option value="SLCT"> SLCT </option>
+      </select>
+    </div>
+    <div class="col-sm-6">
+      {!! Form::label('hw_classlel', 'Class: ', ['class' => 'control-label']) !!} <br>
+      <select name='hw_class' class = 'form-control'>
+        <option value="Standard"> Standard </option>
+        <option value="Service"> Service </option>
+        <option value="SAILS"> SAILS </option>
+      </select>
+    </div>
+
+    <div class="col-lg-6">
+      {!! Form::label('supid', 'Supplier:', ['class' => 'col-sm-2 control-label col-lg-5']) !!}
+      <select name='hw_supplier' required class = 'form-control'>
+        <option value=""> --Choose Supplier-- </option>
+        @foreach ($value as $val)
+        <option value= "{{ $val-> id }}"> {{$val->supp_name}} </option>
+        @endforeach
+      </select>
 
 
-            {!! Form::label('hw_type', 'Hardware Type: ', ['class' => 'control-label']) !!} <br>
-            <select name='hw_type' required class = 'form-control'>
-                <option value=""> --Choose Type-- </option>
-                @foreach ($value2 as $val2)
-                <option> {{$val2}} </option>
-                @endforeach
-            </select>
+      {!! Form::label('hw_type', 'Hardware Type: ', ['class' => 'control-label']) !!} <br>
+      <select name='hw_type' required class = 'form-control'>
+        <option value=""> --Choose Type-- </option>
+        @foreach ($value2 as $val2)
+        <option> {{$val2}} </option>
+        @endforeach
+      </select>
 
-          </div>
-          <div class="col-lg-6">
-            <div class="row">
-            Supplier not listed? <br>
-          	<button type="button" class="btn btn-round btn-info">Add Supplier</button>
-            </div>
-            <div class="row">
-            <br>New asset type? <br>
-            <button type="button" class="btn btn-round btn-info">Add Asset Type</button>
-            </div>
-          </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="row">
+        Supplier not listed? <br>
+        <button class="btn btn-round btn-info" data-toggle="modal" data-target="#myModal1">Add Supplier</button>
+      </div>
+      <div class="row">
+        <br>New asset type? <br>
+        <button class="btn btn-round btn-info" data-toggle="modal" data-target="#myModal2">Add Asset Type</button>
       </div>
     </div>
-    {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
-    <a href="{{URL::previous()}}" class="btn btn-default">Cancel</a>
-    {!! Form::close() !!}
-
-    @stop
+  </div>
+</div>
+<div class="col-md-12 centered">
+  {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
+  <a href="{{URL::previous()}}" class="btn btn-default">Cancel</a>
+  {!! Form::close() !!}
+</div>
+@include('modal.addsupplier')
+@include('modal.addassettype')
+@stop

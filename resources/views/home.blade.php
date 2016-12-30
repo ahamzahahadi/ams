@@ -2,7 +2,6 @@
 @section('content')
 <link rel="stylesheet" type="text/css" href="{{URL::asset('lineicons/style.css')}}">
 <link href="{{ URL::asset('css/to-do.css') }}" rel="stylesheet">
-<script src="{{ URL::asset('js/chart-master/Chart.js') }}"></script>
 <div class="row">
 
 <!-- FETCH LIVE RECORDS -->
@@ -299,10 +298,10 @@
                     <!-- First Member -->
                     <div class="desc">
                       <div class="thumb">
-                        <img class="img-circle" src="assets/img/ui-divya.jpg" width="35px" height="35px" align="">
+                        <img class="img-circle" src="{{URL::asset('img/abgk.jpg')}}" width="60px" height="60px" align="left">
                       </div>
                       <div class="details">
-                        <p><a href="#">DIVYA MANIAN</a><br/>
+                        <p><a href="#">KHAIRUL ANUAR</a><br/>
                            <muted>Available</muted>
                         </p>
                       </div>
@@ -310,10 +309,10 @@
                     <!-- Second Member -->
                     <div class="desc">
                       <div class="thumb">
-                        <img class="img-circle" src="assets/img/ui-sherman.jpg" width="35px" height="35px" align="">
+                        <img class="img-circle" src="{{URL::asset('img/ain.png')}}" width="60px" height="60px" align="">
                       </div>
                       <div class="details">
-                        <p><a href="#">DJ SHERMAN</a><br/>
+                        <p><a href="#">SHASARIDA</a><br/>
                            <muted>I am Busy</muted>
                         </p>
                       </div>

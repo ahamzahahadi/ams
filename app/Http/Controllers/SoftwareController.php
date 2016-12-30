@@ -87,6 +87,8 @@ class SoftwareController extends Controller
       $software->sw_datefac = $datefac;
       $software->sw_supplier = $supid;
       $software->sw_type = $typeIndexNo;
+      $software->sw_company = ''; //jgn lupa edit ni lepas dah repath ref key ke ID,lps dah tambah kat form dia
+
       $software->save();
 
       flash()->success('Success!', 'New record has been added.');

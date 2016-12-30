@@ -61,14 +61,14 @@ $(function() {
     </script>
   </ul>
 </div>
-<a href="{{ URL::previous() }}" class="btn btn-default">Back</a>
+<a href="{{ action('HardwareController@index') }}" class="btn btn-default">Back</a>
   <!-- <script src="{{ URL::asset('js/swag.js') }}"></script> -->
 <hr>
 
 <!-- CURRENT STATUS SECTION -->
 
 @if($hardware->hw_status== '1')
-  <?php $latestuser = DB::table('hwrecord')->where('fk_assetid', "$hardware->hw_assetid")->orderBy('created_at', 'desc')->first(); //get record of latest user
+  <?php $latestuser = DB::table('hwrecord')->where('fk_assetid', "$hardware->id")->orderBy('created_at', 'desc')->first(); //get record of latest user
         if($latestuser == null){
           header("Location: /error");
           exit();
@@ -104,6 +104,8 @@ $(function() {
       <tr><td><b>Asset ID</b></td><td>{{$hardware->hw_assetid}}</td></tr>
       <tr><td><b>Serial Number</b></td><td>{{$hardware->hw_serialno}}</td></tr>
       <tr><td><b>Model</b></td><td>{{$hardware->hw_model}}</td></tr>
+      <tr><td><b>Class</b></td><td>{{$hardware->hw_class}}</td></tr>
+      <tr><td><b>Owner's Company</b></td><td>{{$hardware->hw_company}}</td></tr>
       <tr><td><b>Purchase Order Number</b></td><td>{{$hardware->hw_po_no}}</td></tr>
       <tr><td><b>Purchase Order Date</b></td>
         @if(($hardware->hw_date_po) == '0000-11-30 00:00:00')
@@ -119,6 +121,12 @@ $(function() {
         <td>Unspecified</td>
         @else
         <td>{{ $hardware->hw_datesupp->format('d/m/Y') }}</td>
+        @endif</tr>
+      <tr><td><b>Date Received by GIT</b></td>
+        @if(($hardware->hw_datefac) == '0000-11-30 00:00:00')
+        <td>Unspecified</td>
+        @else
+        <td>{{ $hardware->hw_datefac->format('d/m/Y') }}</td>
         @endif</tr>
       <tr><td><b>Supplied By</b></td><td>{{DB::table('supplier')->where('id',$hardware->hw_supplier)->value('supp_name')}}</td></tr>
     </table>
@@ -176,7 +184,7 @@ $(function() {
 
 <!-- TRANSFER LOG SECTION -->
 
-    <?php $prevuser = DB::table('hwrecord')->where('fk_assetid', $hardware->hw_assetid)->get();?>
+    <?php $prevuser = DB::table('hwrecord')->where('fk_assetid', $hardware->id)->get();?>
     @if($prevuser->isEmpty())
     <div class="alert alert-info"><b>Info:</b> There are no previous user recorded.</div>
     @else
@@ -199,7 +207,7 @@ $(function() {
           <td> {{ DB::table('staff')->where('staff_id', $pu->current_userid)->value('staff_name')}} </td>
           <td> {{$pu->current_userid}} </td>
           <td> {{$pu->remark}} </td>
-          @if($pu->created_at == $pu->updated_at)
+          @if($pu->status == 1)
             <td></td>
           @else
           <td> {{date('jS F Y', strtotime($pu->updated_at))}} </td>

@@ -7,14 +7,14 @@
 
 <div class="form-group">
   {!! form::label('assetid', 'Asset ID:', ['class'=> 'control-label']) !!}
-  {!! form::text('fk_assetid', "$hardware->hw_assetid", ['class'=> 'form-control', 'readonly'=>'readonly','value'=>"$hardware->hw_assetid" ]  )!!}
+  {!! form::text('id', "$hardware->hw_assetid", ['class'=> 'form-control', 'readonly'=>'readonly','value'=>"$hardware->id" ]  )!!}
 
   {!! form::label('assignto','For Staff ID:', ['class'=> 'control-label'] )!!}
   {!! Form::text('current_userid', null, ['class' => 'form-control']) !!}
   <span class="help-block"><sup>&nbsp&nbsp&nbsp&nbspEnter staff ID to be assigned to.</sup></span>
 
   {!! Form::label('assigndate', "Handed on:", ['class' => 'control-label']) !!}<br>
-  {!! form::text( '','' , ['class'=> 'form-control', 'placeholder'=> "$datenow", 'disabled'=>'disabled']  )!!}
+  {!! form::input( 'date','date_handed' , null,['class'=> 'form-control'])!!}
 
   {!! form::label('remark','Remarks:', ['class'=> 'control-label'] )!!}
   {!! Form::textarea('remark', null, ['class' => 'form-control']) !!}

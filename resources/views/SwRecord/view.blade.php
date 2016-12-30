@@ -20,7 +20,7 @@
     <li><a href="#"><button value="Delete" id="delete" class="btn btn-danger btn-sm">Delete Software</button></a></li>
   </ul>
 </div>
-<a href="{{ URL::previous() }}" class="btn btn-default">Back</a>
+<a href="{{ action('SoftwareController@index') }}" class="btn btn-default">Back</a>
 <hr>
 
 <!-- CURRENT STATUS SECTION -->
@@ -76,6 +76,8 @@
         <td>{{ $software->sw_datesupp->format('d/m/Y') }}</td>
         @endif</tr>
       <tr><td><b>Supplied By</b></td><td>{{DB::table('supplier')->where('id',$software->sw_supplier)->value('supp_name')}}</td></tr>
+      <tr><td><b>Remarks</b></td><td>{{$software->sw_remark}}</td></tr>
+      <tr><td><b>Package</b></td><td>{{$software->sw_variation}}</td></tr>
   </table>
 </div>
 

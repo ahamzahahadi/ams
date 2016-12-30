@@ -19,6 +19,8 @@ class Hardware extends Model
 		'hw_price',
 		'hw_type',
 		'hw_datesupp',
+    'hw_company',
+    'hw_class',
 		'hw_datefac'
     ];
 }
