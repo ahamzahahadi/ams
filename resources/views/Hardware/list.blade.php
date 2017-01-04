@@ -112,7 +112,13 @@
             <td>{{ $hw->hw_type }}</td>
             <td>{{ $hw->hw_class }}</td>
             @if($hw->hw_status == '1')
-            <td><span class="badge bg-warning">Assigned</span></td>
+            <td><span class="badge bg-success">Assigned</span></td>
+            @elseif($hw->hw_status == '2')
+            <td><span class="badge bg-warning">Faulty</span></td>
+            @elseif($hw->hw_status == '3')
+            <td><span class="badge">BER</span></td>
+            @elseif($hw->hw_status == '4')
+            <td><span class="badge bg-important">Stolen</span></td>
             @else
             <td><span class="badge bg-info">Available</span></td>
             @endif

@@ -11,21 +11,29 @@
 <?php $x++ ?>
 @endforeach
 
-//replace serial no with asset id in hwrecord, update hw_status to 1
+--------------------------------------------------------------------------------------------------------------------
+
+//convert imported SN in hw_rec to id of hardware
 <?php
-        $noid = DB::table('hwrecord')->where('fk_assetid', '')
+        $recserial = DB::table('hwrecord')->where('id', '>', '1540')
                 ->get();
                 $x=1;
 ?>
 
-@foreach($noid as $nono)
-{{$x}}) {{$nono->serialno}} -done<br>
+
+@foreach($recserial as $sn)
 <?php
-$getassetid = DB::table('hardware')->where('hw_serialno', 'LIKE', '%'.$nono->serialno.'%')->first(); //dapat asset id
-DB::table('hardware')->where('hw_serialno', $nono->serialno)->update(['hw_status' => 1]);
-DB::table('hwrecord')->where('serialno', $nono->serialno)->update(['fk_assetid' => $getassetid->hw_assetid]);
-$x++; ?>
+$getid = DB::table('hardware')->where('hw_serialno', 'LIKE', '%'.$sn->fk_assetid.'%')->first(); //dapat asset id
+DB::table('hwrecord')->where('id', $sn->id)->update(['fk_assetid' => $getid->id]);
+?>
+{{$x}}) {{$sn->fk_assetid}} changed to {{$getid->id}} <font color=green>done</font><br>
+<?php $x++ ?>
 @endforeach
+<?php $x=$x-1; ?>
+TOTAL record changed: {{$x}}
+
+
+--------------------------------------------------------------------------------------------------------------------
 
 //get available hw test
 
@@ -115,6 +123,25 @@ $x = 1;
     <?php $x++; ?>
 @endforeach
 
+
+
+//delete OLD SRSB history and update notebook status back to 0
+<?php
+$toDelete = DB::table('hwrecord')->where('id','<','483')->get();
+// var_dump($toDelete);
+// die();
+?>
+@foreach($toDelete as $del)
+  <?php DB::table('hardware')->where('id', $del->fk_assetid)->update(['hw_status' => 0]);
+        DB::table('hwrecord')->where('id', $del->id)->delete();
+  ?>
+    Hardware id: {{$del->fk_assetid}} has change status to 0 (available) <br>
+    Record ref: {{$del->id}} has been deleted <br>
+@endforeach
+
+
+---------------------------------------------------------------------------------------------------------------------
+
 //change status for new record with status == 1 (with user)
 <?php
   $statchg = DB::table('hwrecord')->where('id', '>', '660')->get();
@@ -132,16 +159,54 @@ $x = 1;
 
 TOTAL record changed: {{$x}}
 
-//delete OLD SRSB history and update notebook status back to 0
+---------------------------------------------------------------------------------------------------------------------
+//update hardware status based on imported hw_rec
+
 <?php
-$toDelete = DB::table('hwrecord')->where('id','<','483')->get();
-// var_dump($toDelete);
-// die();
+  $statchg = DB::table('hwrecord')->where('id', '>', '1540')->get();
+  //var_dump($statchg);
+  //die();
+  $x=0;
+  $y=0;
+  $z=0;
+  $w=0;
+  $v=0;
 ?>
-@foreach($toDelete as $del)
-  <?php DB::table('hardware')->where('id', $del->fk_assetid)->update(['hw_status' => 0]);
-        DB::table('hwrecord')->where('id', $del->id)->delete();
+@foreach($statchg as $chg)
+  @if($chg->status == 1)
+  <?php DB::table('hardware')->where('id', $chg->fk_assetid) ->update(['hw_status' => 1]);
+  $x++;
   ?>
-    Hardware id: {{$del->fk_assetid}} has change status to 0 (available) <br>
-    Record ref: {{$del->id}} has been deleted <br>
+  @elseif($chg->status == 3)
+  <?php DB::table('hardware')->where('id', $chg->fk_assetid) ->update(['hw_status' => 2]);
+  $y++;
+  ?>
+  @elseif($chg->status == 4)
+  <?php DB::table('hardware')->where('id', $chg->fk_assetid) ->update(['hw_status' => 3]);
+  $z++;
+  ?>
+  @elseif($chg->status == 5)
+  <?php DB::table('hardware')->where('id', $chg->fk_assetid) ->update(['hw_status' => 4]);
+  $w++;
+  ?>
+  @endif
+  <?php $v++; ?>
 @endforeach
+
+TOTAL record changed: {{$v}} <br>
+Assigned: {{$x}} <br>
+Faulty: {{$y}} <br>
+BER: {{$z}} <br>
+Stolen: {{$w}} <br>
+
+
+---------------------------------------------------------------------------------------------------------------------
+SRSB TPP NB UPLOAD
+
+TOTAL record changed: 645
+Assigned: 474
+Faulty: 40
+BER: 66
+Stolen: 7
+
+---------------------------------------------------------------------------------------------------------------------

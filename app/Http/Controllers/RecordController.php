@@ -42,12 +42,12 @@ class RecordController extends Controller
     }
 
     public function returnedit(Request $request){
-      $id = $request->input('fk_assetid');
+      $id = $request->input('hwid');
       $location = $request->input('location');
 
       $returndate = DB::table('hwrecord')->where('fk_assetid', $id)->orderBy('created_at', 'desc')->value('id'); //get date retu
 
-      DB::table('hardware')->where('hw_assetid', $id)->update(['hw_status' => 0, 'hw_location'=> $location]);
+      DB::table('hardware')->where('id', $id)->update(['hw_status' => 0, 'hw_location'=> $location]);
       DB::table('hwrecord')->where('id', $returndate)->update(['updated_at' => Carbon::now(), 'status' => 2]);
 
       $addrec = new Record;
