@@ -107,12 +107,16 @@
             <button class="btn btn-round btn-info" data-toggle="modal" data-target="#myModal2">Add Software Category</button>
       </div>
     </div>
-
+    {!! Form::label('sw_var', 'Software Package: ', ['class' => 'control-label']) !!} <br>
+    {!! Form::radio('sw_variation', 0, true) !!} Retail &nbsp&nbsp
+    {!! Form::radio('sw_variation', 1) !!} OEM
   </div>
 </div>
+<div class="col-md-12 centered">
 {!! Form::submit('Add', ['class' => 'btn btn-primary']) !!}
 <a href="{{action('SoftwareController@index')}}" class="btn btn-default">Cancel</a>
 {!! Form::close() !!}
+</div>
 @include('modal.addsupplier')
 @include('modal.addswtype')
 @stop

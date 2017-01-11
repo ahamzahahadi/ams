@@ -26,7 +26,14 @@
           <h5> Select Software to Install: </h5>
           <ul id="list_3">
             @foreach($valswname as $valsw)
-            <li data-filtr="{{$valsw->sw_type}}"><input type="radio" name="swname" value="{{$valsw->sw_model}}">{{$valsw->sw_model}}</li>
+            <li data-filtr="{{$valsw->sw_type}}"><input type="radio" name="swname" value="{{$valsw->sw_model}}">{{$valsw->sw_model}}
+              <?php $counter = DB::table('software')->where('sw_status', 0)->where('sw_model', $valsw->sw_model)->where('sw_model', '<>', '')->count();?>
+              @if($counter < 2)
+              <font color="red"> {{$counter}} unit available <br> </font>
+              @else
+              <font color="green"> {{$counter}} units available <br> </font>
+              @endif
+            </li>
               @if(!empty(Session::get('ada_error')) && Session::get('ada_error') == $valsw->sw_model)
               <div class="alert alert-danger"> No key available for <b>{{$valsw->sw_model}}</b>, please purchase and add into the system </div>
               @endif

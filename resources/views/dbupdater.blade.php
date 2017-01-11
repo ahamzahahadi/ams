@@ -210,3 +210,60 @@ BER: 66
 Stolen: 7
 
 ---------------------------------------------------------------------------------------------------------------------
+<script src="{{ URL::asset('js/jquery.js') }}"></script>
+<script src="{{ URL::asset('js/typeahead.jquery.js') }}"></script>
+<script src="{{ URL::asset('js/typeahead.bundle.js') }}"></script>
+<script src="{{ URL::asset('js/bloodhound.js') }}"></script>
+
+<div id="findstaff">
+  <input class="typeahead" type="text" placeholder="Enter Staff Name">
+</div>
+
+<?php $staffname = DB::table('staff')->select('staff_name', 'staff_id')->get();
+$staffdetail = array();
+$arrlength = count($staffname);
+$x=0;
+?>
+@foreach($staffname as $staff)
+<?php $staffdetail[$x] = "$staff->staff_name <Staff ID: $staff->staff_id>";
+$x++;
+?>
+@endforeach
+<?php $json = json_encode($staffdetail); ?>
+<script>
+var staff = {!! $json !!};
+
+var staff = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.whitespace,
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  // `states` is an array of state names defined in "The Basics"
+  local: staff
+});
+
+$('#findstaff .form-control').typeahead({
+  hint: true,
+  highlight: true,
+  minLength: 1
+},
+{
+  name: 'staff',
+  source: staff
+});
+
+</script>
+
+----------------------------------------------------------------------------------------------
+String manipulation on trimming bloodhound input
+<?php $varku = 'Amirul Farid Amir Shapuddin <Staff ID: 8592>'; ?>
+{{ $varku }} <br>
+
+<?php $varku = strchr($varku, ':' ) ?>
+lepas strchr jadi {{$varku}} <br>
+
+<?php $varku = substr($varku, 2 ) ?>
+lepas substr jadi {{$varku}} <br>
+
+<?php $varku = str_ireplace('>','',$varku) ?>
+lepas replace jadi {{$varku}} kuku<br>
+
+----------------------------------------------------------------------------------------------

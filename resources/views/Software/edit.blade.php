@@ -42,36 +42,36 @@
     @if($errors->has('sw_date_po'))
     <div class="form-group has-error">
       {!! Form::label('datepono', 'Purchase Order date:', ['class' => 'control-label']) !!}
-      {!! Form::input('date','sw_date_po', null, ['class' => 'form-control']) !!}
+      {!! Form::input('date','sw_date_po', $software->sw_date_po->format('Y-m-d'), ['class' => 'form-control']) !!}
     </div>
         <div class="alert alert-danger" >  {{ $errors->first('sw_date_po')}}</div>
     @else
     {!! Form::label('datepono', 'Purchase Order date:', ['class' => 'control-label']) !!}
-    {!! Form::input('date','sw_date_po', null, ['class' => 'form-control']) !!}
+    {!! Form::input('date','sw_date_po', $software->sw_date_po->format('Y-m-d'), ['class' => 'form-control']) !!}
     @endif
 
     <!-- validation for date supplied  -->
     @if($errors->has('sw_datesupp'))
     <div class="form-group has-error">
       {!! Form::label('datesupp', 'Date Supplied:', ['class' => 'control-label']) !!}
-      {!! Form::input('date','sw_datesupp', null, ['class' => 'form-control']) !!}
+      {!! Form::input('date','sw_datesupp', $software->sw_datesupp->format('Y-m-d'), ['class' => 'form-control']) !!}
     </div>
         <div class="alert alert-danger" >  {{ $errors->first('sw_datesupp')}}</div>
     @else
     {!! Form::label('datesupp', 'Date Supplied:', ['class' => 'control-label']) !!}
-    {!! Form::input('date','sw_datesupp', null, ['class' => 'form-control']) !!}
+    {!! Form::input('date','sw_datesupp', $software->sw_datesupp->format('Y-m-d'), ['class' => 'form-control']) !!}
     @endif
 
     <!-- validation for date to facilities -->
     @if($errors->has('sw_datefac'))
     <div class="form-group has-error">
       {!! Form::label('datefac', 'Date Sent to Facility:', ['class' => 'control-label']) !!}
-      {!! Form::input('date','sw_datefac', null, ['class' => 'form-control']) !!}
+      {!! Form::input('date','sw_datefac', $software->sw_datefac->format('Y-m-d'), ['class' => 'form-control']) !!}
     </div>
         <div class="alert alert-danger" >  {{ $errors->first('sw_datefac')}}</div>
     @else
     {!! Form::label('datefac', 'Date Sent to Facility:', ['class' => 'control-label']) !!}
-    {!! Form::input('date','sw_datefac', null, ['class' => 'form-control']) !!}
+    {!! Form::input('date','sw_datefac', $software->sw_datefac->format('Y-m-d'), ['class' => 'form-control']) !!}
     @endif
 
     <div class="col-lg-6">
@@ -83,7 +83,11 @@
       <select name='sw_supplier' required class = 'form-control'>
           <option value=""> --Choose Supplier-- </option>
           @foreach ($value as $val)
-          <option value="{{ $val-> id}}"> {{ $val->supp_name }} </option>
+            @if($software->sw_supplier == $val->id)
+            <option value="{{ $val-> id}}" selected="selected"> {{ $val->supp_name }} </option>
+            @else
+            <option value="{{ $val-> id}}"> {{ $val->supp_name }} </option>
+            @endif
           @endforeach
       </select>
 
@@ -92,7 +96,11 @@
       <select name='sw_type' required class = 'form-control' >
           <option value=""> --Choose Category-- </option>
           @foreach ($value2 as $val2)
-          <option> {{ $val2 }} </option>
+            @if($software->sw_type == $val2)
+            <option selected="selected"> {{ $val2 }} </option>
+            @else
+            <option> {{ $val2 }} </option>
+            @endif
           @endforeach
       </select>
 
@@ -100,17 +108,23 @@
     <div class="col-lg-6">
       <div class="row">
       Supplier not listed? <br>
-      <button type="button" class="btn btn-round btn-info">Add Supplier</button>
+      <button class="btn btn-round btn-info" data-toggle="modal" data-target="#myModal1">Add Supplier</button>
       </div>
       <div class="row">
       <br>New Software Category? <br>
-      <button type="button" class="btn btn-round btn-info">Add Software Category</button>
+      <button class="btn btn-round btn-info" data-toggle="modal" data-target="#myModal2">Add Software Category</button>
       </div>
     </div>
-
+    {!! Form::label('sw_var', 'Software Package: ', ['class' => 'control-label']) !!} <br>
+    {!! Form::radio('sw_variation', 0, true) !!} Retail &nbsp&nbsp
+    {!! Form::radio('sw_variation', 1) !!} OEM
   </div>
 </div>
+<div class="col-md-12 centered">
 {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
 <a href="{{action('SoftwareController@index')}}" class="btn btn-default">Cancel</a>
 {!! Form::close() !!}
+</div>
+@include('modal.addsupplier')
+@include('modal.addswtype')
 @stop

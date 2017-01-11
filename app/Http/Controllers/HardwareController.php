@@ -34,7 +34,7 @@ class HardwareController extends Controller
     public function store(Request $request)
     {
       $messages = ['required' => 'This field must be FILLED.',
-                   'unique' => 'Duplicated asset id detected.'
+                   'unique' => 'Duplicated serialkey detected.'
       ];
 
       $rulesArr = [
@@ -181,7 +181,7 @@ class HardwareController extends Controller
       $hardware->hw_class = $class;
       $hardware->save();
 
-      flash()->success('Success!', 'Record successfully updated.');
+      flash()->success('Success!', 'Record successfully updated :D');
       return redirect()->action('HardwareController@index');
     }
 

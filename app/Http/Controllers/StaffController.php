@@ -7,6 +7,7 @@ use App\Staff;
 use App\Http\Requests;
 
 use Validator;
+use Session;
 
 class StaffController extends Controller
 {
@@ -44,6 +45,16 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
+      $messages = ['unique' => 'This staff ID already belongs to someone.'];
+
+      $rulesArr = ['staff_id'=>'unique:staff' ];
+
+      $validation = Validator::make($request->all(),$rulesArr,$messages);
+
+      if($validation->fails()){
+          return redirect()->back()->withErrors($validation)->withInput($request->all());
+      }
+
       $sid = $request->input('staff_id');
       $sname = $request->input('staff_name');
       $smail = $request->input('staff_mail');
@@ -67,6 +78,7 @@ class StaffController extends Controller
         $staff->staff_officeLocation = $sol;
         $staff->save();
 
+        flash()->success('Success!', 'New staff has been added.');
         return redirect()->action('StaffController@index');
     }
 
@@ -103,6 +115,16 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
+      $messages = ['unique' => 'This staff ID already belongs to someone.'];
+
+      $rulesArr = ['staff_id'=>'unique:staff' ];
+
+      $validation = Validator::make($request->all(),$rulesArr,$messages);
+
+      if($validation->fails()){
+          return redirect()->back()->withErrors($validation)->withInput($request->all());
+      }
+
       $sid = $request->input('staff_id');
       $sname = $request->input('staff_name');
       $smail = $request->input('staff_mail');
@@ -126,6 +148,7 @@ class StaffController extends Controller
       $staff->staff_officeLocation = $sol;
       $staff->save();
 
+      flash()->success('Success!', 'Staff record has been updated :D');
       return redirect()->action('StaffController@index');
     }
 

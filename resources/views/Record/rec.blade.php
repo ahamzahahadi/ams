@@ -1,6 +1,8 @@
 @extends('master')
 @section('content')
 @include('Alerts::sweetalerts')
+<link href="{{ URL::asset('css/cascadator.css') }}" rel="stylesheet">
+
 @if(!empty(Session::get('ada_error')))
 <script>
 $(function() {
@@ -15,20 +17,42 @@ $(function() {
   <button type="button" class="btn btn-theme dropdown-toggle" data-toggle="dropdown" style="display:inline-block">
     Action <span class="caret"></span>
   </button>
-  <ul class="dropdown-menu" role="menu">
+  <ul class="dropdown-menu">
     @if($hardware->hw_status == '1')
-    <li><a href="{{action('RecordController@returnasset', $hardware->id)}}">Return to IT</a></li>
+      <li><a href="{{action('RecordController@returnasset', $hardware->id)}}">Return to IT</a></li>
     @else
-    <li><a href="{{action('RecordController@recform', $hardware->id)}}">Assign</a></li>
+      <li><a href="{{action('RecordController@recform', $hardware->id)}}">Assign</a></li>
     @endif
-    <li><a href="{{action('HardwareController@edit', $hardware->id)}}">Edit Hardware</a></li>
 
+    <li><a href="{{action('HardwareController@edit', $hardware->id)}}">Edit Hardware</a></li>
+    <li class="dropdown-submenu"><a class="test" tabindex="-1" href="#"><strong>Change status to   </strong><span class="fa fa-angle-right"></span></a>
+        <ul class="dropdown-menu">
+          <li><a tabindex="-1" href="#"><span class="badge bg-success">Assigned</span></a></li>
+          <li><a tabindex="-1" href="#"> Available </a></li>
+          <li><a tabindex="-1" href="#"> BER </a></li>
+          <li><a tabindex="-1" href="#"> Faulty </a></li>
+          <li><a tabindex="-1" href="#"> MAF </a></li>
+          <li><a tabindex="-1" href="#"> Missing </a></li>
+          <li><a tabindex="-1" href="#"> Stolen </a></li>
+        </ul>
+    </li>
+    <li role="separator" class="divider"></li>
+    <li style="text-align:center">
     <form class="delete" action="{{ route('hardware.destroy', $hardware->id) }}" method="POST">
         <input type="hidden" name="_method" value="DELETE">
         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-        <input type="submit" value="Delete Hardware" class="btn btn-danger btn-sm" onclick="return confirm('are you sure?')">
+        <input type="submit" value="Delete Hardware" class="btn btn-danger" onclick="return confirm('are you sure?')">
     </form>
+    </li>
     <script>
+      $(document).ready(function(){
+        $('.dropdown-submenu a.test').on("click", function(e){
+              $(this).next('ul').toggle();
+              e.stopPropagation();
+              e.preventDefault();
+        });
+      });
+
       $(".delete").on("click", function(e){
         swal({
           title: "Are you sure?",
@@ -68,7 +92,7 @@ $(function() {
 <!-- CURRENT STATUS SECTION -->
 
 @if($hardware->hw_status== '1')
-  <?php $latestuser = DB::table('hwrecord')->where('fk_assetid', "$hardware->id")->orderBy('created_at', 'desc')->first(); //get record of latest user
+  <?php $latestuser = DB::table('hwrecord')->where('fk_assetid', "$hardware->id")->where('status', 1)->orderBy('created_at', 'desc')->first(); //get record of latest user
         if($latestuser == null){
           header("Location: /error");
           exit();
@@ -209,6 +233,8 @@ $(function() {
           <td> {{$pu->remark}} </td>
           @if($pu->status == 1)
             <td></td>
+          @elseif($pu->status == 0)
+            <td><strong>Stored</stored></td>
           @else
           <td> {{date('jS F Y', strtotime($pu->updated_at))}} </td>
           @endif

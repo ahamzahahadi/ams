@@ -30,21 +30,15 @@
   <h2>Current Status: <button type="button" class="btn btn-round btn-primary">Available</button></h2>
 </div>
 @else
-<?php $latestuser = DB::table('swrecord')->where('sw_assetid', "$software->sw_assetid")->orderBy('created_at', 'desc')->first(); //get record of latest user
-      $userstaffdb = DB::table('staff')->where('staff_id', "$latestuser->current_userid")->first();
-      $hardware = DB::table('hardware')->where('hw_assetid',$latestuser->hw_assetid)->first()?>
+<?php $latestuser = DB::table('swrecord')->where('sw_assetid', $software->id)->orderBy('created_at', 'desc')->first(); //get record of latest user
+      $hardware = DB::table('hardware')->where('id',$latestuser->hw_assetid)->first()?>
 <h2>Current Status: <button type="button" class="btn btn-round btn-warning">In Use</button></h2>
 <div class="showback">
-  <h3>Current User Details</h3>
+  <h3>Installed in</h3>
   <table class="table table-condensed table-bordered">
-    <tr><td><b>Installed in</b></td><td>{{$userstaffdb->staff_name}}'s <a href="{{action('RecordController@show', $hardware->id)}}">device</a></td></tr>
+    <tr><td><b>Device Name</b></td><td>{{$hardware->hw_model}}</td></tr>
+    <tr><td><b>Serial Number</b></td><td><a href="{{action('RecordController@show', $hardware->id)}}">{{$hardware->hw_serialno}}</a></td></tr>
     <tr><td><b>Device Asset ID</b></td><td>{{$hardware->hw_assetid}}</td></tr>
-    <tr><td><b>Device Model</b></td><td>{{$hardware->hw_model}}</td></tr>
-    <tr><td><b>Staff ID</b></td><td>{{$userstaffdb->staff_id}}</td></tr>
-    <tr><td><b>Email</b></td><td>{{$userstaffdb->staff_mail}}</td></tr>
-    <tr><td><b>Mobile</b></td><td>{{$userstaffdb->staff_mobile}}</td></tr>
-    <tr><td><b>Department</b></td><td>{{$userstaffdb->staff_dept}}</td></tr>
-    <tr><td><b>Designation</b></td><td>{{$userstaffdb->staff_title}}</td></tr>
     <tr><td><b>Date Installed</b></td><td>{{date('jS F Y', strtotime($latestuser->created_at))}}</td></tr>
     <tr><td><b>Remarks</b></td><td>{{$latestuser->remark}}</td></tr>
   </table>
@@ -63,10 +57,10 @@
       <tr><td><b>Price</b></td><td>RM {{$software->sw_price}}</td></tr>
       <tr><td><b>Purchase Order Number</b></td><td>{{$software->sw_po_no}}</td></tr>
       <tr><td><b>Purchase Order Date</b></td>
-        @if(($software->sw_datesupp) == '0000-11-30 00:00:00')
+        @if(($software->sw_date_po) == '0000-11-30 00:00:00')
         <td>Unspecified</td>
         @else
-        <td>{{ $software->sw_datesupp->format('d/m/Y') }}</td>
+        <td>{{ $software->sw_date_po->format('d/m/Y') }}</td>
         @endif</tr>
 
       <tr><td><b>Date Supplied</b></td>
@@ -75,25 +69,36 @@
         @else
         <td>{{ $software->sw_datesupp->format('d/m/Y') }}</td>
         @endif</tr>
+
+      <tr><td><b>Date Received by GIT</b></td>
+        @if(($software->sw_datefac) == '0000-11-30 00:00:00')
+        <td>Unspecified</td>
+        @else
+        <td>{{ $software->sw_datefac->format('d/m/Y') }}</td>
+        @endif</tr>
+
       <tr><td><b>Supplied By</b></td><td>{{DB::table('supplier')->where('id',$software->sw_supplier)->value('supp_name')}}</td></tr>
       <tr><td><b>Remarks</b></td><td>{{$software->sw_remark}}</td></tr>
-      <tr><td><b>Package</b></td><td>{{$software->sw_variation}}</td></tr>
+      @if($software->sw_variation == 1)
+      <tr><td><b>Package</b></td><td>OEM</td></tr>
+      @else
+      <tr><td><b>Package</b></td><td>Retail</td></tr>
+      @endif
   </table>
 </div>
 
 <!-- TRANSFER LOG SECTION -->
-<?php $prevuser = DB::table('swrecord')->where('sw_assetid', $software->sw_assetid)->where('status',1)->get();?>
+<?php $prevuser = DB::table('swrecord')->where('sw_assetid', $software->id)->where('status',1)->get();?>
 @if($prevuser->isEmpty())
 <div class="alert alert-info"><b>Info:</b> There are no previous user recorded.</div>
 @else
 <div class="showback">
-<h2>Previous User</h2>
+<h2>Previous Installation</h2>
 <table class="table table-condensed">
   <thead><tr>
     <th>Ref#</th>
     <th>Date Installed</th>
-    <th>User</th>
-    <th>Staff ID</th>
+    <th>Installed in</th>
     <th>Remark</th>
     <th>Date Software Released</th>
   </tr></thead>
@@ -102,8 +107,7 @@
     <tr>
       <td> {{$pu->id}} </td>
       <td> {{date('jS F Y', strtotime($pu->created_at))}} </td>
-      <td> {{ DB::table('staff')->where('staff_id', $pu->current_userid)->value('staff_name')}} </td>
-      <td> {{$pu->current_userid}} </td>
+      <td> {{ DB::table('hardware')->where('id', $pu->hw_assetid)->value('hw_model')}} </td>
       <td> {{$pu->remark}} </td>
       @if($pu->created_at == $pu->updated_at)
         <td></td>

@@ -31,7 +31,6 @@ class SwRecordController extends Controller
       $swToInstall = $request->input('swname');
       $id = $request->input('id'); //untuk return nanti
       $hwid = $request->input('hwid');
-      $userid = $request->input('current_userid');
       $remark = $request->input('remark');
       $getFirstSwAvailble = DB::table('software')
                             ->where('sw_model', $swToInstall)
@@ -45,7 +44,6 @@ class SwRecordController extends Controller
        $huhu = new SwRecord;
        $huhu->sw_assetid = $assetid;
        $huhu->hw_assetid = $hwid;
-       $huhu->current_userid = $userid;
        $huhu->remark = $remark;
        $huhu->status = 1;
 
@@ -58,16 +56,15 @@ class SwRecordController extends Controller
     }
 
     public function uninstall(Request $request){
-      $id = $request->input('sw_assetid');
+      $id = $request->input('swid');
 
       $returndate = DB::table('swrecord')->where('sw_assetid', $id)->orderBy('created_at', 'desc')->value('id'); //get date retu
 
-      DB::table('software')->where('sw_assetid', $id)->update(['sw_status' => 0, 'installed_in'=> 'standby', 'updated_at' => Carbon::now()]);
+      DB::table('software')->where('id', $id)->update(['sw_status' => 0, 'installed_in'=> 'standby', 'updated_at' => Carbon::now()]);
       DB::table('swrecord')->where('id', $returndate)->update(['updated_at' => Carbon::now()]);
 
       $addrec = new SwRecord;
       $addrec->sw_assetid = $id;
-      $addrec->current_userid = 'WMIT';
       $addrec->remark = $request->input('remark');
       $addrec->status = 0;
       $addrec->save();
@@ -90,20 +87,19 @@ class SwRecordController extends Controller
     }
 
     public function store(Request $request){
-      $assetid = $request->input('sw_assetid');
+      $assetid = $request->input('swid');
       $hwid = $request->input('hw_assetid');
-      $userid = $request->input('current_userid');
+
       $remark = $request->input('remark');
       $status = $request->input('status');
 
       $record = new SwRecord;
       $record->sw_assetid = $assetid;
       $record->hw_assetid = $hwid;
-      $record->current_userid = $userid;
       $record->remark = $remark;
       $record->status = 1;
 
-      DB::table('software')->where('sw_assetid', $assetid)->update(['sw_status' => 1, 'installed_in'=> $hwid, 'updated_at' => Carbon::now()]);
+      DB::table('software')->where('id', $assetid)->update(['sw_status' => 1, 'installed_in'=> $hwid, 'updated_at' => Carbon::now()]);
       flash()->success('Success!', 'Software has been bounded to the device.');
       sleep(0.1);
       $record->save();

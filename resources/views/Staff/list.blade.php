@@ -1,5 +1,6 @@
 @extends('master')
 @section('content')
+@include('Alerts::sweetalerts')
 <div >
     <div >
       <h4><i class="fa fa-angle-right"></i>Staff List</h4>

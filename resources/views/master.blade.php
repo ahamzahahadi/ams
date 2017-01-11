@@ -8,7 +8,7 @@
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
     <title>AMS</title>
-
+    <link rel="icon" href="{!! asset('img/sapura.ico') !!}"/>
     <!-- Bootstrap core CSS -->
     <link href="{{ URL::asset('css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
@@ -65,8 +65,8 @@
 
       <footer class="site-footer">
           <div class="text-center">
-              © 2016 - Sapura Group of Companies. All trademarks and copyrights held by respective owners.
-              <a href="blank.html#" class="go-top">
+              © 2016 - Amir Hamzah for Sapura Secured Technologies. All trademarks and copyrights held by respective owners.
+              <a href="#" class="go-top">
                   <i class="fa fa-angle-up"></i>
               </a>
           </div>

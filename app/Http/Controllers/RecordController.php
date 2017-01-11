@@ -45,10 +45,10 @@ class RecordController extends Controller
       $id = $request->input('hwid');
       $location = $request->input('location');
 
-      $returndate = DB::table('hwrecord')->where('fk_assetid', $id)->orderBy('created_at', 'desc')->value('id'); //get date retu
+      $recid = DB::table('hwrecord')->where('fk_assetid', $id)->where('status', 1)->value('id'); //dapatkan id record
 
       DB::table('hardware')->where('id', $id)->update(['hw_status' => 0, 'hw_location'=> $location]);
-      DB::table('hwrecord')->where('id', $returndate)->update(['updated_at' => Carbon::now(), 'status' => 2]);
+      DB::table('hwrecord')->where('id', $recid)->update(['updated_at' => Carbon::now(), 'status' => 2]);
 
       $addrec = new Record;
       $addrec->fk_assetid = $id;
@@ -92,6 +92,11 @@ class RecordController extends Controller
     public function store(Request $request){
         $id = $request->input('id');
         $userid = $request->input('current_userid');
+        //trimming the input to get only staff ID
+        $userid = strchr($userid, ':' );
+        $userid = substr($userid, 2 );
+        $userid = str_ireplace('>','',$userid);
+
         $remark = $request->input('remark');
         $created_at = $request->input('date_handed');
 

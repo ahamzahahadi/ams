@@ -12,7 +12,7 @@
       {!! Form::label('staffid', 'Staff ID:', ['class' => 'col-sm-2 control-label col-lg-5']) !!}
       {!! Form::text('staff_id', null, ['class' => 'form-control', 'required' => 'required']) !!}
     </div>
-      <div class="alert alert-danger" >  {{ $errors->first('staffid')}}</div>
+      <div class="alert alert-danger" >  {{ $errors->first('staff_id')}}</div>
 
     @else
     {!! Form::label('staffid', 'Staff ID:', ['class' => 'col-sm-2 control-label col-lg-5']) !!}

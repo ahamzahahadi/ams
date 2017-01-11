@@ -34,7 +34,7 @@ class SoftwareController extends Controller
       ];
 
       $rulesArr = [
-                  'sw_assetid'=>'unique:software',
+                  'sw_assetid'=>'required',
                   'sw_date_po'=> 'date_format:"Y-m-d"',
                   'sw_datesupp'=> 'date_format:"Y-m-d"',
                   'sw_datefac'=> 'date_format:"Y-m-d"'
@@ -74,6 +74,7 @@ class SoftwareController extends Controller
 
       $supid = $request->input('sw_supplier');
       $typeIndexNo = $request->input('sw_type');
+      $package = $request->input('sw_variation');
 
       $software = new Software;
       $software->sw_assetid = $assetid;
@@ -87,6 +88,7 @@ class SoftwareController extends Controller
       $software->sw_datefac = $datefac;
       $software->sw_supplier = $supid;
       $software->sw_type = $typeIndexNo;
+      $software->sw_variation = $package;
       $software->sw_company = ''; //jgn lupa edit ni lepas dah repath ref key ke ID,lps dah tambah kat form dia
 
       $software->save();
@@ -156,6 +158,7 @@ class SoftwareController extends Controller
 
       $supid = $request->input('sw_supplier');
       $typeIndexNo = $request->input('sw_type');
+      $package = $request->input('sw_variation');
 
       $software = Software::find($id);
       $software->sw_assetid = $assetid;
@@ -169,6 +172,7 @@ class SoftwareController extends Controller
       $software->sw_datefac = $datefac;
       $software->sw_supplier = $supid;
       $software->sw_type = $typeIndexNo;
+      $software->sw_variation = $package;
       $software->save();
 
       flash()->success('Success!', 'Update successful :D');
