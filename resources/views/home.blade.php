@@ -60,6 +60,88 @@
     </div>
 
   </div><!-- END OF PRETTY ICON WITH MINIMAL INFO -->
+  <div class="row mt"> <!-- PANEL UNTUK QUICK LOAN LOG -->
+    <div class="col-md-12">
+        <section class="task-panel tasks-widget">
+      <div class="panel-heading" id="loan">
+            <div class="pull-left"><h3><i class="fa fa-pencil-square-o"></i>  Quick Loan Log </h3></div>
+            <br><br><hr>
+      </div>
+            <div class="panel-body">
+                <div class="task-content">
+                    <ul id="sortable" class="task-list">
+                      <?php $rekodpeminjam = DB::table('loan')->get(); ?>
+                      @foreach($rekodpeminjam as $peminjam)
+                        <li class="list-primary">
+                            <div class="task-checkbox">
+                                <input type="checkbox" class="list-child" value=""  />
+                            </div>
+                            <div class="task-title">
+                                <span class="badge bg-theme">Yesterday</span>
+                                <span class="task-title-sp">{{$peminjam->borrower}} borrowed {{$peminjam->item}}</span>
+                                <div class="pull-right hidden-phone">
+                                    {!! Form::open(['method' => 'DELETE','route' => ['loan.padam', $peminjam->id]]) !!}
+                                    {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger', 'class'=>'fa fa-trash-o'] )  !!}
+                                    {!! Form::close() !!}
+                                </div>
+                            </div>
+                        </li>
+                      @endforeach
+                    </ul>
+                </div>
+                <div class=" add-task-row">
+                  <button class="btn btn-success btn-sm pull-left" data-toggle="modal" data-target="#myModal">Add New Record</button>
+                </div>
+            </div>
+        </section>
+    </div><!--/col-md-12 -->
+  </div><!-- END OF PANEL UNTUK QUICK LOAN LOG -->
+  <div class="row mt">
+              <!--CUSTOM CHART START -->
+              <div class="border-head">
+                  <h3>VISITS</h3>
+              </div>
+              <div class="custom-bar-chart">
+                  <ul class="y-axis">
+                      <li><span>10.000</span></li>
+                      <li><span>8.000</span></li>
+                      <li><span>6.000</span></li>
+                      <li><span>4.000</span></li>
+                      <li><span>2.000</span></li>
+                      <li><span>0</span></li>
+                  </ul>
+                  <div class="bar">
+                      <div class="title">JAN</div>
+                      <div class="value tooltips" data-original-title="8.500" data-toggle="tooltip" data-placement="top">85%</div>
+                  </div>
+                  <div class="bar ">
+                      <div class="title">FEB</div>
+                      <div class="value tooltips" data-original-title="5.000" data-toggle="tooltip" data-placement="top">50%</div>
+                  </div>
+                  <div class="bar ">
+                      <div class="title">MAR</div>
+                      <div class="value tooltips" data-original-title="6.000" data-toggle="tooltip" data-placement="top">60%</div>
+                  </div>
+                  <div class="bar ">
+                      <div class="title">APR</div>
+                      <div class="value tooltips" data-original-title="4.500" data-toggle="tooltip" data-placement="top">45%</div>
+                  </div>
+                  <div class="bar">
+                      <div class="title">MAY</div>
+                      <div class="value tooltips" data-original-title="3.200" data-toggle="tooltip" data-placement="top">32%</div>
+                  </div>
+                  <div class="bar ">
+                      <div class="title">JUN</div>
+                      <div class="value tooltips" data-original-title="6.200" data-toggle="tooltip" data-placement="top">62%</div>
+                  </div>
+                  <div class="bar">
+                      <div class="title">JUL</div>
+                      <div class="value tooltips" data-original-title="7.500" data-toggle="tooltip" data-placement="top">75%</div>
+                  </div>
+              </div>
+              <!--custom chart end-->
+  </div><!-- /row -->
+
     <!-- start of black panel row -->
     <div class="row mt">
       <!-- TWITTER PANEL -->
@@ -156,14 +238,9 @@
           <div class="white-header">
             <h5>TOP PRODUCT</h5>
           </div>
-          <div class="row">
-            <div class="col-sm-6 col-xs-6 goleft">
-              <p><i class="fa fa-heart"></i> 122</p>
-            </div>
-            <div class="col-sm-6 col-xs-6"></div>
-          </div>
+
           <div class="centered">
-            <img src="assets/img/product.png" width="120">
+            <img src="{{URL::asset('img/p2.png')}}" height="180" width="250">
           </div>
         </div>
       </div><!-- /col-md-4 -->
@@ -192,42 +269,7 @@
 
     </div><!-- PENUTUP ROW PANEL SERVER/TOP PRODUCT/TOP USER -->
 
-    <div class="row mt"> <!-- PANEL UNTUK QUICK LOAN LOG -->
-      <div class="col-md-12">
-          <section class="task-panel tasks-widget">
-        <div class="panel-heading" id="loan">
-              <div class="pull-left"><h3><i class="fa fa-pencil-square-o"></i>  Quick Loan Log </h3></div>
-              <br><br><hr>
-        </div>
-              <div class="panel-body">
-                  <div class="task-content">
-                      <ul id="sortable" class="task-list">
-                        <?php $rekodpeminjam = DB::table('loan')->get(); ?>
-                        @foreach($rekodpeminjam as $peminjam)
-                          <li class="list-primary">
-                              <div class="task-checkbox">
-                                  <input type="checkbox" class="list-child" value=""  />
-                              </div>
-                              <div class="task-title">
-                                  <span class="badge bg-theme">Yesterday</span>
-                                  <span class="task-title-sp">{{$peminjam->borrower}} borrowed {{$peminjam->item}}</span>
-                                  <div class="pull-right hidden-phone">
-                                      {!! Form::open(['method' => 'DELETE','route' => ['loan.padam', $peminjam->id]]) !!}
-                                      {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger', 'class'=>'fa fa-trash-o'] )  !!}
-                                      {!! Form::close() !!}
-                                  </div>
-                              </div>
-                          </li>
-                        @endforeach
-                      </ul>
-                  </div>
-                  <div class=" add-task-row">
-                    <button class="btn btn-success btn-sm pull-left" data-toggle="modal" data-target="#myModal">Add New Record</button>
-                  </div>
-              </div>
-          </section>
-      </div><!--/col-md-12 -->
-    </div>
+
   </div>
 
 
@@ -361,8 +403,11 @@
 
 @include('modal.addloaner')
 <!-- page-specific scripting -->
-<script src={{ url('http://code.jquery.com/ui/1.10.3/jquery-ui.js') }} </script>
-<script src="{{ URL::asset('js/tasks.js') }}" type="text/javascript"></script>
+<script src="{{URL::asset('http://code.jquery.com/ui/1.10.3/jquery-ui.js') }}"> </script>
+<script src="{{URL::asset('js/tasks.js') }}" type="text/javascript"></script>
+<script src="{{URL::asset('js/jquery.sparkline.js')}}"></script>
+<script src="{{URL::asset('js/sparkline-chart.js')}}"></script>
+
 <script>
   jQuery(document).ready(function() {
       TaskList.initTaskWidget();
@@ -372,9 +417,5 @@
       $( "#sortable" ).disableSelection();
   });
 </script>
-<script>
-    $(function(){
-        $('select.styled').customSelect();
-    });
-</script>
+
 @endsection

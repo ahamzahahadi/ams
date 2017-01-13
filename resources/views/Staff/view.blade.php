@@ -1,5 +1,6 @@
 @extends('master')
 @section('content')
+@include('Alerts::sweetalerts')
 <h1>{{$staff->staff_name}} - {{$staff->staff_id}}
 <div class="btn-group">
   <button type="button" class="btn btn-theme dropdown-toggle" data-toggle="dropdown" style="display:inline-block">
@@ -21,12 +22,13 @@
   <table class="table table-condensed table-bordered">
     <tr><td><b>Name</b></td><td>{{$staff->staff_name}}</td></tr>
     <tr><td><b>Staff ID</b></td><td>{{$staff->staff_id}}</td></tr>
+    <tr><td><b>Designation</b></td><td>{{$staff->staff_title}}</td></tr>
     <tr><td><b>Email</b></td><td>{{$staff->staff_mail}}</td></tr>
     <tr><td><b>Mobile</b></td><td>{{$staff->staff_mobile}}</td></tr>
     <tr><td><b>Telephone no.</b></td><td>{{$staff->staff_telno}}</td></tr>
     <tr><td><b>Department</b></td><td>{{$staff->staff_dept}}</td></tr>
-    <tr><td><b>Designation</b></td><td>{{$staff->staff_title}}</td></tr>
     <tr><td><b>Company</b></td><td>{{$staff->staff_company}}</td></tr>
+    <tr><td><b>Office Location</b></td><td>{{$staff->staff_officeLocation}}</td></tr>
   </table>
 </div>
 
@@ -55,7 +57,7 @@
     </thead>
         @foreach($hwrec as $recku)
       <tr>
-        <?php $idhw = DB::table('hardware')->where('id', $recku->fk_assetid)->first() ?>
+        <?php $idhw = DB::table('hardware')->where('id', $recku->id)->first() ?>
         <td>{{$recku->id}}</td>
         <td>{{$idhw->hw_model}}</td>
         <td>{{$idhw->hw_assetid}}</td>

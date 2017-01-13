@@ -25,15 +25,19 @@ $(function() {
     @endif
 
     <li><a href="{{action('HardwareController@edit', $hardware->id)}}">Edit Hardware</a></li>
-    <li class="dropdown-submenu"><a class="test" tabindex="-1" href="#"><strong>Change status to   </strong><span class="fa fa-angle-right"></span></a>
+    <li class="dropdown-submenu"><a class="test" tabindex="-1" href="#"><strong>Change status to</strong><span class="fa fa-angle-right"></span></a>
         <ul class="dropdown-menu">
-          <li><a tabindex="-1" href="#"><span class="badge bg-success">Assigned</span></a></li>
-          <li><a tabindex="-1" href="#"> Available </a></li>
-          <li><a tabindex="-1" href="#"> BER </a></li>
-          <li><a tabindex="-1" href="#"> Faulty </a></li>
-          <li><a tabindex="-1" href="#"> MAF </a></li>
-          <li><a tabindex="-1" href="#"> Missing </a></li>
-          <li><a tabindex="-1" href="#"> Stolen </a></li>
+          @if($hardware->hw_status != '1') <!-- kalau selain assigned -->
+            @if($hardware->hw_status != '0') <!-- kalau selain available n assigned-->
+            <li style="text-align:center"><a tabindex="-1" href="{{action('RecordController@repairform', $hardware->id)}}"><span class="badge bg-info">Available</span></a></li>
+            @endif
+            <li style="text-align:center"><a tabindex="-1" href="{{action('RecordController@berform', $hardware->id)}}"><span class="badge">&nbsp&nbsp&nbsp&nbsp  BER  &nbsp&nbsp&nbsp&nbsp</span></a></li>
+            <li style="text-align:center"><a tabindex="-1" href="{{action('RecordController@faultyform', $hardware->id)}}"><span class="badge bg-warning">&nbsp&nbsp  Faulty  &nbsp&nbsp</span></a></li>
+            <li style="text-align:center"><a tabindex="-1" href="{{action('RecordController@mafform', $hardware->id)}}"><span class="badge bg-primary">&nbsp&nbsp&nbsp&nbsp  MAF  &nbsp&nbsp&nbsp&nbsp</span></a></li>
+          @endif
+          <li style="text-align:center" style="background-color:#263244 "><a tabindex="-1" href="{{action('RecordController@missingform', $hardware->id)}}"><span class="badge bg-inverse">Missing</span></a></li>
+          <li style="text-align:center"><a tabindex="-1" href="{{action('RecordController@stolenform', $hardware->id)}}"><span class="badge bg-important">&nbsp  Stolen  &nbsp</span></a></li>
+
         </ul>
     </li>
     <li role="separator" class="divider"></li>
@@ -108,6 +112,7 @@ $(function() {
       <tr><td><b>Email</b></td><td>{{$userstaffdb->staff_mail}}</td></tr>
       <tr><td><b>Mobile</b></td><td>{{$userstaffdb->staff_mobile}}</td></tr>
       <tr><td><b>Department</b></td><td>{{$userstaffdb->staff_dept}}</td></tr>
+      <tr><td><b>Company</b></td><td>{{$userstaffdb->staff_company}}</td></tr>
       <tr><td><b>Designation</b></td><td>{{$userstaffdb->staff_title}}</td></tr>
       <tr><td><b>Date Assigned</b></td><td>{{date('jS F Y', strtotime($latestuser->created_at))}}</td></tr>
       <tr><td><b>Remarks</b></td><td>{{$latestuser->remark}}</td></tr>
@@ -115,7 +120,21 @@ $(function() {
   </div>
 @else
   <div class="showback">
-    <h2>Current Status: <button type="button" class="btn btn-round btn-primary">Available</button></h2>
+    <h2>Current Status:
+      @if($hardware->hw_status=='2')
+      <button type="button" class="btn btn-round btn-warning">Faulty</button>
+      @elseif($hardware->hw_status=='3')
+      <button type="button" class="btn btn-round">BER</button>
+      @elseif($hardware->hw_status=='4')
+      <button type="button" class="btn btn-round btn-danger">Stolen</button>
+      @elseif($hardware->hw_status=='5')
+      <button type="button" class="btn btn-round">Missing</button>
+      @elseif($hardware->hw_status=='6')
+      <button type="button" class="btn btn-round btn-theme02">MAF</button>
+      @else
+      <button type="button" class="btn btn-round btn-primary">Available</button>
+      @endif
+    </h2>
     &nbsp&nbsp&nbsp&nbsp&nbsp<b>Stored at: </b>{{$hardware->hw_location}}
   </div>
 @endif
@@ -153,13 +172,14 @@ $(function() {
         <td>{{ $hardware->hw_datefac->format('d/m/Y') }}</td>
         @endif</tr>
       <tr><td><b>Supplied By</b></td><td>{{DB::table('supplier')->where('id',$hardware->hw_supplier)->value('supp_name')}}</td></tr>
+      <tr><td><b>Hardware remarks</b></td><td>{{$hardware->hw_remark}}</td></tr>
     </table>
   </div>
 
 <!-- LIST OF SOFTWARE INSTALLED -->
 
 <?php $installedsoftware = DB::table('software')
-->where('installed_in', $hardware->hw_assetid)
+->where('installed_in', $hardware->id)
 ->get();?>
 
 @include('modal.addsoftware')
@@ -231,10 +251,18 @@ $(function() {
           <td> {{ DB::table('staff')->where('staff_id', $pu->current_userid)->value('staff_name')}} </td>
           <td> {{$pu->current_userid}} </td>
           <td> {{$pu->remark}} </td>
-          @if($pu->status == 1)
+          @if($pu->status == 1 || $pu->status == 6)
             <td></td>
           @elseif($pu->status == 0)
             <td><strong>Stored</stored></td>
+          @elseif($pu->status == 3)
+            <td><strong>On Hold - Faulty</stored></td>
+          @elseif($pu->status == 4)
+            <td><strong>Declared BER</stored></td>
+          @elseif($pu->status == 5)
+            <td><strong>Declared Stolen</stored></td>
+          @elseif($pu->status == 7)
+            <td><strong>Missing - Unknown Location</stored></td>
           @else
           <td> {{date('jS F Y', strtotime($pu->updated_at))}} </td>
           @endif

@@ -35,6 +35,9 @@
 
     {!! Form::label('price', 'Price:', ['class' => 'control-label']) !!} <br>RM
     {!! Form::input('number','hw_price', null, ['class' => 'form-control', 'class' =>'formsize-100', 'step' => 'any', 'min'=>'0', 'placeholder'=> '0.00']) !!}
+    <br>
+    {!! Form::label('hw_remark', 'Remarks: ', ['class' => 'control-label']) !!}
+    {!! Form::text('hw_remark', null, ['class' => 'form-control']) !!}
 
   </div>
   <div class="col-lg-6">
@@ -130,7 +133,7 @@
 
   </div>
 </div>
-<div class="col-md-12 centered">
+<div class="col-md-12 centered"><br>
   {!! Form::submit('Add', ['class' => 'btn btn-primary']) !!}
   <a href="{{action('HardwareController@index')}}" class="btn btn-default">Cancel</a>
   {!! Form::close() !!}

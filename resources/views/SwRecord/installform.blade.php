@@ -14,7 +14,7 @@
 
   {!! form::label('installinto','Install into:', ['class'=> 'control-label'] )!!}
   <div id="findhw">
-  {!! Form::text('hw_assetid', null, ['class' => 'form-control','size' => "180"]) !!}
+  {!! Form::text('hw_serialno', null, ['class' => 'form-control','size' => "180"]) !!}
   </div>
   <span class="help-block"><sup>&nbsp&nbsp&nbsp&nbspPlease choose from the suggestions listed.</sup></span>
 
@@ -37,7 +37,7 @@ $arrlength = count($hwinfo);
 $x=0;
 ?>
 @foreach($hwinfo as $hw)
-<?php $hwdetail[$x] = "$hw->hw_model $hw->hw_serialno";
+<?php $hwdetail[$x] = "$hw->hw_model <SN: $hw->hw_serialno>";
 $x++;
 ?>
 @endforeach

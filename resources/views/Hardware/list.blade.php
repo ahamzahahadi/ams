@@ -119,6 +119,10 @@
             <td><span class="badge">BER</span></td>
             @elseif($hw->hw_status == '4')
             <td><span class="badge bg-important">Stolen</span></td>
+            @elseif($hw->hw_status == '5')
+            <td><span class="badge bg-inverse">Missing</span></td>
+            @elseif($hw->hw_status == '6')
+            <td><span class="badge bg-primary">MAF</span></td>
             @else
             <td><span class="badge bg-info">Available</span></td>
             @endif

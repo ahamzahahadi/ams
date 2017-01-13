@@ -57,6 +57,7 @@ class HardwareController extends Controller
         $pono = $request->input('hw_po_no');
         $company = $request->input('hw_company');
         $class = $request->input('hw_class');
+        $remark = $request->input('hw_remark');
 
         if($request->input('hw_price') == ''){
           $price= '0.00';
@@ -97,6 +98,7 @@ class HardwareController extends Controller
         $hardware->hw_type = $typeIndexNo;
         $hardware->hw_company = $company;
         $hardware->hw_class = $class;
+        $hardware->hw_remark = $remark;
         $hardware->save();
 
         flash()->success('Success!', 'New record has been added.');
@@ -140,6 +142,7 @@ class HardwareController extends Controller
       $pono = $request->input('hw_po_no');
       $company = $request->input('hw_company');
       $class = $request->input('hw_class');
+      $remark = $request->input('hw_remark');
 
       if($request->input('hw_price') == ''){
         $price= '0.00';
@@ -179,6 +182,7 @@ class HardwareController extends Controller
       $hardware->hw_type = $typeIndexNo;
       $hardware->hw_company = $company;
       $hardware->hw_class = $class;
+      $hardware->hw_remark = $remark;
       $hardware->save();
 
       flash()->success('Success!', 'Record successfully updated :D');

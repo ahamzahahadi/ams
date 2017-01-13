@@ -43,7 +43,6 @@
           {!! Form::textarea('remark', null, ['class' => 'form-control']) !!}
 
 <!-- SOME AUTOFILL INFOS -->
-          {!! Form::hidden('hwid', "$hardware->hw_assetid") !!}
           @if($hardware->hw_status == '1') <!-- sebab kalau status = 0, xde current user, crash -->
           {!! Form::hidden('current_userid', "$userstaffdb->staff_id") !!}
           {!! Form::hidden('id', "$hardware->id") !!}

@@ -30,7 +30,7 @@ class RecordController extends Controller
     {
         //
     }
-
+    //list of forms
     public function recform($id){
       $data['hardware'] = Hardware::find($id);
       return view('record.form',$data)->with('datenow', Carbon::now()->format('d/m/Y'));
@@ -39,6 +39,78 @@ class RecordController extends Controller
     public function returnasset($id){
       $data['hardware'] = Hardware::find($id);
       return view('record.returnform',$data)->with('datenow', Carbon::now()->format('d/m/Y'));
+    }
+
+    public function berform($id){
+      $data['hardware'] = Hardware::find($id);
+      return view('record.berform',$data)->with('datenow', Carbon::now()->format('d/m/Y'));
+    }
+
+    public function faultyform($id){
+      $data['hardware'] = Hardware::find($id);
+      return view('record.faultyform',$data)->with('datenow', Carbon::now()->format('d/m/Y'));
+    }
+
+    public function stolenform($id){
+      $data['hardware'] = Hardware::find($id);
+      return view('record.stolenform',$data)->with('datenow', Carbon::now()->format('d/m/Y'));
+    }
+
+    public function mafform($id){
+      $data['hardware'] = Hardware::find($id);
+      return view('record.mafform',$data)->with('datenow', Carbon::now()->format('d/m/Y'));
+    }
+
+    public function missingform($id){
+      $data['hardware'] = Hardware::find($id);
+      return view('record.missingform',$data)->with('datenow', Carbon::now()->format('d/m/Y'));
+    }
+    public function repairform($id){
+      $data['hardware'] = Hardware::find($id);
+      return view('record.repairform',$data)->with('datenow', Carbon::now()->format('d/m/Y'));
+    }
+
+    //backend functions
+    public function changestatus(Request $request){
+      $chgstat = $request->input('status'); // 2-Faulty, 3-BER , 4-Stolen, 5-Missing, 6-MAF
+      if($chgstat == 3){ //if BER
+        $hwrecstat = 4;
+      }elseif($chgstat == 2){ //if Faulty
+        $hwrecstat = 3;
+      }elseif($chgstat == 4){ //if Stolen
+        $hwrecstat = 5;
+      }elseif($chgstat == 5){ //if Missing
+        $hwrecstat = 7;
+      }elseif($chgstat == 6){ //if MAF
+        $hwrecstat = 6;
+      }elseif($chgstat == 0){ //if chg to Available
+        $hwrecstat = 0;
+      }
+      $id = $request->input('hwid');
+      $location = $request->input('location');
+
+      $recid = DB::table('hwrecord')->select('id')->where('fk_assetid', $id)->orderBy('updated_at','desc')->first(); //dapatkan id record
+      DB::table('hardware')->where('id', $id)->update(['hw_status' => $chgstat, 'hw_location'=> $location]);
+      DB::table('hwrecord')->where('id', $recid->id)->update(['updated_at' => Carbon::now(), 'status' => 2]);
+
+      $addrec = new Record;
+      $addrec->fk_assetid = $id;
+      if($chgstat == 6){
+        $addrec->current_userid = 'MAF';
+      }
+      else{
+      $addrec->current_userid = 'WMIT';
+      }
+      $addrec->remark = $request->input('remark');
+      $addrec->status = $hwrecstat;
+      $addrec->save();
+
+      if($chgstat == 3){
+        flash()->success('Success', 'Asset has been declared BER');
+      }else{
+      flash()->success('Success!', 'Asset status change have been recorded.');
+      }
+      return redirect()->action('RecordController@show', $id);
     }
 
     public function returnedit(Request $request){
@@ -58,7 +130,7 @@ class RecordController extends Controller
       $addrec->save();
 
       flash()->success('Success!', 'Asset return have been recorded.');
-      return redirect()->action('HardwareController@index');
+      return redirect()->action('RecordController@show', $id);
     }
 
     public function modalassign(Request $request){
@@ -74,17 +146,17 @@ class RecordController extends Controller
         return redirect()->back()->with('ada_error', $hwToGive);
       }
       else{
-        $assetid = $getFirstHwAvailble->hw_assetid;
+        $assetid = $getFirstHwAvailble->id;
         $huhu = new Record;
         $huhu->fk_assetid = $assetid;
         $huhu->current_userid = $userid;
         $huhu->remark = $remark;
         $huhu->status = 1;
 
-        DB::table('hardware')->where('hw_assetid', $assetid)->update(['hw_status' => 1]);
-        flash()->success('Success!', 'Asset requisition has been recorded.');
-        sleep(0.1);
+        DB::table('hardware')->where('id', $assetid)->update(['hw_status' => 1]);
+        //sleep(0.1);
         $huhu->save();
+        flash()->success('Success!', 'Asset requisition has been recorded.');
         return redirect()->to(action('StaffController@show', $id).'#hwlist');
       }
     }
@@ -109,52 +181,27 @@ class RecordController extends Controller
 
         DB::table('hardware')->where('id', $id)->update(['hw_status' => 1]);
         flash()->success('Success!', 'Asset requisition has been recorded.');
-        sleep(0.1);
         $record->save();
         return redirect()->action('RecordController@show', $id);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
       $data['hardware'] = Hardware::find($id);
       return view('record.rec',$data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

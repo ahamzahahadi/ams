@@ -41,6 +41,14 @@ Route::get('/addHardware', function() {
 
 Route::get('/record/form/{id}',['uses' => 'RecordController@recform']);
 Route::get('/record/returnform/{id}',['uses' => 'RecordController@returnasset']);
+Route::get('/record/berform/{id}',['uses' => 'RecordController@berform']);
+Route::get('/record/faultyform/{id}',['uses' => 'RecordController@faultyform']);
+Route::get('/record/stolenform/{id}',['uses' => 'RecordController@stolenform']);
+Route::get('/record/mafform/{id}',['uses' => 'RecordController@mafform']);
+Route::get('/record/missingform/{id}',['uses' => 'RecordController@missingform']);
+Route::get('/record/repairform/{id}',['uses' => 'RecordController@repairform']);
+
+Route::post('record/changestatus',['uses' => 'RecordController@changestatus']);
 Route::post('record/returned', ['uses' => 'RecordController@returnedit']);
 Route::post('hwrecord/modalassign', ['uses' => 'RecordController@modalassign']);
 

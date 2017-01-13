@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="Dashboard">
-    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
     <title>AMS</title>
     <link rel="icon" href="{!! asset('img/sapura.ico') !!}"/>
@@ -22,7 +20,7 @@
     <!-- SweetAlert -->
     <link href="{{ URL::asset('css/sweetalert.css') }}" rel="stylesheet" type="text/css" />
     <script src="{{ URL::asset('js/sweetalert.min.js') }}"></script>
-    <script src="{{ URL::asset('js/swag.js') }}"></script>
+    <!-- <script src="{{ URL::asset('js/swag.js') }}"></script> -->
     @include('Alerts::sweetalerts')
     <!-- JQuery JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

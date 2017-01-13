@@ -1,5 +1,6 @@
 @extends('master')
 @section('content')
+@include('Alerts::sweetalerts')
 
 <h1>Software Information (Asset ID: <b>{{$software->sw_assetid}}</b> ) </h1>
 

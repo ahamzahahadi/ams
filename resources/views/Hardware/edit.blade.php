@@ -1,5 +1,4 @@
 @extends('master')
-
 @section('content')
 
 <h1>Update Asset</h1>
@@ -12,13 +11,13 @@
     @if($errors->has('hw_assetid'))
     <div class="form-group has-error">
       {!! Form::label('assetid', 'Asset ID:', ['class' => 'col-sm-2 control-label col-lg-5']) !!}
-      {!! Form::text('hw_assetid', null, ['class' => 'form-control']) !!}
+      {!! Form::text('hw_assetid', null, ['class' => 'form-control', 'required' => 'required']) !!}
     </div>
     <div class="alert alert-danger" >  {{ $errors->first('hw_assetid')}}</div>
 
     @else
     {!! Form::label('assetid', 'Asset ID:', ['class' => 'control-label']) !!}
-    {!! Form::text('hw_assetid', null, ['class' => 'form-control']) !!}
+    {!! Form::text('hw_assetid', null, ['class' => 'form-control','required' => 'required']) !!}
     @endif
 
     {!! Form::label('serialno', 'Serial number:', ['class' => 'control-label']) !!}
@@ -35,7 +34,9 @@
 
     {!! Form::label('price', 'Price:', ['class' => 'control-label']) !!} <br>RM
     {!! Form::input('number','hw_price', null, ['class' => 'form-control', 'class' => 'formsize-100', 'step' => 'any', 'min'=>'0']) !!}
-
+    <br>
+    {!! Form::label('hw_remark', 'Remarks: ', ['class' => 'control-label']) !!}
+    {!! Form::text('hw_remark', null, ['class' => 'form-control']) !!}
   </div>
   <div class="col-lg-6">
     <!-- validation for PO date -->
@@ -76,7 +77,7 @@
     $value2 = DB::table('hwtype')->where('flag', 1)->orderBy('type', 'asc')->pluck('type'); ?>
 
     <div class="col-sm-6">
-      {!! Form::label('hw_companylel', 'Owner Company: ', ['class' => 'control-label']) !!} <br>
+      {!! Form::label('hw_company', 'Owner Company: ', ['class' => 'control-label']) !!} <br>
       <?php $arraycomp = ['SAS','SST', 'STB', 'SDSB', 'SRSB', 'SLCT'];
             $arrayclass = ['Standard', 'Service', 'SAILS'];?>
       <select name='hw_company' class = 'form-control'>
@@ -140,9 +141,10 @@
         <button class="btn btn-round btn-info" data-toggle="modal" data-target="#myModal2">Add Asset Type</button>
       </div>
     </div>
+
   </div>
 </div>
-<div class="col-md-12 centered">
+<div class="col-md-12 centered"><br>
   {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
   <a href="{{URL::previous()}}" class="btn btn-default">Cancel</a>
   {!! Form::close() !!}
