@@ -3,6 +3,7 @@
 <link rel="stylesheet" type="text/css" href="{{URL::asset('lineicons/style.css')}}">
 <link href="{{ URL::asset('css/to-do.css') }}" rel="stylesheet">
 <div class="row">
+<link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
 
 <!-- FETCH LIVE RECORDS -->
     <?php $hwcount = DB::table('hardware')->count();//total hardware
@@ -96,10 +97,27 @@
         </section>
     </div><!--/col-md-12 -->
   </div><!-- END OF PANEL UNTUK QUICK LOAN LOG -->
+  
+  <div class="row mt">
+
+    <div class="col-lg-5">
+      <h3><b>CURRENT STATUS SUMMARY (Unit Count)</b></h3>
+      <div id="donut-example"></div>
+    </div>
+
+  <div class="col-lg-2"></div>
+
+    <div class="col-lg-5">
+      <h5>SOFTWARE IN USE</h5>
+      <div id="donut-example"></div>
+    </div>
+
+  </div>
+
   <div class="row mt">
               <!--CUSTOM CHART START -->
               <div class="border-head">
-                  <h3>VISITS</h3>
+                  <h3>HARDWARE IN ACTIVE DUTY</h3>
               </div>
               <div class="custom-bar-chart">
                   <ul class="y-axis">
@@ -113,6 +131,8 @@
                   <div class="bar">
                       <div class="title">JAN</div>
                       <div class="value tooltips" data-original-title="8.500" data-toggle="tooltip" data-placement="top">85%</div>
+                      <!-- data original title = mouse over
+                      data placement = ketinggian bar itu -->
                   </div>
                   <div class="bar ">
                       <div class="title">FEB</div>
@@ -145,10 +165,23 @@
     <!-- start of black panel row -->
     <div class="row mt">
       <!-- TWITTER PANEL -->
+      <div class="col-md-4 col-sm-4 mb">
+        <!-- REVENUE PANEL -->
+        <div class="darkblue-panel pn">
+          <div class="darkblue-header">
+            <h5>ASSET REQUISITIONS RECORDED</h5>
+          </div>
+          <div class="chart mt">
+            <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,464,655]"></div>
+          </div>
+          <p class="mt"><b>78 Requisitions </b><br/>in the past 11 months</p>
+        </div>
+      </div><!-- /col-md-4 -->
+
       <div class="col-md-4 mb">
         <div class="darkblue-panel pn">
           <div class="darkblue-header">
-            <h5>NOTEBOOK IN USE</h5>
+            <h5>TOTAL HARDWARE ASSET IN USE</h5>
           </div>
           <canvas id="serverstatus02" height="120" width="120"></canvas>
           <script>
@@ -165,7 +198,7 @@
           ];
           var myDoughnut = new Chart(document.getElementById("serverstatus02").getContext("2d")).Doughnut(doughnutData);
           </script>
-          <p>{{$totnotebook - $notebookinuse}} Available / {{$notebookinuse}} In Use</p>
+          <p>{{$notebookinuse}} In Use</p>
           <footer>
             <div class="pull-left">
               <h5><i class="fa fa-hdd-o"></i> {{$totnotebook}} Total</h5>
@@ -178,27 +211,16 @@
       </div><!-- /col-md-4 -->
 
 
-      <div class="col-md-4 mb">
-        <!-- INSTAGRAM PANEL -->
-        <div class="instagram-panel pn">
-          <i class="fa fa-instagram fa-4x"></i>
-          <p>@THISISYOU<br/>
-            5 min. ago
-          </p>
-          <p><i class="fa fa-comment"></i> 18 | <i class="fa fa-heart"></i> 49</p>
-        </div>
-      </div><!-- /col-md-4 -->
-
       <div class="col-md-4 col-sm-4 mb">
         <!-- REVENUE PANEL -->
         <div class="darkblue-panel pn">
           <div class="darkblue-header">
-            <h5>REVENUE</h5>
+            <h5>ASSET RETURNS RECORDED</h5>
           </div>
           <div class="chart mt">
             <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,464,655]"></div>
           </div>
-          <p class="mt"><b>$ 17,980</b><br/>Month Income</p>
+          <p class="mt"><b>103 Returns</b><br/>in the past 11 months</p>
         </div>
       </div><!-- /col-md-4 -->
 
@@ -240,7 +262,7 @@
           </div>
 
           <div class="centered">
-            <img src="{{URL::asset('img/p2.png')}}" height="180" width="250">
+            <img src="{{URL::asset('img/p2t.png')}}" height="180" width="250">
           </div>
         </div>
       </div><!-- /col-md-4 -->
@@ -340,7 +362,7 @@
                     <!-- First Member -->
                     <div class="desc">
                       <div class="thumb">
-                        <img class="img-circle" src="{{URL::asset('img/abgk.jpg')}}" width="60px" height="60px" align="left">
+                        <img class="img-circle" src="{{URL::asset('img/abgk1.jpg')}}" width="60px" height="60px" align="left">
                       </div>
                       <div class="details">
                         <p><a href="#">KHAIRUL ANUAR</a><br/>
@@ -351,7 +373,7 @@
                     <!-- Second Member -->
                     <div class="desc">
                       <div class="thumb">
-                        <img class="img-circle" src="{{URL::asset('img/ain.png')}}" width="60px" height="60px" align="">
+                        <img class="img-circle" src="{{URL::asset('img/ain1.png')}}" width="60px" height="60px" align="">
                       </div>
                       <div class="details">
                         <p><a href="#">SHASARIDA</a><br/>
@@ -403,7 +425,8 @@
 
 @include('modal.addloaner')
 <!-- page-specific scripting -->
-<script src="{{URL::asset('http://code.jquery.com/ui/1.10.3/jquery-ui.js') }}"> </script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
 <script src="{{URL::asset('js/tasks.js') }}" type="text/javascript"></script>
 <script src="{{URL::asset('js/jquery.sparkline.js')}}"></script>
 <script src="{{URL::asset('js/sparkline-chart.js')}}"></script>
@@ -417,5 +440,38 @@
       $( "#sortable" ).disableSelection();
   });
 </script>
+<!-- script for morris donut -->
+<?php $totavailable = DB::table('hardware')->where('hw_status',0)->count();
+      $totassigned = DB::table('hardware')->where('hw_status',1)->count();
+      $totber = DB::table('hardware')->where('hw_status',3)->count();
+      $totstolen = DB::table('hardware')->where('hw_status',4)->count();
+      $totmissing = DB::table('hardware')->where('hw_status',5)->count();?>
+<script>
+var available = Number('<?php echo $totavailable; ?>');
+var assigned = Number('<?php echo $totassigned; ?>');
+var ber = Number('<?php echo $totber; ?>');
+var stolen = Number('<?php echo $totstolen; ?>');
+var missing = Number('<?php echo $totmissing; ?>');
+
+Morris.Donut({
+  element: 'donut-example',
+  data: [
+    {label: "Available", value: available},
+    {label: "Assigned", value: assigned},
+    {label: "BER", value: ber},
+    {label: "Stolen", value: stolen},
+    {label: "Missing", value: missing}
+  ],
+  colors: [
+  '#2bc4ba', // turqoise
+  '#aae88f', // hijau
+  '#d65f20', //kuning
+  '#cc2610', //merah
+  '#121c84' // biru gelap
+]
+});
+</script>
+
+
 
 @endsection

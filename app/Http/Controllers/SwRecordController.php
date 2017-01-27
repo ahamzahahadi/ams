@@ -28,31 +28,50 @@ class SwRecordController extends Controller
     }
 
     public function modalinstall(Request $request){
+      $prodkey = $request->input('sw_prodkey');
       $swToInstall = $request->input('swname');
       $id = $request->input('id'); //untuk return nanti (id hardware)
       $remark = $request->input('remark');
-      $getFirstSwAvailble = DB::table('software')
-                            ->where('sw_model', $swToInstall)
-                            ->where('sw_status', 0)
-                            ->first();
-      if($getFirstSwAvailble == null){
-        return redirect()->back()->with('ada_error', $swToInstall);
-      }
-      else{
-       $assetid = $getFirstSwAvailble->id;
+      $dateinstall = $request->input('updated_at');
+
+      if($prodkey == ''){ //kalau x cari guna prodkey
+            $getFirstSwAvailble = DB::table('software')->where('sw_model', $swToInstall)->where('sw_status', 0)->first();
+            if($getFirstSwAvailble == null){
+              return redirect()->back()->with('ada_error', $swToInstall);
+            }else{
+             $assetid = $getFirstSwAvailble->id;
+             $swname = $getFirstSwAvailble->sw_model;
+            }
+     }else{ //kalau ada prodkey input
+       //if salah format return "pls select from suggested"
+       if(substr($prodkey,-1) != ">"){
+         return redirect()->back()->with('ada_error', 2); // error = 2, input x select suggestion
+       }
+       $prodkey = strchr($prodkey, '<');
+       $prodkey = substr($prodkey, 2);
+       $prodkey = str_ireplace(' >','',$prodkey);
+       if($prodkey == ''){
+         return redirect()->back()->with('ada_error', 3); // error = 3, xde prodkey
+       }
+
+       $findSwUsingProdkey = DB::table('software')->where('sw_prodkey', $prodkey)->where('sw_status', 0)->first();
+       $assetid = $findSwUsingProdkey->id;
+       $swname = $findSwUsingProdkey->sw_model;
+
+     }
        $huhu = new SwRecord;
        $huhu->sw_assetid = $assetid;
        $huhu->hw_assetid = $id;
        $huhu->remark = $remark;
        $huhu->status = 1;
-
-       DB::table('software')->where('id', $assetid)->update(['sw_status' => 1, 'installed_in'=> $id, 'updated_at' => Carbon::now()]);
-       flash()->success('Success!', $getFirstSwAvailble->sw_model.' has been installed to the device.');
-       sleep(0.1);
        $huhu->save();
+
+       DB::table('software')->where('id', $assetid)->update(['sw_status' => 1, 'installed_in'=> $id, 'updated_at' => $dateinstall]); //Carbon::now()
+       flash()->success('Success!', $swname.' has been installed to the device.');
+       sleep(0.1);
+
        return redirect()->to(action('RecordController@show', $id).'#swlist');
-     }
-    }
+  }
 
     public function uninstall(Request $request){
       $id = $request->input('swid');
@@ -86,29 +105,33 @@ class SwRecordController extends Controller
     }
 
     public function store(Request $request){
-      $assetid = $request->input('swid');
       $hwsn = $request->input('hw_serialno');
-      $hwsn = strchr($hwsn, ':' );
-      $hwsn = substr($hwsn, 2 );
-      $hwsn = str_ireplace('>','',$hwsn);
-      $converttoid = DB::table('hardware')->where('hw_serialno', $hwsn)->value('id');
 
-      $remark = $request->input('remark');
-      $status = $request->input('status');
+      if($hwsn == '' || substr($hwsn,-1) != ">"){
+        return redirect()->back()->with('ada_error', 2);
+      }else{
+        $assetid = $request->input('swid');
+        $hwsn = strchr($hwsn, ':' );
+        $hwsn = substr($hwsn, 2 );
+        $hwsn = str_ireplace('>','',$hwsn);
+        $converttoid = DB::table('hardware')->where('hw_serialno', $hwsn)->value('id');
 
-      $record = new SwRecord;
-      $record->sw_assetid = $assetid;
-      $record->hw_assetid = $converttoid;
-      $record->remark = $remark;
-      $record->status = 1;
+        $remark = $request->input('remark');
+        $dateinstall = $request->input('updated_at');
 
-      DB::table('software')->where('id', $assetid)->update(['sw_status' => 1, 'installed_in'=> $converttoid, 'updated_at' => Carbon::now()]);
-      flash()->success('Success!', 'Software has been bounded to the device.');
-      sleep(0.1);
-      $record->save();
+        $record = new SwRecord;
+        $record->sw_assetid = $assetid;
+        $record->hw_assetid = $converttoid;
+        $record->remark = $remark;
+        $record->status = 1;
 
-      return redirect()->action('SwRecordController@show', $assetid);
-      //return redirect()->action('SoftwareController@show, $assetid');
+        DB::table('software')->where('id', $assetid)->update(['sw_status' => 1, 'installed_in'=> $converttoid, 'updated_at' => $dateinstall]);
+        flash()->success('Success!', 'Software has been bounded to the device.');
+        sleep(0.1);
+        $record->save();
+
+        return redirect()->action('SwRecordController@show', $assetid);
+      }
     }
 
     public function show($id){

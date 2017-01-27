@@ -151,7 +151,7 @@ $(function() {
       <tr><td><b>Owner's Company</b></td><td>{{$hardware->hw_company}}</td></tr>
       <tr><td><b>Purchase Order Number</b></td><td>{{$hardware->hw_po_no}}</td></tr>
       <tr><td><b>Purchase Order Date</b></td>
-        @if(($hardware->hw_date_po) == '0000-11-30 00:00:00')
+        @if(($hardware->hw_date_po) == '-0001-11-30 00:00:00')
         <td>Unspecified</td>
         @else
         <td>{{ $hardware->hw_date_po->format('d/m/Y') }}</td>
@@ -160,13 +160,13 @@ $(function() {
       <tr><td><b>Price</b></td><td>RM {{$hardware->hw_price}}</td></tr>
       <tr><td><b>Type</b></td><td>{{$hardware->hw_type}}</td></tr>
       <tr><td><b>Date Supplied</b></td>
-        @if(($hardware->hw_datesupp) == '0000-11-30 00:00:00')
+        @if(($hardware->hw_datesupp) == '-0001-11-30 00:00:00')
         <td>Unspecified</td>
         @else
         <td>{{ $hardware->hw_datesupp->format('d/m/Y') }}</td>
         @endif</tr>
       <tr><td><b>Date Received by GIT</b></td>
-        @if(($hardware->hw_datefac) == '0000-11-30 00:00:00')
+        @if(($hardware->hw_datefac) == '-0001-11-30 00:00:00')
         <td>Unspecified</td>
         @else
         <td>{{ $hardware->hw_datefac->format('d/m/Y') }}</td>
@@ -185,11 +185,9 @@ $(function() {
 @include('modal.addsoftware')
   @if($installedsoftware->isEmpty())
   <div class="alert alert-warning"><b>Note:</b> There are no software installed in this device.
-    @if($hardware->hw_status == '1')
       <button class="btn btn-success pull-right" data-toggle="modal" data-target="#myModal">
         Add new software
       </button>
-    @endif
   </div>
   @else
   <div class="showback" id="swlist">
@@ -206,23 +204,21 @@ $(function() {
 
       <tbody>
         @foreach($installedsoftware as $us)
-        <?php $softwareinfo = DB::table('software')->where('sw_assetid', $us->sw_assetid)->first(); ?>
+        <?php $softwareinfo = DB::table('software')->where('id', $us->id)->first(); ?>
         <tr>
           <td> {{$softwareinfo->sw_model}} </td>
           <td> {{$softwareinfo->sw_type}} </td>
           <td> {{$softwareinfo->sw_prodkey}} </td>
           <td><a href="{{action('SwRecordController@show', $us->id)}}"> {{$softwareinfo->sw_assetid}} </a></td>
-          <td> {{date('jS F Y', strtotime($us->created_at))}} </td>
+          <td> {{date('jS F Y', strtotime($us->updated_at))}} </td>
           <td><a href="{{action('SwRecordController@uninstalllist', $softwareinfo->sw_assetid)}}" onclick="return confirm('are you sure?')"><button value="Delete" id="delete" class="btn btn-danger btn-sm">Uninstall</button></a> </td>
         </tr>
         @endforeach
       </tbody>
     </table>
-      @if($hardware->hw_status == '1')
         <button class="btn btn-success" data-toggle="modal" data-target="#myModal">
           Add new software
         </button>
-      @endif
     </div>
   @endif
 

@@ -58,21 +58,21 @@
       <tr><td><b>Price</b></td><td>RM {{$software->sw_price}}</td></tr>
       <tr><td><b>Purchase Order Number</b></td><td>{{$software->sw_po_no}}</td></tr>
       <tr><td><b>Purchase Order Date</b></td>
-        @if(($software->sw_date_po) == '0000-11-30 00:00:00')
+        @if(($software->sw_date_po) == '-0001-11-30 00:00:00')
         <td>Unspecified</td>
         @else
         <td>{{ $software->sw_date_po->format('d/m/Y') }}</td>
         @endif</tr>
 
       <tr><td><b>Date Supplied</b></td>
-        @if(($software->sw_datesupp) == '0000-11-30 00:00:00')
+        @if(($software->sw_datesupp) == '-0001-11-30 00:00:00')
         <td>Unspecified</td>
         @else
         <td>{{ $software->sw_datesupp->format('d/m/Y') }}</td>
         @endif</tr>
 
       <tr><td><b>Date Received by GIT</b></td>
-        @if(($software->sw_datefac) == '0000-11-30 00:00:00')
+        @if(($software->sw_datefac) == '-0001-11-30 00:00:00')
         <td>Unspecified</td>
         @else
         <td>{{ $software->sw_datefac->format('d/m/Y') }}</td>
@@ -100,8 +100,9 @@
     <th>Ref#</th>
     <th>Date Installed</th>
     <th>Installed in</th>
+    <th>Hardware S/N</th>
     <th>Remark</th>
-    <th>Date Software Released</th>
+    <th>Date Uninstalled</th>
   </tr></thead>
   <tbody>
     @foreach($prevuser as $pu)
@@ -109,6 +110,7 @@
       <td> {{$pu->id}} </td>
       <td> {{date('jS F Y', strtotime($pu->created_at))}} </td>
       <td> {{ DB::table('hardware')->where('id', $pu->hw_assetid)->value('hw_model')}} </td>
+      <td> {{ DB::table('hardware')->where('id', $pu->hw_assetid)->value('hw_serialno')}} </td>
       <td> {{$pu->remark}} </td>
       @if($pu->created_at == $pu->updated_at)
         <td></td>

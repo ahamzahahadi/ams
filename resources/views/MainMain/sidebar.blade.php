@@ -7,7 +7,7 @@
              <!-- sidebar menu start-->
              <ul class="sidebar-menu" id="nav-accordion">
 
-                 <p class="centered"><a href="profile.html"><img src="{{ URL::asset('img/ui-sapura.jpg') }}" class="img-circle" width="60"></a></p>
+                 <p class="centered"><img src="{{ URL::asset('img/ui-sapura.jpg') }}" class="img-circle" width="60"></p>
                  <h5 class="centered">AMS Sapura</h5>
 
                  <li class="mt">
@@ -33,9 +33,9 @@
                          <span>Asset</span>
                      </a>
                      <ul class="sub">
-                         <li><a  href="/hardware">Hardware List</a></li>
+                         <li><a  href="/hwcategories">Hardware Categories</a></li>
                          <li><a  href="/hardware/create">Add Hardware</a></li>
-                         <li><a  href="/software">Software List</a></li>
+                         <li><a  href="/swcategories">Software Categories</a></li>
                          <li><a  href="/software/create">Add Software</a></li>
                      </ul>
                  </li>
@@ -71,7 +71,7 @@
                  </li>
 
              </ul>
-             <!-- sidebar menu end-->        
+             <!-- sidebar menu end-->
          </div>
      </aside>
      <!--sidebar end-->

@@ -1,0 +1,23 @@
+#poptext {
+	width: 730px;
+	height: 80px;
+	line-height: 0px;
+	color: transparent;
+	font-size: 25px;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	   font-weight: 300;
+	text-transform: uppercase;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+}
+
+#poptext:hover {
+	line-height: 90px;
+	color: #575858;
+}
+
+#poptext img{
+	float: left;
+	margin: 0 15px;
+}

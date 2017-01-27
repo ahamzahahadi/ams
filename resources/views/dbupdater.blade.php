@@ -267,3 +267,19 @@ lepas substr jadi {{$varku}} <br>
 lepas replace jadi {{$varku}} kuku<br>
 
 ----------------------------------------------------------------------------------------------
+String output tester
+<?php $stringku = 'Microsoft Office Home and Business 2011 (FPP) < RD7CK-VT4JX-9C8YP-B7FHP-M4V3Y >';
+
+$stringku = strchr($stringku, '<');
+$stringku = substr($stringku, 2);
+$stringku = str_ireplace(' >','',$stringku);
+$findSwUsingProdkey = DB::table('software')->where('sw_prodkey', $stringku)->where('sw_status', 0)->first();
+
+var_dump($findSwUsingProdkey);
+die();
+?>
+-------------------------------------------------------------------------------------------------------
+SELECT hwrecord.`fk_assetid`, hwrecord.status, hardware.hw_status, hwrecord.id
+FROM hwrecord INNER JOIN hardware
+ON hwrecord.fk_assetid=hardware.id WHERE hwrecord.status = 1
+AND hardware.hw_status = 0

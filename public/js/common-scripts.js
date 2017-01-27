@@ -114,9 +114,10 @@ var Script = function () {
             }, 2000)
         })
     }
-
-
+    
 }();
+
+
 
 //data table pagination and search
 $('#tableA').dataTable();

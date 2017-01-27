@@ -111,7 +111,7 @@
           <td><a href="{{action('SoftwareController@edit', $sw->id)}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a></td>
           <td>
             {!! Form::open(['method' => 'DELETE','route' => ['software.destroy', $sw->id]]) !!}
-            {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
+            {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm', 'onclick' =>"return confirm('You will not be able to recover this record, are you sure?')"]) !!}
             {!! Form::close() !!} </td>
       </tr>
       @endforeach

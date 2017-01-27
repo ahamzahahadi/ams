@@ -49,7 +49,7 @@
 
     </div>
     {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
-    <a href="{{action('StaffController@index')}}" class="btn btn-default">Cancel</a>
+    <a href="{{action('StaffController@show', $staff->id)}}" class="btn btn-default">Cancel</a>
     {!! Form::close() !!}
 </div>
 

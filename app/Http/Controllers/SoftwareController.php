@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests;
 use App\Software;
@@ -20,6 +21,11 @@ class SoftwareController extends Controller
     {
         $swList = Software::all();
         return view('software.list', ['swList' => $swList]);
+    }
+
+    public function cat($cat){
+          $catsoftware = DB::table('software')->where('sw_type',$cat)->get();
+          return view('software.bycategory', ['catsoftware' => $catsoftware])->with('category',$cat);
     }
 
     public function create()
@@ -89,6 +95,7 @@ class SoftwareController extends Controller
       $software->sw_supplier = $supid;
       $software->sw_type = $typeIndexNo;
       $software->sw_variation = $package;
+      $software->sw_remark = $request->input('sw_remark');
       $software->sw_company = ''; //jgn lupa edit ni lepas dah repath ref key ke ID,lps dah tambah kat form dia
 
       $software->save();
@@ -173,6 +180,8 @@ class SoftwareController extends Controller
       $software->sw_supplier = $supid;
       $software->sw_type = $typeIndexNo;
       $software->sw_variation = $package;
+      $software->sw_remark = $request->input('sw_remark');
+
       $software->save();
 
       flash()->success('Success!', 'Update successful :D');

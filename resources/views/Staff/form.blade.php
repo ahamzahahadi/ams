@@ -41,12 +41,18 @@
     {!! Form::text('staff_dept', null, ['class' => 'form-control']) !!}
 
     {!! Form::label('staffcompany', 'Company:', ['class' => 'control-label']) !!}
-    {!! Form::text('staff_company', null, ['class' => 'form-control']) !!}
+    <select name='staff_company' required class = 'form-control'>
+      <option value="Sapura Secured Technologies Sdn Bhd"> Sapura Secured Technologies Sdn Bhd </option>
+      <option value="Sapura Advanced Systems Sdn Bhd"> Sapura Advanced Systems Sdn Bhd </option>
+      <option value="Sapura Defence Sdn Bhd"> Sapura Defence Sdn Bhd </option>
+      <option value="Sapura LTAT Communication Sdn Bhd"> Sapura LTAT Communication Sdn Bhd </option>
+      <option value="Sapura Research Sdn Bhd"> Sapura Research Sdn Bhd </option>
+    </select>
     <span class="help-block"><sub><b>E.g:</b> <i>"Sapura Secured Technologies", "Sapura Advanced Systems Sdn Bhd" .</i></sub></span>
 
     {!! Form::label('staffOL', 'Office Location:', ['class' => 'control-label']) !!}
     {!! Form::text('staff_officeLocation', null, ['class' => 'form-control']) !!}
-<span class="help-block"><sub><b>E.g:</b> <i>"Wangsa Maju" .</i></sub></span>
+<span class="help-block"><sub><b>E.g:</b> <i>"Wangsa Maju", "Mines" .</i></sub></span>
 
     </div>
     {!! Form::submit('Add', ['class' => 'btn btn-primary']) !!}

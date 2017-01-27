@@ -13,10 +13,17 @@
   {!! form::text('id', "$hardware->hw_assetid", ['class'=> 'form-control', 'readonly'=>'readonly']  )!!}
 
   {!! form::label('assignto','Given to:', ['class'=> 'control-label'] )!!}
+  @if(!empty(Session::get('ada_error')))
+  <div id="findstaff" class="form-group has-error">
+  {!! Form::text('current_userid', null, ['class' => 'form-control','size' => "180", 'placeholder' => 'Enter Staff Name or ID', 'id'=>'inputError']) !!}
+  </div>
+  <div class="alert alert-danger"><b>Please choose from the suggestions listed.</b></div>
+  @else
   <div id="findstaff">
   {!! Form::text('current_userid', null, ['class' => 'form-control', 'placeholder' => 'Enter Staff Name or ID', 'size' => "180"]) !!}
   </div>
   <span class="help-block"><sup>&nbsp&nbsp&nbsp&nbspPlease choose from the suggestions listed.</sup></span>
+  @endif
 
   {!! Form::label('assigndate', "Handed on:", ['class' => 'control-label']) !!}<br>
   {!! form::input( 'date','date_handed' , null,['class'=> 'form-control', 'required' => 'required'])!!}
@@ -59,7 +66,12 @@ $('#findstaff .form-control').typeahead({
 },
 {
   name: 'staff',
-  source: staff
+  source: staff,
+  templates: {
+    empty: [
+      '<div class="alert alert-warning"><b>Unable to find the specified staff</b></div>'
+    ]
+}
 });
 
 </script>

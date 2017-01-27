@@ -91,7 +91,9 @@ class RecordController extends Controller
 
       $recid = DB::table('hwrecord')->select('id')->where('fk_assetid', $id)->orderBy('updated_at','desc')->first(); //dapatkan id record
       DB::table('hardware')->where('id', $id)->update(['hw_status' => $chgstat, 'hw_location'=> $location]);
-      DB::table('hwrecord')->where('id', $recid->id)->update(['updated_at' => Carbon::now(), 'status' => 2]);
+      if(!empty($recid)){
+        DB::table('hwrecord')->where('id', $recid->id)->update(['updated_at' => Carbon::now(), 'status' => 2]);
+      }
 
       $addrec = new Record;
       $addrec->fk_assetid = $id;
@@ -134,36 +136,53 @@ class RecordController extends Controller
     }
 
     public function modalassign(Request $request){
+      $hwsn = $request->input('hw_serialno');
       $hwToGive = $request->input('hwname');
       $id = $request->input('id'); //untuk return nanti
       $userid = $request->input('current_userid');
       $remark = $request->input('remark');
-      $getFirstHwAvailble = DB::table('hardware')
-      ->where('hw_model', $hwToGive)
-      ->where('hw_status', 0)
-      ->first();
-      if($getFirstHwAvailble == null){
-        return redirect()->back()->with('ada_error', $hwToGive);
+      $dategiven = $request->input('created_at');
+
+      if($hwsn ==''){ //kalau x cari guna SN
+        $getFirstHwAvailble = DB::table('hardware')->where('hw_model', $hwToGive)->where('hw_status', 0)->first();
+        if($getFirstHwAvailble == null){
+          return redirect()->back()->with('ada_error', $hwToGive);
+        }else{
+          $assetid = $getFirstHwAvailble->id;
+        }
+      }else{
+        if(substr($hwsn,-1) != ">"){
+          return redirect()->back()->with('ada_error', 2);
+        }
+        $hwsn = strchr($hwsn, ':');
+        $hwsn = substr($hwsn, 2);
+        $hwsn = str_ireplace('>','',$hwsn);
+
+        $findHwUsinghwsn = DB::table('hardware')->where('hw_serialno', $hwsn)->first();
+        $assetid = $findHwUsinghwsn->id;
       }
-      else{
-        $assetid = $getFirstHwAvailble->id;
+
         $huhu = new Record;
         $huhu->fk_assetid = $assetid;
         $huhu->current_userid = $userid;
         $huhu->remark = $remark;
         $huhu->status = 1;
+        $huhu->created_at = $dategiven;
+        $huhu->save();
 
         DB::table('hardware')->where('id', $assetid)->update(['hw_status' => 1]);
         //sleep(0.1);
-        $huhu->save();
         flash()->success('Success!', 'Asset requisition has been recorded.');
         return redirect()->to(action('StaffController@show', $id).'#hwlist');
       }
-    }
+
 
     public function store(Request $request){
         $id = $request->input('id');
         $userid = $request->input('current_userid');
+        if($userid == '' || substr($userid,-1) != ">"){
+          return redirect()->back()->with('ada_error', 2);
+        }else{
         //trimming the input to get only staff ID
         $userid = strchr($userid, ':' );
         $userid = substr($userid, 2 );
@@ -183,6 +202,7 @@ class RecordController extends Controller
         flash()->success('Success!', 'Asset requisition has been recorded.');
         $record->save();
         return redirect()->action('RecordController@show', $id);
+      }
     }
 
     public function show($id)

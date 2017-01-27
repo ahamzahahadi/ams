@@ -1,3 +1,5 @@
+<script src="{{ URL::asset('js/typeahead.bundle.min.js') }}"></script>
+<link href="{{ URL::asset('css/typesuggest.css') }}" rel="stylesheet">
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -39,6 +41,21 @@
               @endif
             @endforeach
           </ul>
+          {!! Form::label('datesupp', 'Date Given:', ['class' => 'control-label']) !!}
+          {!! Form::input('date','created_at', null, ['class' => 'form-control', 'required' => 'required']) !!}
+<!-- or find using hardware SN -->
+          <span class="help-block"><sub><b>Or search using hardware S/N..</b></sub></span>
+          @if(!empty(Session::get('ada_error')) && Session::get('ada_error') == 2)
+          <div id="findhw">
+          {!! Form::text('hw_serialno', null, ['class' => 'form-control', 'placeholder' => 'Enter hardware S/N', 'size' => "180"]) !!}
+          </div>
+          <div class="alert alert-danger"> Serial number is not in a valid format. Please select from the suggested list or leave this field empty. </div>
+          @else
+          <div id="findhw">
+          {!! Form::text('hw_serialno', null, ['class' => 'form-control', 'placeholder' => 'Enter hardware S/N', 'size' => "180"]) !!}
+          </div>
+          @endif
+
           {!! form::label('remark','Remarks:', ['class'=> 'control-label'] )!!}
           {!! Form::textarea('remark', null, ['class' => 'form-control']) !!}
 
@@ -54,7 +71,43 @@
             wait				: 0
           });
           </script>
+<!-- START OF BLOODHOUND.JS SCRIPTING -->
+          <?php $hwinfo = DB::table('hardware')->select('hw_serialno', 'hw_model')->where('hw_status', 0)->get();
+          $hwdetail = array();
+          $arrlength = count($hwinfo);
+          $x=0;
+          ?>
+          @foreach($hwinfo as $hw)
+          <?php $hwdetail[$x] = "$hw->hw_model <SN: $hw->hw_serialno>";
+          $x++;
+          ?>
+          @endforeach
+          <?php $json = json_encode($hwdetail); ?>
+          <script>
+          var hwlist = {!! $json !!};
 
+          var hwlist = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            local: hwlist
+          });
+
+          $('#findhw .form-control').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1
+          },
+          {
+            name: 'hwlist',
+            source: hwlist,
+            templates: {
+              empty: [
+                '<div class="alert alert-warning"><b>Unable to find the specified hardware</b></div>'
+              ]
+          }
+          });
+          </script>
+<!-- END OF BLOODHOUND SCRIPTING -->
         </div>
 
       </div>

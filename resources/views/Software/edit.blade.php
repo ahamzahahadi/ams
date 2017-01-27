@@ -33,6 +33,9 @@
     {!! Form::label('prodkey', 'Product Key:', ['class' => 'control-label']) !!}
     {!! Form::text('sw_prodkey', null, ['class' => 'form-control']) !!}
 
+    {!! Form::label('remark', 'Remarks/Access Key:', ['class' => 'control-label']) !!}
+    {!! Form::text('sw_remark', null, ['class' => 'form-control']) !!}
+
     {!! Form::label('price', 'Price:', ['class' => 'control-label']) !!} <br>RM
     {!! Form::input('number','sw_price', null, ['class' => 'form-control', 'class' =>'formsize-100', 'step' => 'any', 'min'=>'0', 'placeholder'=> '0.00']) !!}
 

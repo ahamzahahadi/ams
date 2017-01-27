@@ -75,8 +75,9 @@
 
     <!-- js placed at the end of the document so the pages load faster -->
     <script src="{{ URL::asset('js/jquery.js') }}"></script>
+    <script src="{{ URL::asset('js/jquery-1.8.3.min.js') }}"></script>
     <script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ URL::asset('js/jquery-ui-1.9.2.custom.min.js') }}"></script>
+    <!-- <script src="{{ URL::asset('js/jquery-ui-1.9.2.custom.min.js') }}"></script> -->
     <script src="{{ URL::asset('js/jquery.ui.touch-punch.min.js') }}"></script>
     <script src="{{ URL::asset('js/jquery.dcjqaccordion.2.7.js') }}" class="include" type="text/javascript" ></script>
     <script src="{{ URL::asset('js/jquery.scrollTo.min.js') }}"></script>
@@ -91,13 +92,10 @@
     <!--common script for all pages-->
     <script src="{{ URL::asset('js/common-scripts.js') }}"></script>
 
-    <!--script for this page-->
+    <!-- script for this page-->
     <!-- <script>
         $.backstretch("{{URL::asset('img/suka.png')}}", {speed: 500});
     </script> -->
-
-    </script>
-
 
   </body>
 </html>

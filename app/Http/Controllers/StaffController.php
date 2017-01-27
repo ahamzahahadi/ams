@@ -149,7 +149,7 @@ class StaffController extends Controller
       $staff->save();
 
       flash()->success('Success!', 'Staff record has been updated :D');
-      return redirect()->action('StaffController@index');
+      return redirect()->action('StaffController@show',$id);
     }
 
     /**

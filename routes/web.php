@@ -35,9 +35,15 @@ Route::get('/testbtn', function(){
 	return view('testbtn');
 });
 
-Route::get('/addHardware', function() {
-	return view('hardware.form');
+Route::get('/swcategories', function() {
+	return view('software.category');
 });
+Route::get('/hwcategories', function() {
+	return view('hardware.category');
+});
+
+Route::get('/bycategory/{cat}',['uses' => 'HardwareController@cat']);
+Route::get('/bySoftwareCategory/{cat}',['uses' => 'SoftwareController@cat']);
 
 Route::get('/record/form/{id}',['uses' => 'RecordController@recform']);
 Route::get('/record/returnform/{id}',['uses' => 'RecordController@returnasset']);

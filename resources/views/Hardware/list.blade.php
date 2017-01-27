@@ -2,20 +2,22 @@
 @section('content')
 
 @include('Alerts::sweetalerts')
+<link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
+
 <div >
   <div >
     <div class="row mt">
       <h4><i class="fa fa-angle-right"></i>Hardware Overview</h4>
       <?php
-      $totnotebook = DB::table('hardware')->where('hw_type','Notebook')->count(); //total notebook
-      $notebookinuse = DB::table('hardware')->where('hw_type','Notebook')->where('hw_status',1)->count(); //notebook in use
+      $totnotebook = DB::table('hardware')->count(); //total hw
+      $notebookinuse = DB::table('hardware')->where('hw_status',1)->count(); //notebook in use
       $notepercent = round($notebookinuse/$totnotebook*100);
       ?>
       <!-- TWITTER PANEL -->
       <div class="col-md-4 mb">
         <div class="darkblue-panel pn">
           <div class="darkblue-header">
-            <h5>NOTEBOOK IN USE</h5>
+            <h5>HARDWARE IN USE</h5>
           </div>
           <canvas id="serverstatus02" height="120" width="120"></canvas>
           <script>
@@ -32,7 +34,7 @@
           ];
           var myDoughnut = new Chart(document.getElementById("serverstatus02").getContext("2d")).Doughnut(doughnutData);
           </script>
-          <p>{{$totnotebook - $notebookinuse}} Available / {{$notebookinuse}} In Use</p>
+          <p>{{$notebookinuse}} <b>Hardware Assigned</b></p>
           <footer>
             <div class="pull-left">
               <h5><i class="fa fa-hdd-o"></i> {{$totnotebook}} Total</h5>
@@ -44,29 +46,42 @@
         </div><! -- /darkblue panel -->
       </div><!-- /col-md-4 -->
 
-      <div class="col-md-4 mb">
-        <!-- INSTAGRAM PANEL -->
-        <div class="instagram-panel pn">
-          <i class="fa fa-instagram fa-4x"></i>
-          <p>@THISISYOU<br/>
-            5 min. ago
-          </p>
-          <p><i class="fa fa-comment"></i> 18 | <i class="fa fa-heart"></i> 49</p>
+      <div class="col-md-4 col-sm-4 mb">
+        <!-- LOG PANEL -->
+        <div class="grey-panel pn">
+          <div class="grey-header">
+            <h5>LAST ACTIVITY BY</h5>
+          </div>
+          <p><img src="{{ URL::asset('img/amir.jpg') }}" class="img-circle" width="50" height="50"></p>
+          <p><b>{{Auth::user()->name}}</b></p>
+          <p> At 5:15pm, 26th Jan 2017 </p>
+            <div class="row">
+              <div class="col-md-6">
+                <p class="small mt"><b>ON ASSET</b></p>
+                <p>cneg65656</p>
+              </div>
+              <div class="col-md-6">
+                <p class="small mt"><b>ACTION</b></p>
+                <p>Recorded asset return</p>
+              </div>
+            </div>
         </div>
+
       </div><!-- /col-md-4 -->
 
-      <div class="col-md-4 col-sm-4 mb">
-        <!-- REVENUE PANEL -->
+      <!-- STATUS OVERVIEW -->
+      <div class="col-md-4 mb">
         <div class="darkblue-panel pn">
           <div class="darkblue-header">
-            <h5>REVENUE</h5>
+            <h5>ASSET REQUISITIONS ACTIVITY</h5>
           </div>
           <div class="chart mt">
             <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,464,655]"></div>
           </div>
-          <p class="mt"><b>$ 17,980</b><br/>Month Income</p>
+          <p class="mt"><b>78 Requisitions </b><br/>in the past 11 months</p>
         </div>
       </div><!-- /col-md-4 -->
+
 
     </div> <!-- row-mt -->
 
@@ -143,4 +158,41 @@
       </div><!-- /content-panel -->
    </div><!-- /col-lg-4 -->
 </div><!-- /row -->
+<script src="{{URL::asset('js/jquery.sparkline.js')}}"></script>
+<script src="{{URL::asset('js/sparkline-chart.js')}}"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
+
+<!-- script for morris donut -->
+<?php $totavailable = DB::table('hardware')->where('hw_status',0)->count();
+      $totassigned = DB::table('hardware')->where('hw_status',1)->count();
+      $totber = DB::table('hardware')->where('hw_status',3)->count();
+      $totstolen = DB::table('hardware')->where('hw_status',4)->count();
+      $totmissing = DB::table('hardware')->where('hw_status',5)->count();?>
+<script>
+var available = Number('<?php echo $totavailable; ?>');
+var assigned = Number('<?php echo $totassigned; ?>');
+var ber = Number('<?php echo $totber; ?>');
+var stolen = Number('<?php echo $totstolen; ?>');
+var missing = Number('<?php echo $totmissing; ?>');
+
+Morris.Donut({
+  element: 'donut-example',
+  data: [
+    {label: "Available", value: available},
+    {label: "Assigned", value: assigned},
+    {label: "BER", value: ber},
+    {label: "Stolen", value: stolen},
+    {label: "Missing", value: missing}
+  ],
+  colors: [
+  '#2bc4ba', // turqoise
+  '#aae88f', // hijau
+  '#d65f20', //kuning
+  '#cc2610', //merah
+  '#121c84' // biru gelap
+]
+});
+</script>
+
 @stop

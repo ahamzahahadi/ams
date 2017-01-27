@@ -1,3 +1,5 @@
+<script src="{{ URL::asset('js/typeahead.bundle.min.js') }}"></script>
+<link href="{{ URL::asset('css/typesuggest.css') }}" rel="stylesheet">
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -39,16 +41,35 @@
               @endif
             @endforeach
           </ul>
+          {!! Form::label('datesupp', 'Date Installed:', ['class' => 'control-label']) !!}
+          {!! Form::input('date','updated_at', null, ['class' => 'form-control', 'required' => 'required']) !!}
+          <hr>
+          <span class="help-block"><b>Or search using available product key..</b></span>
+          @if(!empty(Session::get('ada_error')) && Session::get('ada_error') == 2)
+          <div id="findswkey">
+          {!! Form::text('sw_prodkey', null, ['class' => 'form-control', 'placeholder' => 'Enter product key', 'size' => "180"]) !!}
+          </div>
+          <div class="alert alert-danger"> Product key is not in a valid format. Please select from the suggested list or leave this field empty. </div>
+          @elseif(!empty(Session::get('ada_error')) && Session::get('ada_error') == 3)
+          <div id="findswkey">
+          {!! Form::text('sw_prodkey', null, ['class' => 'form-control', 'placeholder' => 'Enter product key', 'size' => "180"]) !!}
+          </div>
+          <div class="alert alert-danger"> Unable to assign software with no product key through this quick form, please assign manually from the list of software. </div>
+          @else
+          <div id="findswkey">
+          {!! Form::text('sw_prodkey', null, ['class' => 'form-control', 'placeholder' => 'Enter product key', 'size' => "180"]) !!}
+          </div>
+          @endif
+          <br>
           {!! form::label('remark','Remarks:', ['class'=> 'control-label'] )!!}
           {!! Form::textarea('remark', null, ['class' => 'form-control']) !!}
 
 <!-- SOME AUTOFILL INFOS -->
           @if($hardware->hw_status == '1') <!-- sebab kalau status = 0, xde current user, crash -->
-          {!! Form::hidden('current_userid', "$userstaffdb->staff_id") !!}
           {!! Form::hidden('id', "$hardware->id") !!}
           @endif
 
-<!-- START OF SCRIPTING -->
+<!-- START OF FILTR.JS SCRIPTING -->
           <script src="{{ URL::asset('js/jquery.filtr.min.js') }}"></script>
           <script>
           $('select[name="filtr_3"]').filtr($('#list_3 li'), {
@@ -56,7 +77,44 @@
             wait				: 0
           });
           </script>
+<!-- START OF BLOODHOUND.JS SCRIPTING -->
+            <?php $swdetail = DB::table('software')->select('sw_model', 'sw_prodkey')->get();
+            $swarray = array();
+            $arrlength = count($swdetail);
+            $x=0;
+            ?>
+            @foreach($swdetail as $sw)
+            <?php $swarray[$x] = "$sw->sw_model < $sw->sw_prodkey >";
+            $x++;
+            ?>
+            @endforeach
+            <?php $json = json_encode($swarray); ?>
+            <script>
+            var sw = {!! $json !!};
 
+            var sw = new Bloodhound({
+              datumTokenizer: Bloodhound.tokenizers.whitespace,
+              queryTokenizer: Bloodhound.tokenizers.whitespace,
+              local: sw
+            });
+
+            $('#findswkey .form-control').typeahead({
+              hint: true,
+              highlight: true,
+              minLength: 1
+            },
+            {
+              name: 'sw',
+              source: sw,
+              templates: {
+                empty: [
+                  '<div class="alert alert-warning"><b>Unable to find the product key</b></div>'
+                ]
+            }
+            });
+
+            </script>
+            <!-- end of blood -->
         </div>
 
       </div>

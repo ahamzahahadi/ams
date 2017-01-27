@@ -21,9 +21,13 @@ class HardwareController extends Controller
 
     public function index()
     {
-
         $allHardware = Hardware::all();
         return view('hardware.list', ['allHardware' => $allHardware]);
+    }
+
+    public function cat($cat){
+          $cathardware = DB::table('hardware')->where('hw_type',$cat)->get();
+          return view('hardware.bycategory', ['cathardware' => $cathardware])->with('category',$cat);
     }
 
     public function create()

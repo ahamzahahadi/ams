@@ -7,12 +7,11 @@
     Action <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
-    <li><a href="#">Assign hardware</a></li>
     <li><a href="{{action('StaffController@edit', $staff->id)}}">Edit Staff Information</a></li>
-
     {!! Form::open(['method' => 'DELETE','route' => ['staff.destroy', $staff->id],'style'=>'display:inline-block','id'=>'deleteform']) !!}
     {!! Form::close() !!}
-    <li><a href="#"><button value="Delete" id="delete" class="btn btn-danger btn-sm">Resign</button></a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#"><button value="Delete" id="delete" class="btn btn-danger">Mark as Resigned</button></a></li>
   </ul>
 </div></h1>
 <hr>
@@ -49,6 +48,7 @@
       <tr>
         <th> Ref# </th>
         <th> Hardware Model </th>
+        <th> Hardware Type </th>
         <th> Asset ID </th>
         <th> S/N </th>
         <th> Date Taken </th>
@@ -57,12 +57,17 @@
     </thead>
         @foreach($hwrec as $recku)
       <tr>
-        <?php $idhw = DB::table('hardware')->where('id', $recku->id)->first() ?>
+        <?php $idhw = DB::table('hardware')->where('id', $recku->fk_assetid)->first() ?>
         <td>{{$recku->id}}</td>
         <td>{{$idhw->hw_model}}</td>
+        <td>{{$idhw->hw_type}}</td>
         <td>{{$idhw->hw_assetid}}</td>
         <td>{{$idhw->hw_serialno}}</td>
+        @if(($recku->created_at) == '0000-00-00 00:00:00')
+        <td> Date Missing </td>
+        @else
         <td>{{date('jS F Y', strtotime($recku->created_at))}}</td>
+        @endif
         @if($recku->status == 1)
           <td><a href="{{action('RecordController@show', $idhw->id)}}">In Use</a></td>
         @else
