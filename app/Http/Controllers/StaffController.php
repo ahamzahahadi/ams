@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Staff;
 use App\Http\Requests;
-
+use Carbon\Carbon;
 use Validator;
 use Session;
 
@@ -64,7 +64,7 @@ class StaffController extends Controller
       $sdept = $request->input('staff_dept');
       $scompany = $request->input('staff_company');
       $sol = $request->input('staff_officeLocation');
-
+      $cek = $request->input('check');
 
         $staff = new Staff;
         $staff->staff_id = $sid;
@@ -77,6 +77,15 @@ class StaffController extends Controller
         $staff->staff_company = $scompany;
         $staff->staff_officeLocation = $sol;
         $staff->save();
+
+        if($cek == 'yes'){
+          $sgid = DB::table('staff')->where('staff_id',$sid)->value('id');
+
+          DB::table('stafftemp')->insert([ ['staff_name' => $sname,
+            'sgid' => $sgid,
+          'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now() ]]);
+        }
 
         flash()->success('Success!', 'New staff has been added.');
         return redirect()->action('StaffController@index');
@@ -134,7 +143,7 @@ class StaffController extends Controller
       $sdept = $request->input('staff_dept');
       $scompany = $request->input('staff_company');
       $sol = $request->input('staff_officeLocation');
-
+      $cek = $request->input('check');
 
       $staff = Staff::find($id);
       $staff->staff_id = $sid;
@@ -147,6 +156,15 @@ class StaffController extends Controller
       $staff->staff_company = $scompany;
       $staff->staff_officeLocation = $sol;
       $staff->save();
+
+      if($cek == 'yes'){
+        $sgid = DB::table('staff')->where('staff_id',$sid)->value('id');
+
+        DB::table('stafftemp')->insert([ ['staff_name' => $sname,
+          'sgid' => $sgid,
+        'created_at' => Carbon::now(),
+      'updated_at' => Carbon::now() ]]);
+      }
 
       flash()->success('Success!', 'Staff record has been updated :D');
       return redirect()->action('StaffController@show',$id);

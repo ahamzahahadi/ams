@@ -283,3 +283,76 @@ SELECT hwrecord.`fk_assetid`, hwrecord.status, hardware.hw_status, hwrecord.id
 FROM hwrecord INNER JOIN hardware
 ON hwrecord.fk_assetid=hardware.id WHERE hwrecord.status = 1
 AND hardware.hw_status = 0
+-------------------------------------------------------------------------------------------------------
+_____________QUERY FOR REQUISITIION LINE CHART_________________________________________
+SELECT MONTHNAME(`created_at`) as 'Month', YEAR(`created_at`) as 'Year', COUNT(id)
+FROM hwrecord
+WHERE `created_at` != '0000-00-00 00:00:00'
+AND `status` = '1'
+GROUP BY YEAR(`created_at`), MONTH(`created_at`)
+--------------------------------------------------------------------
+SELECT MONTHNAME(`created_at`) as 'Month', YEAR(`created_at`) as 'Year',COUNT(id) as "req"
+FROM hwrecord
+WHERE `created_at` != "0000-00-00 00:00:00"
+AND `status` = "1"
+GROUP BY YEAR(`created_at`), MONTH(`created_at`)
+ORDER BY YEAR(`created_at`) desc, MONTH(`created_at`) desc
+LIMIT 11
+----------------------------------------------------------------------------------------
+_____________QUERY FOR ASSET RETURN LINE CHART_________________________________________
+SELECT MONTHNAME(`created_at`) as 'Month', YEAR(`created_at`) as 'Year', COUNT(id)
+FROM hwrecord
+WHERE `created_at` != '0000-00-00 00:00:00'
+AND `status` = '2'
+GROUP BY YEAR(`created_at`), MONTH(`created_at`)
+
+SELECT MONTHNAME(`created_at`) as 'Month', YEAR(`created_at`) as 'Year',COUNT(id) as "req"
+FROM hwrecord
+WHERE `created_at` != "0000-00-00 00:00:00"
+AND `status` = "2"
+GROUP BY YEAR(`created_at`), MONTH(`created_at`)
+ORDER BY YEAR(`created_at`) desc, MONTH(`created_at`) desc
+LIMIT 11
+---------------------------------------------------------------------------------------
+____________tester stacked bar chart______________________________________________________
+<link href="{{ URL::asset('css/bootstrap.css') }}" rel="stylesheet">
+<link href="{{ URL::asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
+<link href="{{ URL::asset('css/style.css') }}" rel="stylesheet">
+<link href="{{ URL::asset('css/style-responsive.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
+<div id="morris">
+<div class="col-lg-6">
+    <div class="content-panel">
+        <h4><i class="fa fa-angle-right"></i> Hardware in Active Duty</h4>
+        <div class="panel-body">
+            <div id="hero-bar" class="graph"></div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="{{ URL::asset('js/jquery.js') }}"></script>
+<script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ URL::asset('js/jquery.dcjqaccordion.2.7.js') }}" class="include" type="text/javascript" ></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
+
+<script src="{{ URL::asset('js/common-scripts.js') }}"></script>
+
+<script>
+Morris.Bar({
+  element: 'hero-bar',
+  stacked: true,
+  data: [
+    { y: '2006', a: 200, b: 90 },
+    { y: '2007', a: 75,  b: 65 },
+    { y: '2008', a: 50,  b: 40 },
+    { y: '2009', a: 75,  b: 65 },
+    { y: '2010', a: 50,  b: 40 },
+    { y: '2011', a: 75,  b: 65 },
+    { y: 'Current', a: 100, b: 90 }
+  ],
+  xkey: 'y',
+  ykeys: ['a', 'b'],
+  labels: ['Assigned', 'Inactive']
+});
+</script>

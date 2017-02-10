@@ -97,7 +97,7 @@
         </section>
     </div><!--/col-md-12 -->
   </div><!-- END OF PANEL UNTUK QUICK LOAN LOG -->
-  
+
   <div class="row mt">
 
     <div class="col-lg-5">
@@ -170,11 +170,34 @@
         <div class="darkblue-panel pn">
           <div class="darkblue-header">
             <h5>ASSET REQUISITIONS RECORDED</h5>
+            <?php
+            $x=DB::select(DB::raw('SELECT COUNT(id) as "req"
+            FROM hwrecord
+            WHERE `created_at` != "0000-00-00 00:00:00"
+            AND `status` = "1"
+            GROUP BY YEAR(`created_at`), MONTH(`created_at`)
+            ORDER BY YEAR(`created_at`) desc, MONTH(`created_at`) desc
+            LIMIT 11'
+            ));
+            $x = array_reverse($x);
+            $sting = "[";
+            $ctr = 0;
+            ?>
+            @foreach($x as $y)
+            <?php $sting .= $y->req.",";
+            $ctr += $y->req ?>
+
+            @endforeach
+            <?php
+            $sting = rtrim($sting, ",");
+            $sting.= "]";
+            ?>
+
           </div>
           <div class="chart mt">
-            <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,464,655]"></div>
+            <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data=<?php echo $sting; ?>   ></div>
           </div>
-          <p class="mt"><b>78 Requisitions </b><br/>in the past 11 months</p>
+          <p class="mt"><b>{{$ctr}} Requisitions </b><br/>in the past 11 months</p>
         </div>
       </div><!-- /col-md-4 -->
 
@@ -216,82 +239,38 @@
         <div class="darkblue-panel pn">
           <div class="darkblue-header">
             <h5>ASSET RETURNS RECORDED</h5>
+
+            <?php
+            $x2=DB::select(DB::raw('SELECT COUNT(id) as "req"
+            FROM hwrecord
+            WHERE `created_at` != "0000-00-00 00:00:00"
+            AND `status` = "2"
+            GROUP BY YEAR(`created_at`), MONTH(`created_at`)
+            ORDER BY YEAR(`created_at`) desc, MONTH(`created_at`) desc
+            LIMIT 11'
+            ));
+            $x2 = array_reverse($x2);
+            $sting2 = "[";
+            $ctr2 = 0;
+            ?>
+            @foreach($x2 as $y2)
+            <?php $sting2 .= $y2->req.",";
+            $ctr2 += $y2->req ?>
+
+            @endforeach
+            <?php
+            $sting2 = rtrim($sting2, ",");
+            $sting2.= "]"; ?>
           </div>
           <div class="chart mt">
-            <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,464,655]"></div>
+            <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data=<?php echo $sting2; ?>></div>
           </div>
-          <p class="mt"><b>103 Returns</b><br/>in the past 11 months</p>
+          <p class="mt"><b>{{$ctr2}} Returns</b><br/>in the past 11 months</p>
         </div>
       </div><!-- /col-md-4 -->
 
     </div><!-- end of black panel row DROPBOX/INSTA/REVENUE -->
-    <div class="row mt">
-      <!-- SERVER STATUS PANELS -->
-      <div class="col-md-4 col-sm-4 mb">
-        <div class="white-panel pn donut-chart">
-          <div class="white-header">
-            <h5>SERVER LOAD</h5>
-          </div>
-          <div class="row">
-            <div class="col-sm-6 col-xs-6 goleft">
-              <p><i class="fa fa-database"></i> 70%</p>
-            </div>
-          </div>
-          <canvas id="serverstatus01" height="120" width="120"></canvas>
-          <script>
-          var doughnutData = [
-            {
-              value: 70,
-              color:"#68dff0"
-            },
-            {
-              value : 30,
-              color : "#fdfdfd"
-            }
-          ];
-          var myDoughnut = new Chart(document.getElementById("serverstatus01").getContext("2d")).Doughnut(doughnutData);
-          </script>
-        </div><! --/grey-panel -->
-      </div><!-- /col-md-4-->
-
-
-      <div class="col-md-4 col-sm-4 mb">
-        <div class="white-panel pn">
-          <div class="white-header">
-            <h5>TOP PRODUCT</h5>
-          </div>
-
-          <div class="centered">
-            <img src="{{URL::asset('img/p2t.png')}}" height="180" width="250">
-          </div>
-        </div>
-      </div><!-- /col-md-4 -->
-
-      <div class="col-md-4 mb">
-        <!-- WHITE PANEL - TOP USER -->
-        <div class="white-panel pn">
-          <div class="white-header">
-            <h5>TOP USER</h5>
-          </div>
-          <p><img src="assets/img/ui-zac.jpg" class="img-circle" width="80"></p>
-          <p><b>Zac Snider</b></p>
-          <div class="row">
-            <div class="col-md-6">
-              <p class="small mt">MEMBER SINCE</p>
-              <p>2012</p>
-            </div>
-            <div class="col-md-6">
-              <p class="small mt">TOTAL SPEND</p>
-              <p>$ 47,60</p>
-            </div>
-          </div>
-        </div>
-      </div><!-- /col-md-4 -->
-
-
-    </div><!-- PENUTUP ROW PANEL SERVER/TOP PRODUCT/TOP USER -->
-
-
+  
   </div>
 
 
@@ -358,63 +337,38 @@
                     </div>
 
                      <!-- USERS ONLINE SECTION -->
-                <h3>TEAM MEMBERS</h3>
+                <h3>STAFF WITH TEMPORARY ID</h3>
+                <?php
+                  $tmpid = DB::table('stafftemp')->get();
+                 ?>
                     <!-- First Member -->
-                    <div class="desc">
-                      <div class="thumb">
-                        <img class="img-circle" src="{{URL::asset('img/abgk1.jpg')}}" width="60px" height="60px" align="left">
-                      </div>
-                      <div class="details">
-                        <p><a href="#">KHAIRUL ANUAR</a><br/>
-                           <muted>Available</muted>
-                        </p>
-                      </div>
-                    </div>
-                    <!-- Second Member -->
-                    <div class="desc">
-                      <div class="thumb">
-                        <img class="img-circle" src="{{URL::asset('img/ain1.png')}}" width="60px" height="60px" align="">
-                      </div>
-                      <div class="details">
-                        <p><a href="#">SHASARIDA</a><br/>
-                           <muted>I am Busy</muted>
-                        </p>
-                      </div>
-                    </div>
-                    <!-- Third Member -->
-                    <div class="desc">
-                      <div class="thumb">
-                        <img class="img-circle" src="assets/img/ui-danro.jpg" width="35px" height="35px" align="">
-                      </div>
-                      <div class="details">
-                        <p><a href="#">DAN ROGERS</a><br/>
-                           <muted>Available</muted>
-                        </p>
-                      </div>
-                    </div>
-                    <!-- Fourth Member -->
-                    <div class="desc">
-                      <div class="thumb">
-                        <img class="img-circle" src="assets/img/ui-zac.jpg" width="35px" height="35px" align="">
-                      </div>
-                      <div class="details">
-                        <p><a href="#">Zac Sniders</a><br/>
-                           <muted>Available</muted>
-                        </p>
-                      </div>
-                    </div>
-                    <!-- Fifth Member -->
-                    <div class="desc">
-                      <div class="thumb">
-                        <img class="img-circle" src="assets/img/ui-sam.jpg" width="35px" height="35px" align="">
-                      </div>
-                      <div class="details">
-                        <p><a href="#">Marcel Newman</a><br/>
-                           <muted>Available</muted>
-                        </p>
-                      </div>
-                    </div>
+                    <div class="col-md-12" id="stafftmp">
+                        <section class="task-panel tasks-widget">
+                            <div class="panel-body">
+                                <div class="task-content">
+                                    <ul class="task-list">
+                                      @if($tmpid->isEmpty())
+                                        <p style="color:#339966;">There are no staff currently assigned with temporary ID.</p>
+                                      @endif
+                                      @foreach($tmpid as $tmp)
+                                        <li>
+                                            <div class="task-title">
+                                                <span class="task-title-sp"><a href="{{action('StaffController@show', $tmp->sgid)}}" >{{$tmp->staff_name}} </a></span>
+                                                <div class="pull-right hidden-phone">
+                                                    {!! Form::open(['method' => 'DELETE','route' => ['stafftmp.padam', $tmp->id]]) !!}
+                                                    {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-success btn-xs', 'class'=>'fa fa-check'] )  !!}
+                                                    {!! Form::close() !!}
+                                                </div>
+                                            </div>
+                                        </li>
+                                      @endforeach
+                                    </ul>
+                                </div>
 
+
+                            </div>
+                        </section>
+                    </div><!-- /col-md-12-->
 
                 </div><!-- /col-lg-3 -->
 

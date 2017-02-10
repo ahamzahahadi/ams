@@ -67,6 +67,10 @@ Route::get('/swrecord/uninstalllist/{id}', ['uses' => 'SwRecordController@uninst
 Route::post('category', ['uses' => 'CategoryController@store']);
 Route::post('loan', ['uses' => 'LoanController@store']);
 Route::delete('/loan/{loan}', ['uses' => 'LoanController@padam', 'as' => 'loan.padam']);
+Route::delete('/stafftmp/{id}', ['uses' => 'WidgetController@padamstafftmp', 'as' => 'stafftmp.padam']);
+
+Route::get('/ageReport', 'ExcelController@hwAgeReport');
+Route::get('/downloadExcel', 'ExcelController@downloadExcel');
 
 Route::group(['middleware' => 'auth'], function(){
 	Route::resource('hardware', 'HardwareController');

@@ -76,15 +76,13 @@
     <!-- js placed at the end of the document so the pages load faster -->
     <script src="{{ URL::asset('js/jquery.js') }}"></script>
     <script src="{{ URL::asset('js/jquery-1.8.3.min.js') }}"></script>
+    <script src="{{ URL::asset('js/jquery-ui-1.9.2.custom.min.js') }}"></script>
     <script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
-    <!-- <script src="{{ URL::asset('js/jquery-ui-1.9.2.custom.min.js') }}"></script> -->
     <script src="{{ URL::asset('js/jquery.ui.touch-punch.min.js') }}"></script>
     <script src="{{ URL::asset('js/jquery.dcjqaccordion.2.7.js') }}" class="include" type="text/javascript" ></script>
     <script src="{{ URL::asset('js/jquery.scrollTo.min.js') }}"></script>
     <script src="{{ URL::asset('js/jquery.nicescroll.js') }}" type="text/javascript"></script>
 
-    <!-- Backstretch -->
-    <script type="text/javascript" src="{{URL::asset('js/jquery.backstretch.min.js')}}"></script>
     <!--DATA TABLE SCRIPTS -->
     <script src="{{ URL::asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ URL::asset('js/dataTables.bootstrap.min.js') }}"></script>
@@ -93,6 +91,8 @@
     <script src="{{ URL::asset('js/common-scripts.js') }}"></script>
 
     <!-- script for this page-->
+    <!-- Backstretch -->
+    <!-- <script type="text/javascript" src="{{URL::asset('js/jquery.backstretch.min.js')}}"></script> -->
     <!-- <script>
         $.backstretch("{{URL::asset('img/suka.png')}}", {speed: 500});
     </script> -->

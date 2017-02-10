@@ -65,9 +65,7 @@
           {!! Form::textarea('remark', null, ['class' => 'form-control']) !!}
 
 <!-- SOME AUTOFILL INFOS -->
-          @if($hardware->hw_status == '1') <!-- sebab kalau status = 0, xde current user, crash -->
           {!! Form::hidden('id', "$hardware->id") !!}
-          @endif
 
 <!-- START OF FILTR.JS SCRIPTING -->
           <script src="{{ URL::asset('js/jquery.filtr.min.js') }}"></script>

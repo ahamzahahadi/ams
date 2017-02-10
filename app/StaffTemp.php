@@ -1,9 +1,10 @@
 <?php
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Staff extends Model
+class StaffTemp extends Model
 {
-   protected $table= 'staff';
+    protected $table = 'stafftemp';
 }

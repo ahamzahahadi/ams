@@ -55,7 +55,7 @@
                          <span>Report</span>
                      </a>
                      <ul class="sub">
-                         <li><a  href="basic_table.html">Basic Table</a></li>
+                         <li><a  href="/ageReport">Notebook Age</a></li>
                          <li><a  href="responsive_table.html">Responsive Table</a></li>
                      </ul>
                  </li>

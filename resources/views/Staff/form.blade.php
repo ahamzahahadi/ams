@@ -44,6 +44,7 @@
     <select name='staff_company' required class = 'form-control'>
       <option value="Sapura Secured Technologies Sdn Bhd"> Sapura Secured Technologies Sdn Bhd </option>
       <option value="Sapura Advanced Systems Sdn Bhd"> Sapura Advanced Systems Sdn Bhd </option>
+      <option value="Sapura Business Systems Sdn Bhd"> Sapura Business Systems Sdn Bhd </option>
       <option value="Sapura Defence Sdn Bhd"> Sapura Defence Sdn Bhd </option>
       <option value="Sapura LTAT Communication Sdn Bhd"> Sapura LTAT Communication Sdn Bhd </option>
       <option value="Sapura Research Sdn Bhd"> Sapura Research Sdn Bhd </option>
@@ -55,11 +56,16 @@
 <span class="help-block"><sub><b>E.g:</b> <i>"Wangsa Maju", "Mines" .</i></sub></span>
 
     </div>
-    {!! Form::submit('Add', ['class' => 'btn btn-primary']) !!}
-    <a href="{{action('StaffController@index')}}" class="btn btn-default">Cancel</a>
-    {!! Form::close() !!}
 </div>
-
+<div class="col-md-12 centered">
+  <br><br>
+  {!! Form::checkbox('check', 'yes') !!}
+  <b style="color:#339966;">Assigned with temporary ID.</b>
+<br><br>
+  {!! Form::submit('Add', ['class' => 'btn btn-primary']) !!}
+  <a href="{{action('StaffController@index')}}" class="btn btn-default">Cancel</a>
+  {!! Form::close() !!}
+</div>
 
 
 @stop

@@ -146,8 +146,8 @@
            <td><a href="{{action('RecordController@show', $hw->id)}}" class="btn btn-theme"><i class="fa fa-info"></i> Info</a></td>
            <td><a href="{{action('HardwareController@edit', $hw->id)}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a></td>
            <td>
-             {!! Form::open(['method' => 'DELETE','id'=>'deleteform','route' => ['hardware.destroy', $hw->id]]) !!}
-             {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm', 'id' =>'delete']) !!}
+             {!! Form::open(['method' => 'DELETE','id'=>'deleteform','route' => ['hardware.destroy', $hw->id] ]) !!}
+             {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm', 'id' =>'delete' ,'onclick' =>"return confirm('You will not be able to recover this record, are you sure?')"]) !!}
              {!! Form::close() !!}
              <!-- <form "{{action('HardwareController@destroy', $hw->id)}}" method = "DELETE" id="deleteform"> -->
 

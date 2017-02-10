@@ -33,7 +33,7 @@
             <td>{{ $staff->staff_officeLocation }}</td>
             <td><a href="{{action('StaffController@show', $staff->id)}}" class="btn btn-theme"><i class="fa fa-info"></i> Info</button></a></td>
            <td><a href="{{action('StaffController@edit', $staff->id)}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a></td>
-           <td>{!! Form::open(['method' => 'DELETE','route' => ['staff.destroy', $staff->id]]) !!}
+           <td>{!! Form::open(['method' => 'DELETE','route' => ['staff.destroy', $staff->id], "onclick"=>"return confirm('Are you sure?')"]) !!}
                {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
                {!! Form::close() !!}</td>
           </tr>  @endforeach

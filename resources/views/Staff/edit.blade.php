@@ -40,7 +40,14 @@
       {!! Form::text('staff_dept', null, ['class' => 'form-control']) !!}
 
       {!! Form::label('staffcompany', 'Company:', ['class' => 'control-label']) !!}
-      {!! Form::text('staff_company', null, ['class' => 'form-control']) !!}
+      <select name='staff_company' required class = 'form-control'>
+        <option value="Sapura Secured Technologies Sdn Bhd"> Sapura Secured Technologies Sdn Bhd </option>
+        <option value="Sapura Advanced Systems Sdn Bhd"> Sapura Advanced Systems Sdn Bhd </option>
+        <option value="Sapura Business Systems Sdn Bhd"> Sapura Business Systems Sdn Bhd </option>
+        <option value="Sapura Defence Sdn Bhd"> Sapura Defence Sdn Bhd </option>
+        <option value="Sapura LTAT Communication Sdn Bhd"> Sapura LTAT Communication Sdn Bhd </option>
+        <option value="Sapura Research Sdn Bhd"> Sapura Research Sdn Bhd </option>
+      </select>
       <span class="help-block"><sub><b>E.g:</b> <i>"Sapura Secured Technologies", "Sapura Advanced Systems Sdn Bhd" .</i></sub></span>
 
       {!! Form::label('staffOL', 'Office Location:', ['class' => 'control-label']) !!}
@@ -48,11 +55,16 @@
 <span class="help-block"><sub><b>E.g:</b> <i>"Wangsa Maju" .</i></sub></span>
 
     </div>
-    {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
-    <a href="{{action('StaffController@show', $staff->id)}}" class="btn btn-default">Cancel</a>
-    {!! Form::close() !!}
 </div>
-
+<div class="col-md-12 centered">
+  <br><br>
+  {!! Form::checkbox('check', 'yes') !!}
+  <b style="color:#339966;">Assigned with temporary ID.</b>
+<br><br>
+{!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
+<a href="{{action('StaffController@show', $staff->id)}}" class="btn btn-default">Cancel</a>
+{!! Form::close() !!}
+</div>
 
 
 @stop
