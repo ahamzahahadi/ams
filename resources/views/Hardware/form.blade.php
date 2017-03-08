@@ -84,7 +84,7 @@
         <option value=""> --Choose Company-- </option>
         <option value="SAS"> SAS </option>
         <option value="SST"> SST </option>
-        <option value="SST"> STB </option>
+        <option value="STB"> STB </option>
         <option value="SDSB"> SDSB </option>
         <option value="SRSB"> SRSB </option>
         <option value="SLCT"> SLCT </option>

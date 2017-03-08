@@ -32,11 +32,11 @@
           <div class="col-lg-12">
 <?php
 $test = DB::table('hardware')
-->select(DB::raw('hw_model,count(hw_serialno) AS Quantity, round((datediff(curdate(),hw_datesupp)/365)) AS Age'))
+->select(DB::raw('hw_model,hw_po_no,count(hw_serialno) AS Quantity, round((datediff(curdate(),hw_datesupp)/365)) AS Age'))
 ->where('hw_type', 'notebook')
 ->where('hw_model', '!=', '')
 ->where('hw_datesupp', '!=', '0000-00-00')
-->groupBy('hw_model')
+->groupBy('hw_model', 'hw_po_no') //add 'hw_po_no' to distinguish same model, but from different PO
 ->orderBy('Age', 'desc')
 ->get();
  ?>
@@ -48,12 +48,13 @@ $test = DB::table('hardware')
   <!-- <caption> Notebook Age Summary </caption> -->
   <thead>
   <tr>
-    <th> Model </th> <th> Quantity </th> <th> Age </th>
+    <th> Model </th> <th> PO Number </th> <th> Quantity </th> <th> Age </th>
   </tr>
 </thead>
 @foreach($test as $t)
 <tr>
   <td>{{$t->hw_model}}</td>
+  <td>{{$t->hw_po_no}}</td>
   <td>{{$t->Quantity}}</td>
   @if($t->Age == '0')
 <td> New </td>

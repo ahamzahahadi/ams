@@ -59,16 +59,25 @@
       <tr>
         <?php $idhw = DB::table('hardware')->where('id', $recku->fk_assetid)->first() ?>
         <td>{{$recku->id}}</td>
+        @if(is_null($idhw))
+        <td>--Hardware Record Deleted-- </td>
+        <td> -- </td>
+        <td> -- </td>
+        <td> -- </td>
+
+        @else
         <td>{{$idhw->hw_model}}</td>
         <td>{{$idhw->hw_type}}</td>
         <td>{{$idhw->hw_assetid}}</td>
         <td>{{$idhw->hw_serialno}}</td>
+        @endif
         @if(($recku->created_at) == '0000-00-00 00:00:00')
         <td> Date Missing </td>
         @else
         <td>{{date('jS F Y', strtotime($recku->created_at))}}</td>
         @endif
-        @if($recku->status == 1)
+
+        @if($recku->status == 1 && !is_null($idhw))
           <td><a href="{{action('RecordController@show', $idhw->id)}}">In Use</a></td>
         @else
           <td>{{date('jS F Y', strtotime($recku->updated_at))}}</td>

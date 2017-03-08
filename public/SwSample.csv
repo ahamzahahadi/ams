@@ -1,0 +1,11 @@
+sw_assetid,sw_serialno,sw_model,sw_prodkey,sw_po_no,sw_price,sw_supplier,sw_type,sw_variation,sw_remark,sw_company
+987654321,1234567,Test batch input,8161-3254-6546-1222,SRSB/JW/821/PO,4300,1,Antivirus,0,,STB
+987654321,1234567,Test batch input,8161-3254-6546-1223,SRSB/JW/821/PO,4300,1,Antivirus,0,,STB
+987654321,1234567,Test batch input,8161-3254-6546-1224,SRSB/JW/821/PO,4300,1,Antivirus,0,,STB
+987654321,1234567,Test batch input,8161-3254-6546-1225,SRSB/JW/821/PO,4300,1,Antivirus,0,,STB
+987654321,1234567,Test batch input,8161-3254-6546-1226,SRSB/JW/821/PO,4300,1,Antivirus,0,AccessKey: 912381,STB
+987654321,1234567,Test batch input,8161-3254-6546-1227,SRSB/JW/821/PO,4300,1,Antivirus,0,Can also be left null,STB
+987654321,1234567,Test batch input,8161-3254-6546-1228,SRSB/JW/821/PO,4300,1,Antivirus,0,,STB
+987654321,1234567,Test batch input,8161-3254-6546-1229,SRSB/JW/821/PO,4300,1,Antivirus,0,Null,STB
+987654321,1234567,Test batch input,8161-3254-6546-1230,SRSB/JW/821/PO,4300,1,Antivirus,0,,STB
+987654321,1234567,Test batch input,8161-3254-6546-1231,SRSB/JW/821/PO,4300,1,Antivirus,0,,STB

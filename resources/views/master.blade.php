@@ -63,7 +63,7 @@
 
       <footer class="site-footer">
           <div class="text-center">
-              © 2016 - Amir Hamzah for Sapura Secured Technologies. All trademarks and copyrights held by respective owners.
+              © 2016 - Amir Hamzah for Sapura Secured Technologies. All rights are held by respective owners.
               <a href="#" class="go-top">
                   <i class="fa fa-angle-up"></i>
               </a>

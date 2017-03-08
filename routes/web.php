@@ -42,6 +42,23 @@ Route::get('/hwcategories', function() {
 	return view('hardware.category');
 });
 
+Route::get('/register', function() {
+	return view('admin.register');
+});
+Route::get('/manage', function() {
+	return view('admin.manage');
+});
+
+Route::get('/reportwizard', function(){
+	return view('report.reportwizard');
+});
+
+Route::post('managegrant', ['uses' => 'AdminController@grantadmin']);
+Route::delete('manage/{id}', ['uses' => 'AdminController@destroy', 'as' => 'user.destroy']);
+Route::get('/manageedit/{id}',['uses' => 'AdminController@edit', 'as' => 'user.edit']);
+Route::patch('manageupdate/{id}', ['uses' => 'AdminController@update', 'as' => 'user.update']);
+
+
 Route::get('/bycategory/{cat}',['uses' => 'HardwareController@cat']);
 Route::get('/bySoftwareCategory/{cat}',['uses' => 'SoftwareController@cat']);
 
@@ -71,6 +88,12 @@ Route::delete('/stafftmp/{id}', ['uses' => 'WidgetController@padamstafftmp', 'as
 
 Route::get('/ageReport', 'ExcelController@hwAgeReport');
 Route::get('/downloadExcel', 'ExcelController@downloadExcel');
+Route::get('/hwBatchImport', 'ExcelController@getHwImport');
+Route::post('/hwImportHandler', 'ExcelController@hwImportHandler');
+Route::get('/swBatchImport', 'ExcelController@getSwImport');
+Route::post('/swImportHandler', 'ExcelController@swImportHandler');
+Route::post('repgen', 'ExcelController@generateHwReport');
+
 
 Route::group(['middleware' => 'auth'], function(){
 	Route::resource('hardware', 'HardwareController');

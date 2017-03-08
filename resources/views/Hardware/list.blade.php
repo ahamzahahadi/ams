@@ -12,6 +12,9 @@
       $totnotebook = DB::table('hardware')->count(); //total hw
       $notebookinuse = DB::table('hardware')->where('hw_status',1)->count(); //notebook in use
       $notepercent = round($notebookinuse/$totnotebook*100);
+      $lastreq = DB::table('hwrecord')->where('status',1)->orderBy('created_at', 'desc')->first();
+      $lastret = DB::table('hwrecord')->where('status',2)->orderBy('updated_at', 'desc')->first();
+      $latestitem = DB::table('hardware')->orderBy('created_at','desc')->first();
       ?>
       <!-- TWITTER PANEL -->
       <div class="col-md-4 mb">
@@ -46,39 +49,54 @@
         </div><! -- /darkblue panel -->
       </div><!-- /col-md-4 -->
 
-      <div class="col-md-4 col-sm-4 mb">
-        <!-- LOG PANEL -->
-        <div class="grey-panel pn">
-          <div class="grey-header">
-            <h5>LAST ACTIVITY BY</h5>
+      <div class="col-md-4 mb">
+        <div class="content-panel pn">
+          <div id="blog-bg">
+            <div class="badge badge-popular">ALL</div>
+            <div class="blog-title">Update Log</div>
           </div>
-          <p><img src="{{ URL::asset('img/amir.jpg') }}" class="img-circle" width="50" height="50"></p>
-          <p><b>{{Auth::user()->name}}</b></p>
-          <p> At 5:15pm, 26th Jan 2017 </p>
-            <div class="row">
-              <div class="col-md-6">
-                <p class="small mt"><b>ON ASSET</b></p>
-                <p>cneg65656</p>
-              </div>
-              <div class="col-md-6">
-                <p class="small mt"><b>ACTION</b></p>
-                <p>Recorded asset return</p>
-              </div>
-            </div>
+          <div class="blog-text">
+            Lastest requisition: {{date('jS M Y  g:iA',strtotime($lastreq->created_at))}} <a href="{{action('RecordController@show', $lastreq->fk_assetid)}}">View</a><br>
+            Last return recorded: {{date('jS M Y  g:iA',strtotime($lastret->updated_at))}} <a href="{{action('RecordController@show', $lastret->fk_assetid)}}">View</a><br>
+            Latest hardware registered: {{date('jS M Y  g:iA',strtotime($latestitem->created_at))}} <a href="{{action('RecordController@show', $latestitem->id)}}">{{$latestitem->hw_model}}</a><br>
+          </div>
         </div>
-
       </div><!-- /col-md-4 -->
 
       <!-- STATUS OVERVIEW -->
-      <div class="col-md-4 mb">
+      <div class="col-md-4 col-sm-4 mb">
+        <!-- REVENUE PANEL -->
         <div class="darkblue-panel pn">
           <div class="darkblue-header">
-            <h5>ASSET REQUISITIONS ACTIVITY</h5>
+            <h5>ASSET REQUISITIONS RECORDED</h5>
+            <?php
+            $x=DB::select(DB::raw('SELECT COUNT(id) as "req"
+            FROM hwrecord
+            WHERE `created_at` != "0000-00-00 00:00:00"
+            AND `status` = "1"
+            GROUP BY YEAR(`created_at`), MONTH(`created_at`)
+            ORDER BY YEAR(`created_at`) desc, MONTH(`created_at`) desc
+            LIMIT 11'
+            ));
+            $x = array_reverse($x);
+            $sting = "[";
+            $ctr = 0;
+            ?>
+            @foreach($x as $y)
+            <?php $sting .= $y->req.",";
+            $ctr += $y->req ?>
+
+            @endforeach
+            <?php
+            $sting = rtrim($sting, ",");
+            $sting.= "]";
+            ?>
+
           </div>
           <div class="chart mt">
-            <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,464,655]"></div>
+            <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data=<?php echo $sting; ?>   ></div>
           </div>
-          <p class="mt"><b>78 Requisitions </b><br/>in the past 11 months</p>
+          <p class="mt"><b>{{$ctr}} Requisitions </b><br/>in the past 11 months</p>
         </div>
       </div><!-- /col-md-4 -->
 

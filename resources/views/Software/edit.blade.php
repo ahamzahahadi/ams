@@ -80,7 +80,20 @@
     <div class="col-lg-6">
 
       <?php  $value = DB::table('supplier')->orderBy('supp_name', 'asc')->get();
-             $value2 = DB::table('hwtype')->where('flag', 2)->orderBy('type', 'asc')->pluck('type'); ?>
+             $value2 = DB::table('hwtype')->where('flag', 2)->orderBy('type', 'asc')->pluck('type');
+             $arraycomp = ['SAS','SST', 'STB', 'SDSB', 'SRSB', 'SLCT'];
+             ?>
+             {!! Form::label('sw_company', 'Owner Company: ', ['class' => 'control-label']) !!} <br>
+             <select name='sw_company' class = 'form-control'>
+               <option value=""> --Choose Company-- </option>
+               @foreach($arraycomp as $comp)
+                 @if($comp == $software->sw_company)
+                 <option value={{$comp}} selected="selected"> {{$comp}} </option>
+                 @else
+                 <option value={{$comp}}> {{$comp}} </option>
+                 @endif
+               @endforeach
+             </select>
 
       {!! Form::label('supid', 'Supplier:', ['class' => 'col-sm-2 control-label col-lg-5']) !!}
       <select name='sw_supplier' required class = 'form-control'>

@@ -2,6 +2,7 @@
 @section('content')
 
 @include('Alerts::sweetalerts')
+
 <div >
   <div >
     <div class="row mt">
@@ -10,6 +11,9 @@
       $totalhw = DB::table('hardware')->where('hw_type',$category)->count(); //total notebook
       $inuse = DB::table('hardware')->where('hw_type',$category)->where('hw_status',1)->count(); //notebook in use
       $usagepercent = round($inuse/$totalhw*100);
+      $lastreq = DB::table('hwrecord')->where('status',1)->orderBy('created_at', 'desc')->first();
+      $lastret = DB::table('hwrecord')->where('status',2)->orderBy('updated_at', 'desc')->first();
+      $latestitem = DB::table('hardware')->where('hw_type', $category)->orderBy('created_at','desc')->first();
       ?>
       <!-- TWITTER PANEL -->
       <div class="col-md-4 mb">
@@ -45,26 +49,53 @@
       </div><!-- /col-md-4 -->
 
       <div class="col-md-4 mb">
-        <!-- INSTAGRAM PANEL -->
-        <div class="instagram-panel pn">
-          <i class="fa fa-instagram fa-4x"></i>
-          <p>@THISISYOU<br/>
-            5 min. ago
-          </p>
-          <p><i class="fa fa-comment"></i> 18 | <i class="fa fa-heart"></i> 49</p>
+        <div class="content-panel pn">
+          <div id="blog-bg">
+            <div class="badge badge-popular">{{$category}}</div>
+            <div class="blog-title">Update Log</div>
+          </div>
+          <div class="blog-text">
+            Lastest requisition: {{date('jS M Y  g:iA',strtotime($lastreq->created_at))}} <a href="{{action('RecordController@show', $lastreq->fk_assetid)}}">View</a><br>
+            Last return recorded: {{date('jS M Y  g:iA',strtotime($lastret->updated_at))}} <a href="{{action('RecordController@show', $lastret->fk_assetid)}}">View</a><br>
+            Latest {{$category}} registered: {{date('jS M Y  g:iA',strtotime($latestitem->created_at))}} <a href="{{action('RecordController@show', $latestitem->id)}}">{{$latestitem->hw_model}}</a><br>
+          </div>
         </div>
       </div><!-- /col-md-4 -->
 
-      <div class="col-md-4 col-sm-4 mb">
+      <div class="col-md-4 mb">
+        <!-- col-sm-4 -->
         <!-- REVENUE PANEL -->
         <div class="darkblue-panel pn">
           <div class="darkblue-header">
-            <h5>REVENUE</h5>
+            <h5>ASSET REQUISITIONS RECORDED</h5>
+            <?php
+            $x=DB::select(DB::raw('SELECT COUNT(id) as "req"
+            FROM hwrecord
+            WHERE `created_at` != "0000-00-00 00:00:00"
+            AND `status` = "1"
+            GROUP BY YEAR(`created_at`), MONTH(`created_at`)
+            ORDER BY YEAR(`created_at`) desc, MONTH(`created_at`) desc
+            LIMIT 11'
+            ));
+            $x = array_reverse($x);
+            $sting = "[";
+            $ctr = 0;
+            ?>
+            @foreach($x as $y)
+            <?php $sting .= $y->req.",";
+            $ctr += $y->req ?>
+
+            @endforeach
+            <?php
+            $sting = rtrim($sting, ",");
+            $sting.= "]";
+            ?>
+
           </div>
           <div class="chart mt">
-            <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,464,655]"></div>
+            <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data=<?php echo $sting; ?>   ></div>
           </div>
-          <p class="mt"><b>$ 17,980</b><br/>Month Income</p>
+          <p class="mt"><b>{{$ctr}} Requisitions </b><br/>in the past 11 months</p>
         </div>
       </div><!-- /col-md-4 -->
 
@@ -127,7 +158,7 @@
            <td><a href="{{action('HardwareController@edit', $hw->id)}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a></td>
            <td>
              {!! Form::open(['method' => 'DELETE','id'=>'deleteform','route' => ['hardware.destroy', $hw->id]]) !!}
-             {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm', 'id' =>'delete']) !!}
+             {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm', 'id' =>'delete' ,'onclick' =>"return confirm('You will not be able to recover this record, are you sure?')"]) !!}
              {!! Form::close() !!}
              <!-- <form "{{action('HardwareController@destroy', $hw->id)}}" method = "DELETE" id="deleteform"> -->
 
@@ -138,4 +169,6 @@
       </div><!-- /content-panel -->
    </div><!-- /col-lg-4 -->
 </div><!-- /row -->
+<script src="{{URL::asset('js/jquery.sparkline.js')}}"></script>
+<script src="{{URL::asset('js/sparkline-chart.js')}}"></script>
 @stop

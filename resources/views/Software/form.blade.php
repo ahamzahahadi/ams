@@ -82,6 +82,18 @@
       <?php  $value = DB::table('supplier')->orderBy('supp_name', 'asc')->get();
              $value2 = DB::table('hwtype')->where('flag', 2)->orderBy('type', 'asc')->pluck('type'); ?>
 
+               {!! Form::label('sw_company', 'Owner Company: ', ['class' => 'control-label']) !!} <br>
+               <select name='sw_company' required class = 'form-control'>
+                 <option value=""> --Choose Company-- </option>
+                 <option value="SAS"> SAS </option>
+                 <option value="SST"> SST </option>
+                 <option value="STB"> STB </option>
+                 <option value="SDSB"> SDSB </option>
+                 <option value="SRSB"> SRSB </option>
+                 <option value="SLCT"> SLCT </option>
+               </select>
+
+
       {!! Form::label('supid', 'Supplier:', ['class' => 'col-sm-2 control-label col-lg-5']) !!}
       <select name='sw_supplier' required class = 'form-control'>
           <option value=""> --Choose Supplier-- </option>

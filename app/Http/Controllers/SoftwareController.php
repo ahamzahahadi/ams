@@ -63,17 +63,17 @@ class SoftwareController extends Controller
       else{$price = $request->input('sw_price');}
 
       if($request->input('sw_date_po') == ''){
-        $datepono = '0001-00-00';
+        $datepono = '0000-00-00';
       }
       else{$datepono = $request->input('sw_date_po');}
 
       if($request->input('sw_datesupp') == ''){
-        $datesup = '0001-00-00';
+        $datesup = '0000-00-00';
       }
       else{$datesup = $request->input('sw_datesupp');}
 
       if($request->input('sw_datefac') == ''){
-        $datefac = '0001-00-00';
+        $datefac = '0000-00-00';
       }
       else{$datefac = $request->input('sw_datefac');}
 
@@ -96,7 +96,7 @@ class SoftwareController extends Controller
       $software->sw_type = $typeIndexNo;
       $software->sw_variation = $package;
       $software->sw_remark = $request->input('sw_remark');
-      $software->sw_company = ''; //jgn lupa edit ni lepas dah repath ref key ke ID,lps dah tambah kat form dia
+      $software->sw_company = $request->input('sw_company'); //jgn lupa edit ni lepas dah repath ref key ke ID,lps dah tambah kat form dia
 
       $software->save();
 
@@ -148,17 +148,17 @@ class SoftwareController extends Controller
       else{$price = $request->input('sw_price');}
 
       if($request->input('sw_date_po') == ''){
-        $datepono = '0001-00-00';
+        $datepono = '0000-00-00';
       }
       else{$datepono = $request->input('sw_date_po');}
 
       if($request->input('sw_datesupp') == ''){
-        $datesup = '0001-00-00';
+        $datesup = '0000-00-00';
       }
       else{$datesup = $request->input('sw_datesupp');}
 
       if($request->input('sw_datefac') == ''){
-        $datefac = '0001-00-00';
+        $datefac = '0000-00-00';
       }
       else{$datefac = $request->input('sw_datefac');}
 
@@ -181,6 +181,7 @@ class SoftwareController extends Controller
       $software->sw_type = $typeIndexNo;
       $software->sw_variation = $package;
       $software->sw_remark = $request->input('sw_remark');
+      $software->sw_company = $request->input('sw_company');
 
       $software->save();
 

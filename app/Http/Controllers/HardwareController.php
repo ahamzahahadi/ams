@@ -69,17 +69,17 @@ class HardwareController extends Controller
         else{$price = $request->input('hw_price');}
 
         if($request->input('hw_date_po') == ''){
-          $datepono = '0001-00-00';
+          $datepono = '0000-00-00';
         }
         else{$datepono = $request->input('hw_date_po');}
 
         if($request->input('hw_datesupp') == ''){
-          $datesup = '0001-00-00';
+          $datesup = '0000-00-00';
         }
         else{$datesup = $request->input('hw_datesupp');}
 
         if($request->input('hw_datefac') == ''){
-          $datefac = '0001-00-00';
+          $datefac = '0000-00-00';
         }
         else{$datefac = $request->input('hw_datefac');}
 
@@ -154,17 +154,17 @@ class HardwareController extends Controller
       else{$price = $request->input('hw_price');}
 
       if($request->input('hw_date_po') == ''){
-        $datepono = '0001-00-00';
+        $datepono = '0000-00-00';
       }
       else{$datepono = $request->input('hw_date_po');}
 
       if($request->input('hw_datesupp') == ''){
-        $datesup = '0001-00-00';
+        $datesup = '0000-00-00';
       }
       else{$datesup = $request->input('hw_datesupp');}
 
       if($request->input('hw_datefac') == ''){
-        $datefac = '0001-00-00';
+        $datefac = '0000-00-00';
       }
       else{$datefac = $request->input('hw_datefac');}
 

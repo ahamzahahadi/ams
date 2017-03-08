@@ -1,5 +1,7 @@
 @extends('master')
 @section('content')
+@include('Alerts::sweetalerts')
+
 <link rel="stylesheet" type="text/css" href="{{URL::asset('lineicons/style.css')}}">
 <link href="{{ URL::asset('css/to-do.css') }}" rel="stylesheet">
 <div class="row">
@@ -106,58 +108,89 @@
     </div>
 
   <div class="col-lg-2"></div>
-
+  <?php
+    $totalsw = DB::table('software')->count();
+    $inuse = DB::table('software')->where('sw_status',1)->count(); //sw in use
+    $usagepercent = round($inuse/$totalsw*100);
+  ?>
     <div class="col-lg-5">
-      <h5>SOFTWARE IN USE</h5>
-      <div id="donut-example"></div>
+      <h3><b>SOFTWARE IN USE</b></h3>
+      <div class="grey-panel pn donut-chart">
+        <div class="grey-header">
+          <h5>Software Asset In Use</h5>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-xs-6 goleft">
+          </div>
+        </div>
+        <canvas id="serverstatus01" height="120" width="120"></canvas>
+        <script>
+        var software = Number('<?php echo $usagepercent; ?>');
+        var doughnutData = [
+          {
+            value: software,
+            color:"#FF6B6B"
+          },
+          {
+            value : 100-software,
+            color : "#fdfdfd"
+          }
+        ];
+        var myDoughnut = new Chart(document.getElementById("serverstatus01").getContext("2d")).Doughnut(doughnutData);
+        </script>
+        <div class="row">
+          <div class="col-sm-6 col-xs-6 goleft">
+            <p>Total<br/>installed:</p>
+          </div>
+           <div class="col-sm-6 col-xs-6">
+            <h2>{{$usagepercent}}%</h2>
+           </div>
+        </div>
+      </div><! --/grey-panel -->
     </div>
 
   </div>
 
   <div class="row mt">
               <!--CUSTOM CHART START -->
+              <?php
+              $peri = DB::select(DB::raw("
+              SELECT `hw_model`, `hw_location`, count(`id`) as 'quantity'
+              from hardware
+              where `hw_type` like 'peripheral' and `hw_status` = 0
+              and `hw_location` != ''
+              and ( `hw_model` like '%battery%'
+              or `hw_model` like '%adapter%'
+              or `hw_model` like '%mouse%')
+              group by `hw_model`
+              "));
+               ?>
               <div class="border-head">
-                  <h3>HARDWARE IN ACTIVE DUTY</h3>
+                  <h3>LOCATION OF AVAILABLE PERIPHERALS ON STAND BY</h3>
               </div>
               <div class="custom-bar-chart">
                   <ul class="y-axis">
-                      <li><span>10.000</span></li>
-                      <li><span>8.000</span></li>
-                      <li><span>6.000</span></li>
-                      <li><span>4.000</span></li>
-                      <li><span>2.000</span></li>
+                      <li><span>50</span></li>
+                      <li><span>40</span></li>
+                      <li><span>30</span></li>
+                      <li><span>20</span></li>
+                      <li><span>10</span></li>
                       <li><span>0</span></li>
                   </ul>
+                  @foreach($peri as $p)
+                  <?php
+                  $percent = round(($p->quantity/50)*100);
+                  $note = $percent."%" ?>
                   <div class="bar">
-                      <div class="title">JAN</div>
-                      <div class="value tooltips" data-original-title="8.500" data-toggle="tooltip" data-placement="top">85%</div>
-                      <!-- data original title = mouse over
-                      data placement = ketinggian bar itu -->
+                      <div class="title">{{$p->hw_model}}</div>
+                      <div class="value tooltips" data-original-title="{{$p->quantity}} units @ {{$p->hw_location}}" data-toggle="tooltip"
+                        data-placement="top">{{$note}}</div>
+
                   </div>
-                  <div class="bar ">
-                      <div class="title">FEB</div>
-                      <div class="value tooltips" data-original-title="5.000" data-toggle="tooltip" data-placement="top">50%</div>
-                  </div>
-                  <div class="bar ">
-                      <div class="title">MAR</div>
-                      <div class="value tooltips" data-original-title="6.000" data-toggle="tooltip" data-placement="top">60%</div>
-                  </div>
-                  <div class="bar ">
-                      <div class="title">APR</div>
-                      <div class="value tooltips" data-original-title="4.500" data-toggle="tooltip" data-placement="top">45%</div>
-                  </div>
-                  <div class="bar">
-                      <div class="title">MAY</div>
-                      <div class="value tooltips" data-original-title="3.200" data-toggle="tooltip" data-placement="top">32%</div>
-                  </div>
-                  <div class="bar ">
-                      <div class="title">JUN</div>
-                      <div class="value tooltips" data-original-title="6.200" data-toggle="tooltip" data-placement="top">62%</div>
-                  </div>
-                  <div class="bar">
-                      <div class="title">JUL</div>
-                      <div class="value tooltips" data-original-title="7.500" data-toggle="tooltip" data-placement="top">75%</div>
-                  </div>
+                  @endforeach
+                  <!-- data original title = x axis label
+                  % before closing /div tag = ketinggian bar itu -->
+
               </div>
               <!--custom chart end-->
   </div><!-- /row -->
@@ -201,7 +234,7 @@
         </div>
       </div><!-- /col-md-4 -->
 
-      <div class="col-md-4 mb">
+      <div class="col-md-4 col-sm-4 mb">
         <div class="darkblue-panel pn">
           <div class="darkblue-header">
             <h5>TOTAL HARDWARE ASSET IN USE</h5>
@@ -270,7 +303,7 @@
       </div><!-- /col-md-4 -->
 
     </div><!-- end of black panel row DROPBOX/INSTA/REVENUE -->
-  
+
   </div>
 
 
